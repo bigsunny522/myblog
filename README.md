@@ -101,45 +101,84 @@ specs:
 
 ---
 
-## 🎨 デザイン・カスタマイズガイド
+## 🎨 デザイン・カスタマイズ詳細ガイド
 
-サイトのデザインやパラメータを変更する場所をまとめています。
+各ファイルを編集してデザインを変更するための詳細ガイドです。
 
-### 1. 全体テーマ（色・フォント）
-**ファイル:** `app/globals.css`
-このプロジェクトは **Tailwind CSS v4** を使用しています。テーマ変数は `@theme` ブロックと `:root` で定義されています。
+### 1. グローバル設定（全体の色・フォント）
+**ファイル:** [`app/globals.css`](file:///e:/blog/my-terminal-blog/app/globals.css)
 
-- **色 (Colors)**: `:root`（ライト/ダークモード用変数）または `@theme` を直接編集します。
-  - `--primary`: メインのアクセントカラー。
-  - `--background` / `--foreground`: 背景色と文字色。
-- **フォント (Fonts)**: `@theme` ブロック内で定義されています。
-  - `--font-line`: 本文フォント (LINE Seed JP)。
-  - `--font-outfit`: 見出しフォント (Outfit)。
+このファイルはサイト全体の「テーマ」を定義します。
 
-### 2. レイアウト・共通要素
-| コンポーネント | ファイルパス | カスタマイズ内容 |
-| :--- | :--- | :--- |
-| **ヘッダー** | `components/Header.tsx` | ロゴのテキスト、ナビゲーションリンク、「Menu」ボタンのデザイン。 |
-| **フッター** | `components/Footer.tsx` | コピーライトのテキスト、SNSリンク (Twitter/GitHub等のURL)、フッターリンク。 |
-| **背景** | `components/AuroraBackground.tsx` | オーロラグラデーションのアニメーション色や速度。 |
+**変更方法:**
+- **色を変える**: `:root`（ライト/ダークモード別）または `@theme` 内の HEXコードを書き換えます。
+    - `--primary` (現在の `#7BABFF`)：ボタンやリンクのメインカラー。青系です。
+    - `--accent` (現在の `#f59e0b`)：強調色。オレンジ系です。
+    - `--background`：背景色。
+- **フォントを変える**: `@theme` 内の `--font-line`（本文）や `--font-outfit`（見出し）を変更します。外部フォントを使う場合は、まず `app/layout.tsx` でGoogle Fonts等を読み込む必要があります。
 
-### 3. ページ別デザイン設定
-| セクション | ファイルパス | 変更できるパラメータ |
-| :--- | :--- | :--- |
-| **ヒーロー (Top)** | `components/Hero.tsx` | メインタイトル (`<h1>`)、サブテキスト (`<p>`)、スライドショー画像 (`backgroundSlides` 配列)、アニメーション速度。 |
-| **記事一覧** | `components/BlogList.tsx` | カードのレイアウト、グリッド列数 (`grid-cols-1 md:grid-cols-2` 等)、ホバーエフェクト。 |
-| **Homeタブ** | `components/HomePostTabs.tsx` | "Latest" / "Recommended" タブのラベルや挙動。 |
-| **My Gear (Home)**| `components/GearSection.tsx` | セクションタイトル、表示件数、"View More" ボタン。 |
-| **My Gear (Page)**| `components/GearPageClient.tsx` | フィルタリングのロジック、詳細ページのグリッドレイアウト。 |
-| **404ターミナル** | `app/not-found.tsx` | プロンプトのテキスト、`COMMANDS` の応答テキスト、`SECRET_FILES` の中身、グリッチの色。 |
+### 2. トップページ: ヒーローセクション
+**ファイル:** [`components/Hero.tsx`](file:///e:/blog/my-terminal-blog/components/Hero.tsx)
 
-### 4. 記事のデザイン (MDX)
-**ファイル:** `components/MDXComponents.tsx`
-- 標準的なMarkdown要素（H1, H2, P, リンクなど）の見た目を定義しています。
-- ブログ記事全体のデフォルトスタイルを変更したい場合はこのファイルを編集します。
-- 例: 全記事のリンク色を変えたい場合は、ここにある `a` コンポーネントを変更します。
+**コードの意味と変更箇所:**
+- **スライドショー画像**: 7行目の `backgroundSlides` 配列。
+    ```typescript
+    const backgroundSlides = [
+      "/images/slideshow/slide1.JPG", // ここを自分の画像のパスに変更
+      ...
+    ];
+    ```
+- **アニメーション速度**: 18行目の `setInterval(..., 5000)`。`5000` (ミリ秒) を変更するとスライド切り替え間隔が変わります。
+- **メインタイトル**: 50行目付近の `<motion.span>Smart Tech,</motion.span>` を書き換えます。
+- **文字が出るアニメーション**: 56行目付近の `transition: { duration: 1.2 }` で1.2秒かけて表示されます。数字を小さくすると速くなります。
 
-### 5. デプロイ
+### 3. トップページ: オーロラ背景
+**ファイル:** [`components/AuroraBackground.tsx`](file:///e:/blog/my-terminal-blog/components/AuroraBackground.tsx)
+
+**コードの意味と変更箇所:**
+- **オーロラの色**: 33行目の `var(--aurora)` 定義内。
+    ```css
+    repeating-linear-gradient(100deg, var(--primary)_10%, var(--accent)_15%, ...)
+    ```
+    ここの `--primary` や `--accent` を別の色変数（例: `blue` や HEXコード）に変えるとオーロラの色が変わります。
+- **動きの速度**: 28行目付近のコメント `I'm sorry but this is what peak performance looks like` の下にあるアニメーション定義の `duration` 相当は Tailwind config で定義されていますが、色はここで直接いじれます。
+
+### 4. 404ページ（ターミナル）
+**ファイル:** [`app/not-found.tsx`](file:///e:/blog/my-terminal-blog/app/not-found.tsx)
+
+**コードの意味と変更箇所:**
+- **メッセージの変更**: 15行目の `COMMANDS` オブジェクト。
+    - `help`: ヘルプの文章を変えられます。
+    - `whoami`: 表示されるユーザー名を変えられます。
+- **隠しファイル**: 33行目の `SECRET_FILES` オブジェクト。
+    - `'secret.txt': 'Message'` のように追加すると、`type secret.txt` で読めるファイルが増やせます。
+- **背景色**: 146行目の `bg-gradient-to-br from-[#0f172a]...`。このHEXコードを変えると、ターミナルの背景グラデーションが変わります。
+- **ウィンドウの色**: 201行目の `bg-[#0c0c0c]`。ここを黒以外にするとターミナル画面の色が変わります。
+
+### 5. 記事の表示デザイン
+**ファイル:** [`components/MDXComponents.tsx`](file:///e:/blog/my-terminal-blog/components/MDXComponents.tsx)
+
+このファイルは、ブログ記事内の Markdown 要素（見出しや段落）がどう表示されるかを決めています。
+
+**コードの意味と変更箇所:**
+- **H1 (大見出し)**: 33行目の `H1` コンポーネント。
+    - `border-b-4 border-primary/20`: 下線の太さと色。`/20` は透明度20%を意味します。
+- **H2 (中見出し)**: 44行目の `H2` コンポーネント。
+    - `<div className="w-1.5 h-6 bg-primary rounded-full" />`: 見出しの左にある「棒」のデザインです。`bg-primary` を `bg-red-500` にすれば赤くなります。
+- **テキスト装飾**: 5行目の `Text` コンポーネント。Markdown内で `<Text color="red">` と書いたときの挙動を定義しています。
+
+### 6. ヘッダーとフッター
+**ヘッダー:** [`components/Header.tsx`](file:///e:/blog/my-terminal-blog/components/Header.tsx)
+- ロゴの文字や、ナビゲーションメニューのリンク先を変更できます。
+- `<Link href="/about">` の `/about` を書き換えるとリンク先が変わります。
+
+**フッター:** [`components/Footer.tsx`](file:///e:/blog/my-terminal-blog/components/Footer.tsx)
+- コピーライトの年号や、SNSアイコンのリンク先を変更できます。
+- アイコンは `lucide-react` や `FontAwesome` を使っています。
+
+---
+
+### デプロイ（公開）
 **プラットフォーム:** Vercel (推奨)
 1. GitHubにコードをプッシュします。
 2. Vercelでリポジトリをインポートします。
