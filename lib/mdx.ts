@@ -14,6 +14,7 @@ export interface BlogPost {
   coverImage: string;
   recommended?: boolean;
   content: string; // MDX content
+  published?: boolean;
 }
 
 export function getPostSlugs() {
@@ -40,6 +41,7 @@ export function getPostBySlug(slug: string): BlogPost | undefined {
     tags: data.tags || [],
     coverImage: data.coverImage,
     recommended: data.recommended || false,
+    published: data.published !== false, // Default to true if not specified
     content: content,
   };
 }
@@ -48,7 +50,7 @@ export function getAllPosts(): BlogPost[] {
   const slugs = getPostSlugs();
   const posts = slugs
     .map((slug) => getPostBySlug(slug))
-    .filter((post): post is BlogPost => post !== undefined)
+    .filter((post): post is BlogPost => post !== undefined && post.published !== false)
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts;
 }

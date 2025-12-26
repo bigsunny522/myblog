@@ -5,6 +5,7 @@ export interface GearItem {
   image: string;
   description: string;
   specs?: Record<string, string>;
+  published?: boolean;
 }
 
 // Data is now managed in content/my-gear/*.mdx and fetched via lib/gear-data.ts
