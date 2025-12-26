@@ -8,7 +8,7 @@ const backgroundSlides = [
   "/images/slideshow/slide1.JPG",
   "/images/slideshow/slide2.JPG",
   "/images/slideshow/slide3.JPG",
-  "/images/slideshow/slide4.JPG",
+  "/images/slideshow/slide4.jpg",
 ];
 
 export function Hero() {
