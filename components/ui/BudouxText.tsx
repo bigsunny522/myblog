@@ -22,10 +22,12 @@ export const BudouxText = ({
         if (!node.trim()) return node;
         const segments = parser.parse(node);
         return segments.map((segment, i) => (
-          <React.Fragment key={i}>
+          <span 
+            key={i} 
+            className="inline md:inline-block"
+          >
             {segment}
-            {i < segments.length - 1 && <wbr />}
-          </React.Fragment>
+          </span>
         ));
       }
 
@@ -54,8 +56,7 @@ export const BudouxText = ({
 
   return (
     <Component
-      className={cn('break-keep overflow-wrap-anywhere', className)}
-      style={{ wordBreak: 'keep-all', overflowWrap: 'anywhere' }}
+      className={cn('break-normal break-words', className)}
       {...props}
     >
       {parsedChildren}

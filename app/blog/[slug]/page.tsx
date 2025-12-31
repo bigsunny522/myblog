@@ -9,6 +9,7 @@ import { mdxComponents } from '@/components/MDXComponents';
 import rehypeSlug from 'rehype-slug';
 import { TableOfContents } from '@/components/TableOfContents';
 import GithubSlugger from 'github-slugger';
+import { BudouxText } from '@/components/ui/BudouxText';
 
 interface BlogPostPageProps {
   params: {
@@ -49,45 +50,53 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <article className="min-h-screen pb-20">
       {/* Hero Header */}
-      <div className="relative h-[60vh] min-h-[400px] w-full overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={post.coverImage}
-            alt={post.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 p-8 container mx-auto">
-          <Link 
-            href="/" 
-            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-6 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Link>
-          <div className="space-y-4 max-w-4xl">
-            <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-semibold backdrop-blur-md border border-primary/20">
-              {post.category}
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-outfit text-foreground tracking-tight shadow-black drop-shadow-sm">
-              {post.title}
+      {/* Hero Header */}
+      <div className="container mx-auto px-4 pt-8 md:pt-12 pb-8">
+        <Link 
+          href="/" 
+          className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-6 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Home
+        </Link>
+        
+        <div className="max-w-4xl mx-auto">
+          {/* Cover Image */}
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden mb-8 border border-border/50 shadow-sm">
+            <img
+              src={post.coverImage}
+              alt={post.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Title & Metadata */}
+          <div className="space-y-6">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold border border-primary/20">
+                {post.category}
+              </span>
+              <div className="flex items-center text-muted-foreground text-sm">
+                <time>{post.date}</time>
+                <span className="mx-2">•</span>
+                <span>5 min read</span>
+              </div>
+            </div>
+
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-outfit text-foreground tracking-tight leading-tight">
+              <BudouxText>{post.title}</BudouxText>
             </h1>
-            <div className="flex flex-wrap gap-2 my-4">
+
+            <div className="flex flex-wrap gap-2">
               {post.tags?.map((tag) => (
                 <Link 
                   key={tag} 
                   href={`/tags/${tag}`}
-                  className="px-2 py-1 bg-secondary/80 hover:bg-secondary text-xs rounded-md transition-colors text-secondary-foreground"
+                  className="px-2 py-1 bg-secondary hover:bg-secondary/80 text-xs rounded-md transition-colors text-secondary-foreground"
                 >
                   #{tag}
                 </Link>
               ))}
-            </div>
-            <div className="flex items-center text-muted-foreground text-sm">
-              <time>{post.date}</time>
-              <span className="mx-2">•</span>
-              <span>5 min read</span>
             </div>
           </div>
         </div>

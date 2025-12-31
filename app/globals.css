@@ -37,6 +37,8 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-line);
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .font-outfit {
