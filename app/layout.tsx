@@ -9,6 +9,9 @@ const keifont = localFont({ src: './fonts/keifont.ttf', variable: '--font-keifon
 export const metadata: Metadata = {
   title: 'ざっくらぼ',
   description: 'The best gadget reviews and tech news.',
+  icons: {
+    icon: '/images/main/logo.svg',
+  },
 };
 
 import { Header } from '@/components/Header';
