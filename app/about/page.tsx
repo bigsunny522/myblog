@@ -1,8 +1,9 @@
 import React from 'react';
-import Image from 'next/image';
+import ExportedImage from "next-image-export-optimizer";
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { TiltCard } from '@/components/TiltCard';
 import { Scale, Camera, Code, Twitter, Instagram, Youtube, Mail, ExternalLink } from 'lucide-react';
+import { BudouxText } from '@/components/ui/BudouxText';
 
 export default function AboutPage() {
   return (
@@ -11,12 +12,12 @@ export default function AboutPage() {
         
         {/* Header */}
         <ScrollReveal className="text-center space-y-6">
-          <h1 className="text-4xl md:text-6xl font-bold font-outfit tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-400">
+          <h1 className="text-[clamp(2.25rem,5vw,3.75rem)] font-bold font-outfit tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-400 leading-tight">
             About
           </h1>
-          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed text-balance">
+          <BudouxText as="p" className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed text-balance">
             ざっくらぼは、テクノロジーとデザインの融合を探求するデジタルライフスタイル・ブログです。
-          </p>
+          </BudouxText>
         </ScrollReveal>
 
         {/* Website Section */}
@@ -24,9 +25,17 @@ export default function AboutPage() {
           <ScrollReveal direction="left">
             <div className="flex items-center gap-4 mb-8">
                <div className="h-px bg-gradient-to-r from-transparent to-primary/50 flex-1" />
-               <h2 className="text-3xl font-bold font-outfit shrink-0">Website</h2>
+               <h2 className="text-[clamp(1.5rem,4vw,2.25rem)] font-bold font-outfit shrink-0">Website</h2>
                <div className="h-px bg-gradient-to-l from-transparent to-primary/50 flex-1" />
             </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <BudouxText as="p" className="text-muted-foreground text-center max-w-2xl mx-auto mb-12 leading-relaxed text-pretty">
+              「テクノロジーの力で、毎日をスマートに、もっと豊かに。」<br className="hidden md:block"/>
+              このブログは、私の愛するガジェットやデスク環境、<br className="hidden md:block"/>
+              そしてそれらを支える技術について深掘りして発信する場所です。
+            </BudouxText>
           </ScrollReveal>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -36,9 +45,9 @@ export default function AboutPage() {
                   <Scale size={24} />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Fair Review</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed text-pretty">
-                  メリットだけでなくデメリットも含め、実際に使用して感じた「体験」や「変化」をありのままにお届けします。
-                </p>
+                <BudouxText as="p" className="text-muted-foreground text-sm leading-relaxed text-pretty">
+                  良い点も気になった点も、実際の体験に基づいたリアルな使用感をありのままにお届けします。
+                </BudouxText>
               </div>
             </ScrollReveal>
 
@@ -48,9 +57,9 @@ export default function AboutPage() {
                   <Camera size={24} />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Visuals</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed text-pretty">
-                  製品のデザインや質感が手に取るように伝わるよう、こだわりの機材で撮影したオリジナル写真を使用しています。
-                </p>
+                <BudouxText as="p" className="text-muted-foreground text-sm leading-relaxed text-pretty">
+                  製品の魅力が直感的に伝わるよう、自ら撮影したこだわりの写真を使用し、視覚的にも楽しめる記事を目指します。
+                </BudouxText>
               </div>
             </ScrollReveal>
 
@@ -60,9 +69,9 @@ export default function AboutPage() {
                   <Code size={24} />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Tech Stack</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed text-pretty">
-                  Next.js, TailwindCSS, Framer Motionを駆使し、高速で快適な閲覧体験と、洗練されたデザインの両立を目指しています。
-                </p>
+                <BudouxText as="p" className="text-muted-foreground text-sm leading-relaxed text-pretty">
+                  このサイト自体を技術的な実験場とし、学習した内容を反映させながら継続的にアップデートしていきます。
+                </BudouxText>
               </div>
             </ScrollReveal>
           </div>
@@ -73,7 +82,7 @@ export default function AboutPage() {
           <ScrollReveal direction="right">
             <div className="flex items-center gap-4 mb-8">
                <div className="h-px bg-gradient-to-r from-transparent to-primary/50 flex-1" />
-               <h2 className="text-3xl font-bold font-outfit shrink-0">Operator</h2>
+               <h2 className="text-[clamp(1.5rem,4vw,2.25rem)] font-bold font-outfit shrink-0">Operator</h2>
                <div className="h-px bg-gradient-to-l from-transparent to-primary/50 flex-1" />
             </div>
           </ScrollReveal>
@@ -92,7 +101,7 @@ export default function AboutPage() {
                     <div className="shrink-0 relative group">
                        <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-tr from-primary to-purple-400 p-[3px] shadow-lg group-hover:shadow-primary/50 transition-shadow duration-500">
                          <div className="w-full h-full rounded-full bg-card overflow-hidden relative">
-                            <Image 
+                            <ExportedImage 
                               src="/images/main/skyblue.png" 
                               alt="Operator Avatar" 
                               fill 
@@ -113,12 +122,12 @@ export default function AboutPage() {
                           </div>
                        </div>
 
-                       <p className="text-muted-foreground leading-relaxed text-pretty">
+                       <BudouxText as="p" className="text-muted-foreground leading-relaxed text-pretty">
                          デバイスとガジェットをこよなく愛する大学生。<br /> 
                          将来はフロントエンドエンジニアを目指しています。<br /> 
                          「デザイン」と「体験」を重視したモノ選びを心がけています。<br /> 
                          理想のホワイトデスク環境を構築中です。
-                       </p>
+                       </BudouxText>
                        
                        {/* SNS Links */}
                        <div className="flex items-center justify-center md:justify-start gap-4 pt-2">
@@ -133,6 +142,56 @@ export default function AboutPage() {
               </TiltCard>
             </ScrollReveal>
           </div>
+        </section>
+
+        {/* Contact Section */}
+        <section className="space-y-12">
+          <ScrollReveal direction="up">
+            <div className="flex items-center gap-4 mb-8">
+               <div className="h-px bg-gradient-to-r from-transparent to-primary/50 flex-1" />
+               <h2 className="text-[clamp(1.5rem,4vw,2.25rem)] font-bold font-outfit shrink-0">Contact</h2>
+               <div className="h-px bg-gradient-to-l from-transparent to-primary/50 flex-1" />
+            </div>
+
+            <div className="text-center space-y-8">
+              <BudouxText as="p" className="text-muted-foreground leading-relaxed text-pretty max-w-2xl mx-auto">
+                当ブログに関するご感想、ご質問、お仕事のご依頼などは、<br className="hidden md:block" />
+                X(Twitter)のDM、または下記メールアドレスまでお気軽にご連絡ください。
+              </BudouxText>
+              
+              <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+                 <a 
+                   href="https://x.com/xyzack271" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   className="flex items-center gap-3 px-6 py-4 bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 w-full md:w-auto"
+                 >
+                   <div className="p-2 bg-black/5 rounded-lg text-foreground">
+                     <Twitter size={24} />
+                   </div>
+                   <div className="text-left">
+                     <div className="text-xs text-muted-foreground">Direct Message</div>
+                     <div className="font-bold font-outfit">@xyzack271</div>
+                   </div>
+                   <ExternalLink size={16} className="ml-auto text-muted-foreground" />
+                 </a>
+
+                 <a 
+                   href="mailto:xyzack271@gmail.com" 
+                   className="flex items-center gap-3 px-6 py-4 bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 w-full md:w-auto"
+                 >
+                   <div className="p-2 bg-red-500/10 rounded-lg text-red-500">
+                     <Mail size={24} />
+                   </div>
+                   <div className="text-left">
+                     <div className="text-xs text-muted-foreground">Email</div>
+                     <div className="font-bold font-outfit">xyzack271@gmail.com</div>
+                   </div>
+                   <ExternalLink size={16} className="ml-auto text-muted-foreground" />
+                 </a>
+              </div>
+            </div>
+          </ScrollReveal>
         </section>
 
       </div>

@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BlogPost } from '@/lib/mdx';
+import { BudouxText } from './ui/BudouxText';
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -20,7 +21,7 @@ export function BlogList({ posts }: BlogListProps) {
           transition={{ duration: 0.4, delay: index * 0.1 }}
           className="group flex flex-col bg-card border border-border/50 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300"
         >
-          <Link href={`/blog/${post.slug}`} className="block h-48 overflow-hidden">
+          <Link href={`/blog/${post.slug}`} className="block w-full aspect-[4/3] overflow-hidden">
             <img
               src={post.coverImage}
               alt={post.title}
@@ -40,12 +41,12 @@ export function BlogList({ posts }: BlogListProps) {
               <time dateTime={post.date} className="ml-auto">{post.date}</time>
             </div>
             <Link href={`/blog/${post.slug}`}>
-              <h2 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors font-outfit line-clamp-2">
-                {post.title}
+              <h2 className="text-[clamp(1rem,4vw,1.25rem)] font-bold mb-3 group-hover:text-primary transition-colors font-outfit line-clamp-2 leading-tight">
+                <BudouxText>{post.title}</BudouxText>
               </h2>
             </Link>
             <p className="text-muted-foreground text-sm line-clamp-3 mb-4 flex-1">
-              {post.excerpt}
+              <BudouxText>{post.excerpt}</BudouxText>
             </p>
             <Link
               href={`/blog/${post.slug}`}

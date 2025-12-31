@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXTwitter, faInstagram, faYoutube, faTiktok } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { SectionDivider } from './ui/SectionDivider';
+import { BudouxText } from './ui/BudouxText';
 
 export function Footer() {
   return (
@@ -50,7 +51,7 @@ export function Footer() {
 
         {/* Copyright */}
         <p className="text-center text-xs text-muted-foreground mt-4">
-          © {new Date().getFullYear()} ざっくらぼ. All rights reserved.
+          © {new Date().getFullYear()} <BudouxText>ざっくらぼ</BudouxText>. All rights reserved.
         </p>
       </div>
     </footer>

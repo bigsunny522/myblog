@@ -103,7 +103,7 @@ export function GearPageClient({ items }: GearPageClientProps) {
                 </h2>
               </div>
               
-              <p className="text-muted-foreground leading-relaxed text-sm">
+              <p className="text-muted-foreground leading-relaxed text-sm whitespace-pre-wrap">
                 {selectedGear.description}
               </p>
 
@@ -114,7 +114,18 @@ export function GearPageClient({ items }: GearPageClientProps) {
                     {Object.entries(selectedGear.specs).map(([key, value]) => (
                       <div key={key} className="flex justify-between border-b border-border/50 py-1 last:border-0">
                         <span className="text-muted-foreground">{key}</span>
-                        <span className="font-medium text-foreground text-right">{value}</span>
+                        {value.startsWith('http') ? (
+                          <a 
+                            href={value} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="font-medium text-primary text-right truncate max-w-[150px] md:max-w-[200px] hover:underline"
+                          >
+                            {value}
+                          </a>
+                        ) : (
+                          <span className="font-medium text-foreground text-right truncate max-w-[150px] md:max-w-[200px]">{value}</span>
+                        )}
                       </div>
                     ))}
                   </div>

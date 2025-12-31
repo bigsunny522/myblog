@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import ExportedImage from "next-image-export-optimizer";
+import { BudouxText } from './ui/BudouxText';
 
 const backgroundSlides = [
   "/images/slideshow/slide1.JPG",
@@ -47,7 +49,7 @@ export function Hero() {
                         }
                     }}
                 >
-                    <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold font-outfit tracking-tighter text-foreground text-balance leading-none py-1">
+                    <h1 className="text-[clamp(2.5rem,8vw,6rem)] font-bold font-outfit tracking-tighter text-foreground text-balance leading-none py-1">
                     {/* "Handwriting" Reveal Animation */}
                         <motion.span
                             className="inline-block relative overflow-hidden pb-1"
@@ -83,11 +85,10 @@ export function Hero() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                    className="text-lg sm:text-xl text-muted-foreground max-w-lg leading-relaxed text-pretty font-medium"
+                    className="text-[clamp(0.9rem,3vw,1.25rem)] text-muted-foreground max-w-lg leading-relaxed text-pretty font-medium"
                 >
-                    スマートな技術で、人生をより豊かに。<br />
-                    <span className="inline-block">最新デバイスの実機レビューと、</span>
-                    <span className="inline-block">生活を変えるデジタルの活用術をお届けします。</span>
+                    <BudouxText>スマートな技術で、人生をより豊かに。</BudouxText><br />
+                    <BudouxText>最新デバイスの実機レビューと、生活を変えるデジタルの活用術をお届けします。</BudouxText>
                 </motion.p>
                 
                 <motion.div 
@@ -121,9 +122,11 @@ export function Hero() {
                 transition={{ duration: 1.2 }}
                 className="absolute inset-0"
             >
-                <img 
+                <ExportedImage 
                 src={backgroundSlides[currentSlide]} 
                 alt="Hero Slideshow" 
+                fill
+                priority={true}
                 className="w-full h-full object-cover"
                 />
                 {/* Overlay for text contrast if needed, mostly for mobile where text might stack or just aesthetic */}

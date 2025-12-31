@@ -5,6 +5,7 @@ import { GearItem } from '@/lib/gear';
 import { motion } from 'framer-motion';
 import { GearCard } from './GearCard';
 import { Modal } from './Modal';
+import { BudouxText } from './ui/BudouxText';
 
 import { ScrollReveal } from './ui/ScrollReveal';
 
@@ -18,11 +19,11 @@ export function GearSection({ items }: { items: GearItem[] }) {
     <section className="pb-8 pt-0 md:pb-20 md:pt-0 overflow-hidden relative">
       <ScrollReveal direction="up" distance={40} className="container mx-auto px-6 mb-10 flex items-end justify-between">
         <div className="space-y-1">
-            <h2 className="text-3xl md:text-4xl font-bold font-outfit">My Gear</h2>
-            <p className="text-muted-foreground text-sm">実際に愛用しているガジェットのレビュー</p>
+            <h2 className="text-[clamp(1.875rem,4vw,2.25rem)] font-bold font-outfit leading-tight">My Gear</h2>
+            <BudouxText as="p" className="text-muted-foreground text-sm">実際に愛用しているガジェットのレビュー</BudouxText>
         </div>
         <a href="/gear" className="text-primary font-bold hover:underline flex items-center gap-1 group">
-          すべて見る <span className="group-hover:translate-x-1 transition-transform">→</span>
+          <BudouxText>すべて見る</BudouxText> <span className="group-hover:translate-x-1 transition-transform">→</span>
         </a>
       </ScrollReveal>
 
@@ -64,14 +65,14 @@ export function GearSection({ items }: { items: GearItem[] }) {
                 <span className="text-primary text-xs font-bold uppercase tracking-wider">
                   {selectedGear.category}
                 </span>
-                <h2 className="text-2xl md:text-3xl font-bold font-outfit mt-1 text-foreground">
-                  {selectedGear.name}
+                <h2 className="text-[clamp(1.5rem,4vw,1.875rem)] font-bold font-outfit mt-1 text-foreground leading-tight">
+                  <BudouxText>{selectedGear.name}</BudouxText>
                 </h2>
               </div>
               
-              <p className="text-muted-foreground leading-relaxed text-sm">
+              <BudouxText as="p" className="text-muted-foreground leading-relaxed text-sm whitespace-pre-wrap">
                 {selectedGear.description}
-              </p>
+              </BudouxText>
 
               {selectedGear.specs && (
                 <div className="bg-secondary/30 rounded-lg p-4 mt-auto">
@@ -80,7 +81,18 @@ export function GearSection({ items }: { items: GearItem[] }) {
                     {Object.entries(selectedGear.specs).map(([key, value]) => (
                       <div key={key} className="flex justify-between border-b border-border/50 py-1 last:border-0">
                         <span className="text-muted-foreground">{key}</span>
-                        <span className="font-medium text-foreground text-right">{value}</span>
+                        {value.startsWith('http') ? (
+                          <a 
+                            href={value} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="font-medium text-primary text-right truncate max-w-[150px] md:max-w-[200px] hover:underline"
+                          >
+                            {value}
+                          </a>
+                        ) : (
+                          <span className="font-medium text-foreground text-right truncate max-w-[150px] md:max-w-[200px]"><BudouxText>{value}</BudouxText></span>
+                        )}
                       </div>
                     ))}
                   </div>

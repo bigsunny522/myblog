@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronRight, List } from 'lucide-react';
+import { BudouxText } from './ui/BudouxText';
 
 interface TOCItem {
   id: string;
@@ -41,7 +42,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <ul className="space-y-1 mt-2 text-sm">
+            <ul className="space-y-1 mt-2 text-xs sm:text-sm">
               {headings.map((heading) => (
                 <li
                   key={heading.id}
@@ -58,7 +59,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
                       }
                     }}
                   >
-                    {heading.text}
+                    <BudouxText>{heading.text}</BudouxText>
                   </a>
                 </li>
               ))}

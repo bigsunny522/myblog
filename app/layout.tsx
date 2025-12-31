@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { GlobalUIController } from '@/components/GlobalUIController';
 
 export default function RootLayout({
   children,
@@ -25,6 +26,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://seed-cdn.line-scdn.net/seed/css/LineSeed.css" />
       </head>
       <body className={`${outfit.variable} ${keifont.variable} antialiased min-h-screen flex flex-col font-line`} suppressHydrationWarning>
+        <GlobalUIController />
         <Header />
         <main className="flex-1">
           {children}

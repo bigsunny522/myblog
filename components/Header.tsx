@@ -5,13 +5,21 @@ import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { useUIStore } from '@/lib/store/ui-store';
+import { cn } from '@/lib/utils';
+import { BudouxText } from './ui/BudouxText';
+
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isHeaderVisible = useUIStore((state) => state.isHeaderVisible);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className={cn(
+      "sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-opacity duration-700",
+      !isHeaderVisible && "opacity-0 pointer-events-none"
+    )}>
       <div className="w-full flex h-16 items-center justify-between px-6">
         <Link href="/" className="flex items-center group">
           <div className="relative w-[21px] h-[21px] md:w-[25px] md:h-[25px] mr-2 flex-shrink-0">
@@ -29,8 +37,8 @@ export function Header() {
                }}
              />
           </div>
-          <span className="font-keifont text-xl md:text-2xl font-bold text-primary tracking-tight hover:opacity-90 transition-opacity">
-            ざっくらぼ
+          <span className="font-keifont text-[clamp(1.25rem,4vw,1.5rem)] font-bold text-primary tracking-tight hover:opacity-90 transition-opacity">
+            <BudouxText>ざっくらぼ</BudouxText>
           </span>
         </Link>
         

@@ -7,6 +7,8 @@ import { GearSection } from '@/components/GearSection';
 import { Hero } from '@/components/Hero';
 import { SectionDivider } from '@/components/ui/SectionDivider';
 
+import { OpeningAnimation } from '@/components/OpeningAnimation';
+
 export default function Home() {
   const posts = getAllPosts();
   const gearItems = getAllGearItems();
@@ -15,6 +17,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <OpeningAnimation />
       <div className="relative z-10">
         <Hero />
       </div>

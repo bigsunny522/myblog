@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Home, Minus, Square, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { BudouxText } from '@/components/ui/BudouxText';
 
 type TerminalLine = {
   type: 'input' | 'output' | 'system';
@@ -138,7 +139,7 @@ export default function NotFound() {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-start min-h-[calc(100vh-4rem)] overflow-hidden font-mono text-sm sm:text-base pt-20">
+    <div className="relative flex flex-col items-center justify-start min-h-[calc(100vh-4rem)] overflow-hidden font-mono text-[clamp(0.875rem,2vw,1rem)] pt-20">
       
       {/* Windows 10/11 Inspired Background */}
       <div className="absolute inset-0 bg-[#000000] -z-20" /> 
@@ -155,15 +156,15 @@ export default function NotFound() {
         transition={{ delay: 0.2 }}
         className="text-center mb-8 z-10"
       >
-        <h1 className="text-[8rem] leading-none font-bold font-outfit text-white/10 select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 blur-sm scale-150 pointer-events-none">
+        <h1 className="text-[clamp(6rem,15vw,10rem)] leading-none font-bold font-outfit text-white/10 select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 blur-sm scale-150 pointer-events-none">
             404
         </h1>
         <div className="flex flex-col items-center gap-2">
             <span className="text-6xl mb-2 text-white">:(</span>
-            <h2 className="text-4xl font-bold text-white tracking-wide">404 Not Found</h2>
-            <p className="text-blue-200/80 mt-2 text-lg">
+            <h2 className="text-[clamp(1.5rem,5vw,2.25rem)] font-bold text-white tracking-wide">404 Not Found</h2>
+            <BudouxText as="p" className="text-blue-200/80 mt-2 text-[clamp(1rem,3vw,1.125rem)]">
                 問題が発生したため、ページを表示できませんでした。
-            </p>
+            </BudouxText>
         </div>
       </motion.div>
 
@@ -242,10 +243,10 @@ export default function NotFound() {
         className="mt-8 flex flex-col items-center gap-6 text-white text-center px-4 pb-24"
       >
         <div className="space-y-4">
-            <p className="text-white/80 text-sm">
+            <BudouxText as="p" className="text-white/80 text-sm">
                 迷子ですか？ 下のボタンで戻れますが、このコマンドプロンプトは実際に動きます。<br />
                 <code className="bg-white/10 px-1.5 py-0.5 rounded text-white font-mono mx-1">help</code> と入力して、何ができるか確認してみてください。
-            </p>
+            </BudouxText>
         </div>
 
         <Link 
