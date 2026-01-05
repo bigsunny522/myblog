@@ -194,6 +194,22 @@ export default function AboutPage() {
           </ScrollReveal>
         </section>
 
+        {/* Affiliate Disclaimer */}
+        <section className="space-y-6 pt-12 border-t border-border/50">
+            <h3 className="text-sm font-bold font-outfit text-muted-foreground uppercase tracking-wider text-center">
+              Affiliate Disclaimer
+            </h3>
+            <div className="text-xs text-muted-foreground space-y-2 max-w-2xl mx-auto leading-relaxed text-center">
+              <p>
+                当サイト「ざっくらぼ / Zack Lab」は、Amazon.co.jpを宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。
+              </p>
+              <p>
+                また、楽天アフィリエイトなどの各種アフィリエイトプログラムに参加しており、適格販売により紹介料を得ています。
+              </p>
+            </div>
+        </section>
+
+
       </div>
     </div>
   );

@@ -31,6 +31,9 @@ export function getAllGearItems(): GearItem[] {
       image: data.image,
       description: content.trim(), // Use the content body as description
       specs: data.specs,
+      link_official: data.link_official,
+      link_amazon: data.link_amazon,
+      link_rakuten: data.link_rakuten,
       published: data.published !== false, // Default to true
     } as GearItem;
   }).filter((item) => item.published !== false);

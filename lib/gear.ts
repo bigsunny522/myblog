@@ -5,6 +5,9 @@ export interface GearItem {
   image: string;
   description: string;
   specs?: Record<string, string>;
+  link_official?: string;
+  link_amazon?: string;
+  link_rakuten?: string;
   published?: boolean;
 }
 
