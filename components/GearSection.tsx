@@ -18,12 +18,12 @@ export function GearSection({ items }: { items: GearItem[] }) {
 
   return (
     <section className="pb-8 pt-0 md:pb-20 md:pt-0 overflow-hidden relative">
-      <ScrollReveal direction="up" distance={40} className="container mx-auto px-6 mb-10 flex items-end justify-between">
+      <ScrollReveal direction="up" distance={40} className="container mx-auto px-6 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-0">
         <div className="space-y-1">
             <h2 className="text-[clamp(1.875rem,4vw,2.25rem)] font-bold font-outfit leading-tight">My Gear</h2>
             <BudouxText as="p" className="text-muted-foreground text-sm">実際に愛用しているガジェットのレビュー</BudouxText>
         </div>
-        <a href="/gear" className="text-primary font-bold hover:underline flex items-center gap-1 group">
+        <a href="/gear" className="text-primary font-bold hover:underline flex items-center gap-1 group self-end md:self-auto">
           <BudouxText>すべて見る</BudouxText> <span className="group-hover:translate-x-1 transition-transform">→</span>
         </a>
       </ScrollReveal>

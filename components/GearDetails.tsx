@@ -12,14 +12,14 @@ export function GearDetails({ item }: GearDetailsProps) {
 
   return (
     <div className="flex flex-col md:flex-row h-full md:h-[500px]">
-      <div className="relative w-full md:w-1/2 bg-secondary h-64 md:h-full shrink-0">
+      <div className="relative w-full md:w-[40%] bg-secondary h-64 md:h-full shrink-0">
         <img 
           src={item.image} 
           alt={item.name}
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="p-6 md:p-8 space-y-4 bg-background w-full md:w-1/2 overflow-y-auto max-h-[60vh] md:max-h-full flex flex-col">
+      <div className="p-5 md:p-8 space-y-4 bg-background w-full md:w-[60%] overflow-y-auto max-h-[60vh] md:max-h-full flex flex-col">
         <div>
           <span className="text-primary text-xs font-bold uppercase tracking-wider">
             {item.category}
@@ -29,9 +29,13 @@ export function GearDetails({ item }: GearDetailsProps) {
           </h2>
         </div>
         
-        <BudouxText as="p" className="text-muted-foreground leading-relaxed text-sm whitespace-pre-wrap">
-          {item.description}
-        </BudouxText>
+        <div className="text-muted-foreground leading-relaxed text-[13px] md:text-sm break-keep overflow-anywhere text-pretty">
+          {item.description.split('\n').map((line, i) => (
+             <div key={i} className="min-h-[1.5em]">
+               {line ? <BudouxText>{line}</BudouxText> : null}
+             </div>
+          ))}
+        </div>
 
         <div className="mt-auto space-y-4">
           {item.specs && (
@@ -60,16 +64,16 @@ export function GearDetails({ item }: GearDetailsProps) {
           )}
 
           {hasLinks && (
-            <div className="grid grid-cols-1 gap-3 pt-4 border-t border-border/50">
+            <div className="flex flex-col md:flex-row gap-2 pt-4 border-t border-border/50">
               {item.link_official && (
                 <a 
                   href={item.link_official}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-card border border-border hover:border-primary/50 text-foreground rounded-xl transition-all hover:bg-primary/5 group"
+                  className="w-full md:flex-1 flex items-center justify-center gap-2 px-3 py-3 bg-card border border-border hover:border-primary/50 text-foreground rounded-xl transition-all hover:bg-primary/5 group md:min-w-[120px]"
                 >
-                  <ExternalLink size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
-                  <span className="text-sm font-bold font-outfit">Official Site</span>
+                  <ExternalLink size={14} className="text-muted-foreground group-hover:text-primary transition-colors" />
+                  <span className="text-xs font-bold font-outfit whitespace-nowrap">Official</span>
                 </a>
               )}
               {item.link_amazon && (
@@ -77,10 +81,10 @@ export function GearDetails({ item }: GearDetailsProps) {
                   href={item.link_amazon}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-[#FF9900]/10 border border-[#FF9900]/20 hover:border-[#FF9900]/50 text-[#FF9900] rounded-xl transition-all hover:bg-[#FF9900]/20"
+                  className="w-full md:flex-1 flex items-center justify-center gap-2 px-3 py-3 bg-[#FF9900]/10 border border-[#FF9900]/20 hover:border-[#FF9900]/50 text-[#FF9900] rounded-xl transition-all hover:bg-[#FF9900]/20 md:min-w-[100px]"
                 >
-                  <ShoppingCart size={16} />
-                  <span className="text-sm font-bold font-outfit">Amazon</span>
+                  <ShoppingCart size={14} />
+                  <span className="text-xs font-bold font-outfit">Amazon</span>
                 </a>
               )}
               {item.link_rakuten && (
@@ -88,10 +92,10 @@ export function GearDetails({ item }: GearDetailsProps) {
                   href={item.link_rakuten}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-[#BF0000]/10 border border-[#BF0000]/20 hover:border-[#BF0000]/50 text-[#BF0000] rounded-xl transition-all hover:bg-[#BF0000]/20"
+                  className="w-full md:flex-1 flex items-center justify-center gap-2 px-3 py-3 bg-[#BF0000]/10 border border-[#BF0000]/20 hover:border-[#BF0000]/50 text-[#BF0000] rounded-xl transition-all hover:bg-[#BF0000]/20 md:min-w-[100px]"
                 >
-                  <ShoppingCart size={16} />
-                  <span className="text-sm font-bold font-outfit">Rakuten</span>
+                  <ShoppingCart size={14} />
+                  <span className="text-xs font-bold font-outfit">Rakuten</span>
                 </a>
               )}
             </div>

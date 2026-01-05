@@ -43,7 +43,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
               <div className="absolute top-2 right-2 z-50">
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-full hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground"
+                  className="p-2 rounded-full bg-background/80 backdrop-blur-md border border-border/50 text-foreground shadow-sm hover:bg-background transition-all"
                 >
                   <X size={24} />
                 </button>

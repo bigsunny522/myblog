@@ -24,7 +24,7 @@ export const BudouxText = ({
         return segments.map((segment, i) => (
           <span 
             key={i} 
-            className="inline md:inline-block"
+            className="inline-block"
           >
             {segment}
           </span>

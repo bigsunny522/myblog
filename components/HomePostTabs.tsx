@@ -17,13 +17,13 @@ export function HomePostTabs({ latestPosts, recommendedPosts }: HomePostTabsProp
 
   return (
     <ScrollReveal className="w-full" threshold={0.2} duration={0.6}>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4 md:gap-0">
         <h2 className="text-3xl md:text-4xl font-bold font-outfit">
            {activeTab === 'latest' ? 'New Arrivals' : 'Editors\' Choice'}
         </h2>
         
         {/* Tab Switcher */}
-        <div className="flex p-1 bg-secondary rounded-full relative border border-border/20 shadow-sm">
+        <div className="flex p-1 bg-secondary rounded-full relative border border-border/20 shadow-sm self-end md:self-auto">
           <div className="absolute inset-0 rounded-full bg-secondary" />
           {['latest', 'recommended'].map((tab) => (
             <button
