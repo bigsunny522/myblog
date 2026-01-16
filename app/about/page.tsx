@@ -75,6 +75,34 @@ export default function AboutPage() {
               </div>
             </ScrollReveal>
           </div>
+
+          <ScrollReveal delay={0.4}>
+            {/* Affiliate Disclaimer */}
+            <div className="pt-6">
+                <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6 md:p-8">
+                  <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
+                     <div className="p-2 bg-primary/10 rounded-full text-primary shrink-0">
+                        <Scale size={20} />
+                     </div>
+                     <h3 className="text-lg font-bold font-outfit text-primary tracking-wide">
+                       About Affiliate Links
+                     </h3>
+                  </div>
+                  
+                  <div className="text-sm md:text-base text-foreground/80 space-y-4 leading-relaxed text-pretty text-center md:text-left">
+                    <p>
+                      当サイト「ざっくらぼ / Zack Lab」は、Amazon.co.jpを宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。
+                    </p>
+                    <p>
+                      また、楽天アフィリエイトなどの各種アフィリエイトプログラムに参加しており、適格販売により紹介料を得ています。
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-4 pt-4 border-t border-primary/10">
+                      ※これらのリンクを通じて購入された場合でも、購入者の負担額が増えることはありません。得られた収益は、新たなガジェットの購入やサーバー維持費など、ブログ運営の活動資金として大切に使わせていただきます。
+                    </p>
+                  </div>
+                </div>
+            </div>
+          </ScrollReveal>
         </section>
 
         {/* Operator Section */}
@@ -194,20 +222,7 @@ export default function AboutPage() {
           </ScrollReveal>
         </section>
 
-        {/* Affiliate Disclaimer */}
-        <section className="space-y-6 pt-12 border-t border-border/50">
-            <h3 className="text-sm font-bold font-outfit text-muted-foreground uppercase tracking-wider text-center">
-              Affiliate Disclaimer
-            </h3>
-            <div className="text-xs text-muted-foreground space-y-2 max-w-2xl mx-auto leading-relaxed text-center">
-              <p>
-                当サイト「ざっくらぼ / Zack Lab」は、Amazon.co.jpを宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。
-              </p>
-              <p>
-                また、楽天アフィリエイトなどの各種アフィリエイトプログラムに参加しており、適格販売により紹介料を得ています。
-              </p>
-            </div>
-        </section>
+
 
 
       </div>
