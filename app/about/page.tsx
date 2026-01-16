@@ -116,7 +116,7 @@ export default function AboutPage() {
           </ScrollReveal>
 
           <div className="flex justify-center">
-            <ScrollReveal direction="up" className="w-full max-w-2xl">
+            <ScrollReveal direction="up" className="w-full max-w-3xl">
               <TiltCard className="w-full">
                 <div className="bg-gradient-to-br from-card to-secondary/50 border border-white/10 p-8 md:p-12 rounded-2xl shadow-2xl relative overflow-hidden backdrop-blur-xl">
                   
@@ -144,8 +144,8 @@ export default function AboutPage() {
                        <div>
                           <h3 className="text-3xl font-bold font-outfit mb-2">ざいざっく/xyzack</h3>
                           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-primary font-medium text-sm">
-                            <span className="px-3 py-1 bg-primary/10 rounded-full">#DeskSetup</span>
-                            <span className="px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full">#GadgetLover</span>
+                            <a href="https://x.com/search?q=from%3Axyzack271%20%23DeskSetup" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-primary/10 rounded-full hover:opacity-80 transition-opacity">#DeskSetup</a>
+                            <a href="https://x.com/search?q=%23%E4%BB%8A%E6%97%A5%E3%81%AE%E3%81%96%E3%81%84%E3%81%96%E3%81%A3%E3%81%8F%E3%82%AE%E3%82%A2&src=typed_query&f=top" target="_blank" rel="noopener noreferrer" className="px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full hover:opacity-80 transition-opacity">#今日のざいざっくギア</a>
                             <span className="px-3 py-1 bg-blue-500/10 text-blue-500 rounded-full">#Developer</span>
                           </div>
                        </div>
