@@ -8,6 +8,7 @@ export interface GearItem {
   link_official?: string;
   link_amazon?: string;
   link_rakuten?: string;
+  manufacturer?: string;
   published?: boolean;
 }
 

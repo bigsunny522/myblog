@@ -34,6 +34,7 @@ export function getAllGearItems(): GearItem[] {
       link_official: data.link_official,
       link_amazon: data.link_amazon,
       link_rakuten: data.link_rakuten,
+      manufacturer: data.manufacturer,
       published: data.published !== false, // Default to true
     } as GearItem;
   }).filter((item) => item.published !== false);

@@ -38,11 +38,17 @@ export function GearDetails({ item }: GearDetailsProps) {
         </div>
 
         <div className="mt-auto space-y-3 md:space-y-4 pt-2 md:pt-4">
-          {item.specs && (
+          {(item.specs || item.manufacturer) && (
             <div className="bg-secondary/30 rounded-lg p-3 md:p-4">
               <h4 className="font-semibold text-[10px] md:text-xs mb-2 md:mb-3 text-foreground uppercase tracking-wide">Specifications</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1.5 md:gap-y-2 text-[10px] md:text-xs">
-                {Object.entries(item.specs).map(([key, value]) => (
+                {item.manufacturer && (
+                  <div className="flex justify-between border-b border-border/50 py-1 last:border-0 md:last:border-b">
+                    <span className="text-muted-foreground shrink-0 pr-2">Manufacturer</span>
+                    <span className="font-medium text-foreground text-right min-w-0 break-words text-pretty"><BudouxText>{item.manufacturer}</BudouxText></span>
+                  </div>
+                )}
+                {item.specs && Object.entries(item.specs).map(([key, value]) => (
                   <div key={key} className="flex justify-between border-b border-border/50 py-1 last:border-0 md:last:border-b">
                     <span className="text-muted-foreground shrink-0 pr-2">{key}</span>
                     {value.startsWith('http') ? (
