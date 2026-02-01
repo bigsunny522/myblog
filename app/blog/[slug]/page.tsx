@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import remarkBreaks from 'remark-breaks';
 import { getPostBySlug, getAllPosts } from '@/lib/mdx';
 import { notFound } from 'next/navigation';
@@ -14,6 +15,44 @@ import { BudouxText } from '@/components/ui/BudouxText';
 interface BlogPostPageProps {
   params: {
     slug: string;
+  };
+}
+
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    };
+  }
+
+  const ogImage = post.coverImage || '/images/main/logo.svg';
+  const description = post.excerpt || `Read more about ${post.title}`;
+
+  return {
+    title: post.title,
+    description: description,
+    openGraph: {
+      title: post.title,
+      description: description,
+      url: `/blog/${slug}`,
+      type: 'article',
+      images: [
+        {
+          url: ogImage,
+          alt: post.title,
+        },
+      ],
+      publishedTime: post.date,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: description,
+      images: [ogImage],
+    },
   };
 }
 

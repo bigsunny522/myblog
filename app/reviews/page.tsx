@@ -1,10 +1,16 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { getAllPosts } from '@/lib/mdx';
 import { FilteredBlogList } from '@/components/FilteredBlogList';
 
-export const metadata = {
-  title: '記事一覧 | ざっくらぼ',
+export const metadata: Metadata = {
+  title: '記事一覧',
   description: '最新のガジェットレビューとニュース一覧',
+  openGraph: {
+    title: '記事一覧',
+    description: '最新のガジェットレビューとニュース一覧',
+    url: '/reviews',
+  },
 };
 
 export default function ReviewsPage() {

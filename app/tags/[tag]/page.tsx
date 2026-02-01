@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { getAllPosts } from '@/lib/mdx';
 import { BlogList } from '@/components/BlogList';
 import { notFound } from 'next/navigation';
@@ -6,6 +7,21 @@ import { notFound } from 'next/navigation';
 interface TagPageProps {
   params: {
     tag: string;
+  };
+}
+
+export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
+  const { tag } = await params;
+  const decodedTag = decodeURIComponent(tag);
+  
+  return {
+    title: `Posts tagged with #${decodedTag}`,
+    description: `Articles tagged with #${decodedTag}`,
+    openGraph: {
+      title: `Posts tagged with #${decodedTag}`,
+      description: `Articles tagged with #${decodedTag}`,
+      url: `/tags/${tag}`,
+    },
   };
 }
 

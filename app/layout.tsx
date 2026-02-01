@@ -7,8 +7,35 @@ const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 const keifont = localFont({ src: './fonts/keifont.ttf', variable: '--font-keifont' });
 
 export const metadata: Metadata = {
-  title: 'ざっくらぼ',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  title: {
+    default: 'ざっくらぼ',
+    template: '%s | ざっくらぼ',
+  },
   description: 'The best gadget reviews and tech news.',
+  openGraph: {
+    title: 'ざっくらぼ',
+    description: 'The best gadget reviews and tech news.',
+    url: '/',
+    siteName: 'ざっくらぼ',
+    locale: 'ja_JP',
+    type: 'website',
+    images: [
+      {
+        url: '/images/main/skyblue.png',
+        width: 1200,
+        height: 630,
+        alt: 'ざっくらぼ',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ざっくらぼ',
+    description: 'The best gadget reviews and tech news.',
+    creator: '@xyzack271', // Assuming the twitter handle from previous context or generic
+    images: ['/images/main/skyblue.png'],
+  },
   icons: {
     icon: '/images/main/logo.svg',
   },
@@ -27,7 +54,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
-        <link rel="stylesheet" href="https://seed-cdn.line-scdn.net/seed/css/LineSeed.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@100..900&display=swap" rel="stylesheet" />
       </head>
       <body className={`${outfit.variable} ${keifont.variable} antialiased min-h-screen flex flex-col font-line`} suppressHydrationWarning>
         <GoogleAnalytics />

@@ -1,9 +1,20 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import ExportedImage from "next-image-export-optimizer";
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { TiltCard } from '@/components/TiltCard';
 import { Scale, Camera, Code, Twitter, Instagram, Youtube, Mail, ExternalLink } from 'lucide-react';
 import { BudouxText } from '@/components/ui/BudouxText';
+
+export const metadata: Metadata = {
+  title: 'About',
+  description: 'About Zack Lab and the operator.',
+  openGraph: {
+    title: 'About',
+    description: 'About Zack Lab and the operator.',
+    url: '/about',
+  },
+};
 
 export default function AboutPage() {
   return (
