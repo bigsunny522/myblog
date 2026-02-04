@@ -11,6 +11,7 @@ import rehypeSlug from 'rehype-slug';
 import { TableOfContents } from '@/components/TableOfContents';
 import GithubSlugger from 'github-slugger';
 import { BudouxText } from '@/components/ui/BudouxText';
+import { ViewCounter } from '@/components/ViewCounter';
 
 interface BlogPostPageProps {
   params: {
@@ -119,6 +120,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <time>{post.date}</time>
                 <span className="mx-2">•</span>
                 <span>5 min read</span>
+                <span className="mx-2">•</span>
+                <ViewCounter slug={slug} />
               </div>
             </div>
 
