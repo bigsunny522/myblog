@@ -12,6 +12,7 @@ import { TableOfContents } from '@/components/TableOfContents';
 import GithubSlugger from 'github-slugger';
 import { BudouxText } from '@/components/ui/BudouxText';
 import { ViewCounter } from '@/components/ViewCounter';
+import { ShareMenu } from '@/components/ShareMenu';
 
 interface BlogPostPageProps {
   params: {
@@ -122,6 +123,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <span>5 min read</span>
                 <span className="mx-2">•</span>
                 <ViewCounter slug={slug} />
+                <span className="mx-2">•</span>
+                <ShareMenu title={post.title} slug={slug} />
               </div>
             </div>
 
@@ -157,6 +160,31 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             },
           }} 
         />
+        
+        <div className="relative my-20 pt-10 pb-12 px-6 rounded-3xl border border-border/50 bg-gradient-to-b from-secondary/20 to-background overflow-hidden">
+          {/* Decorative background pattern */}
+          <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#888_1px,transparent_1px)] [background-size:16px_16px]" />
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 flex flex-col items-center text-center space-y-6">
+            <div className="space-y-2">
+              <h3 className="text-xl md:text-2xl font-bold font-outfit tracking-tight">
+                Thanks for reading!
+              </h3>
+              <p className="text-muted-foreground max-w-md mx-auto">
+                この記事が面白かったら、ぜひSNSでシェアしてください。<br />
+                感想やコメントもお待ちしています 
+              </p>
+            </div>
+            
+            <ShareMenu 
+              title={post.title} 
+              slug={slug} 
+              label="Share this post" 
+              variant="primary"
+            />
+          </div>
+        </div>
       </div>
     </article>
   );
