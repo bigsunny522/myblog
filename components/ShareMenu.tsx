@@ -11,9 +11,10 @@ interface ShareMenuProps {
   slug: string;
   label?: string;
   variant?: 'default' | 'primary';
+  popupPosition?: 'top' | 'bottom';
 }
 
-export const ShareMenu = ({ title, slug, label = "Share", variant = 'default' }: ShareMenuProps) => {
+export const ShareMenu = ({ title, slug, label = "Share", variant = 'default', popupPosition = 'bottom' }: ShareMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -23,25 +24,6 @@ export const ShareMenu = ({ title, slug, label = "Share", variant = 'default' }:
       return `${window.location.origin}/blog/${slug}`;
     }
     return '';
-  };
-  
-  // ... copyToClipboard logic ...
-
-  // Button styles based on variant
-  const baseStyles = "flex items-center gap-2 rounded-full font-medium transition-all duration-300";
-  const variants = {
-    default: `
-      px-4 py-1.5 text-sm border
-      ${isOpen 
-        ? 'bg-primary text-primary-foreground border-primary shadow-md' 
-        : 'bg-secondary/30 text-muted-foreground border-border/50 hover:bg-secondary hover:text-foreground hover:border-border'}
-    `,
-    primary: `
-      px-8 py-3 text-base shadow-lg hover:shadow-xl hover:-translate-y-0.5 font-bold
-      ${isOpen
-        ? 'bg-primary text-primary-foreground ring-2 ring-primary/20'
-        : 'bg-gradient-to-r from-primary to-blue-400 text-primary-foreground hover:opacity-90'}
-    `
   };
 
   const copyToClipboard = async (text: string) => {
@@ -82,7 +64,7 @@ export const ShareMenu = ({ title, slug, label = "Share", variant = 'default' }:
     {
       name: 'X (Twitter)',
       icon: <FontAwesomeIcon icon={faXTwitter} />,
-      color: 'hover:text-foreground', // X logo is usually black/white, so foreground works well for dark/light mode
+      color: 'hover:text-foreground',
       action: () => {
         const url = getUrl();
         window.open(
@@ -133,6 +115,27 @@ export const ShareMenu = ({ title, slug, label = "Share", variant = 'default' }:
     },
   ];
 
+  // Button styles based on variant
+  const baseStyles = "flex items-center gap-2 rounded-full font-medium transition-all duration-300";
+  const variants = {
+    default: `
+      px-4 py-1.5 text-sm border
+      ${isOpen 
+        ? 'bg-primary text-primary-foreground border-primary shadow-md' 
+        : 'bg-secondary/30 text-muted-foreground border-border/50 hover:bg-secondary hover:text-foreground hover:border-border'}
+    `,
+    primary: `
+      px-8 py-3 text-base shadow-lg hover:shadow-xl hover:-translate-y-0.5 font-bold
+      ${isOpen
+        ? 'bg-primary text-primary-foreground ring-2 ring-primary/20'
+        : 'bg-gradient-to-r from-primary to-blue-400 text-primary-foreground hover:opacity-90'}
+    `
+  };
+
+  const placementClasses = popupPosition === 'top' 
+    ? "md:bottom-full md:mb-2 md:top-auto md:mt-0"
+    : "md:top-full md:mt-2 md:bottom-auto md:mb-0";
+
   return (
     <div className="relative inline-block text-left">
       <motion.button
@@ -158,45 +161,44 @@ export const ShareMenu = ({ title, slug, label = "Share", variant = 'default' }:
               onClick={() => setIsOpen(false)} 
             />
             
-            <motion.div
-              initial={typeof window !== 'undefined' && window.innerWidth < 768 
-                ? { opacity: 0, scale: 0.9, y: 20 } 
-                : { opacity: 0, scale: 0.95, y: 10 }
-              }
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={typeof window !== 'undefined' && window.innerWidth < 768
-                ? { opacity: 0, scale: 0.9, y: 20 }
-                : { opacity: 0, scale: 0.95, y: 10 }
-              }
-              transition={{ duration: 0.15, ease: "easeOut" }}
-              className={`
-                z-50 overflow-hidden bg-background border border-border/50 shadow-xl backdrop-blur-md
-                
-                /* Mobile: Fixed centered modal */
-                fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-sm rounded-2xl p-2
-                
-                /* Desktop (md): Absolute popup dropdown */
-                md:absolute md:top-full md:left-0 md:translate-x-0 md:translate-y-0 md:mt-2 md:w-48 md:rounded-xl md:p-0
-              `}
-            >
-              <div className="py-1">
-                {shareLinks.map((link) => (
-                  <button
-                    key={link.name}
-                    onClick={() => {
-                      link.action();
-                      if (link.name !== 'Copy Link') setIsOpen(false);
-                    }}
-                    className={`w-full text-left px-4 py-3 md:py-2 text-base md:text-sm transition-colors flex items-center gap-3 text-muted-foreground ${link.color} hover:bg-muted/50 rounded-lg md:rounded-none`}
-                  >
-                    <span className="w-8 md:w-5 flex justify-center items-center text-xl md:text-lg">
-                      {link.icon}
-                    </span>
-                    {link.name}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
+            {/* Wrapper: Handles centering on Mobile (Fixed Flex), disappears on Desktop (Contents) */}
+            <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none md:contents">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                className={`
+                  pointer-events-auto
+                  overflow-hidden bg-background border border-border/50 shadow-xl backdrop-blur-md
+                  
+                  /* Mobile: Simple sizing (centering handled by wrapper) */
+                  w-[90vw] max-w-sm rounded-2xl p-2
+                  
+                  /* Desktop (md): Absolute popup dropdown */
+                  md:absolute md:left-0 md:w-48 md:rounded-xl md:p-0
+                  ${placementClasses}
+                `}
+              >
+                <div className="py-1">
+                  {shareLinks.map((link) => (
+                    <button
+                      key={link.name}
+                      onClick={() => {
+                        link.action();
+                        if (link.name !== 'Copy Link') setIsOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-3 md:py-2 text-base md:text-sm transition-colors flex items-center gap-3 text-muted-foreground ${link.color} hover:bg-muted/50 rounded-lg md:rounded-none`}
+                    >
+                      <span className="w-8 md:w-5 flex justify-center items-center text-xl md:text-lg">
+                        {link.icon}
+                      </span>
+                      {link.name}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
           </>
         )}
       </AnimatePresence>
