@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import remarkBreaks from 'remark-breaks';
 import { getPostBySlug, getAllPosts } from '@/lib/mdx';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -156,7 +155,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           options={{
             mdxOptions: {
               rehypePlugins: [rehypeSlug],
-              remarkPlugins: [remarkBreaks],
+              remarkPlugins: [],
             },
           }} 
         />
