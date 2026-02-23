@@ -1,0 +1,397 @@
+---
+title: "GRAPHT Omni Plus レビュー"
+subtitle: "初心者におすすめの多機能コントローラー"
+excerpt: "GRAPHTから登場した多機能ワイヤレスコントローラー「Omni Plus」を徹底レビュー。ホールエフェクトスティックやメカニカルボタン搭載で、プロ級の性能を低価格で実現した高コスパモデルの実力を検証します。"
+date: "2026-02-09"
+category: "レビュー"
+published: true
+tags: ["GRAPHT", "コントローラー", "レビュー", "ゲーミングデバイス", "PC", "Switch"]
+coverImage: "/images/posts/grapht-omni-plus/cover.png" 
+---
+
+
+
+# GRAPHT Omni Plus レビュー
+GRAPHTさんのプレゼントキャンペーンで、カスタム可能なゲームパッド Omni Plus が当選したので、レビューしていきます。
+これまでずっとキーボードとマウス（キーマウ）でゲームをしてきたのですが、ちょうど**コントローラーでの操作にも挑戦してみたい**と思い始めていたタイミングでの当選でした。
+
+また、私はデスク周りを白で統一しているため、ホワイトの方に応募しました。
+
+今回は、**キーマウ勢が初めて使う高機能コントローラー**という視点で、ファーストインプレッションをお届けします。使いこなすまでの過程や詳細な設定などは、また別の記事で深掘りできればと思います。
+
+
+
+
+<div className="my-8 p-6 bg-primary/10 rounded-2xl border border-primary/20">
+  <div className="flex flex-col md:flex-row items-center gap-6">
+    {/* Product Image Placeholder */}
+    <div className="shrink-0 w-32 h-32 bg-white rounded-xl overflow-hidden shadow-sm flex items-center justify-center p-2">
+      {/* 以下のsrcをご自身の画像パス（/images/xxx.jpgなど）に変更してください */}
+      <ImageModal src="/images/posts/grapht-omni-plus/main.JPG" alt="商品画像" className="w-full h-full object-contain" />
+    </div>
+
+    <div className="flex-1 space-y-2 text-center md:text-left">
+      <div className="font-bold text-lg">GRAPHT Omni Plus</div>
+      <div className="text-sm text-muted-foreground">
+        初心者から上級者までおすすめできる、白デスクにも合う高コスパ・多機能コントローラー
+      </div>
+    </div>
+    <div className="flex flex-col w-full md:w-auto gap-2 min-w-[200px]">
+
+      {/* Amazon */}
+      <a 
+        href="https://amzn.to/40mdk6p" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-2 px-4 py-3 bg-[#FF9900]/10 border border-[#FF9900]/20 hover:border-[#FF9900]/50 text-[#FF9900] rounded-xl transition-all hover:bg-[#FF9900]/20 no-underline"
+      >
+        <span className="font-bold font-outfit">Amazon</span>
+      </a>
+      {/* Rakuten */}
+      <a 
+        href="https://item.rakuten.co.jp/gcgr/54080239721/" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-2 px-4 py-3 bg-[#BF0000]/10 border border-[#BF0000]/20 hover:border-[#BF0000]/50 text-[#BF0000] rounded-xl transition-all hover:bg-[#BF0000]/20 no-underline"
+      >
+        <span className="font-bold font-outfit">Rakuten</span>
+      </a>
+      {/* Official */}
+      <a 
+        href="https://store.grapht.tokyo/products/grt067"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-2 px-4 py-3 bg-card border border-border hover:border-primary/50 text-foreground rounded-xl transition-all hover:bg-primary/5 no-underline"
+      >
+        <span className="font-bold font-outfit">Official Site</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+## 製品スペック・特徴
+
+主な仕様は以下の通りです。
+
+<Specs>
+  <SpecsItem label="製品名">GRAPHT Omni Plus</SpecsItem>
+  <SpecsItem label="価格">6,980円</SpecsItem>
+  <SpecsItem label="接続方式">有線 (USB-C) / 2.4GHzワイヤレス / Bluetooth 5.3</SpecsItem>
+  <SpecsItem label="対応機種">Windows PC / Nintendo Switch / Android / iOS</SpecsItem>
+  <SpecsItem label="ポーリングレート">最大 1000Hz (有線/2.4GHz接続時)</SpecsItem>
+  <SpecsItem label="スティック">ホールエフェクトセンサー搭載 (ドリフト防止)</SpecsItem>
+  <SpecsItem label="ボタン">メカニカルスイッチ (ABXYボタン)</SpecsItem>
+  <SpecsItem label="背面ボタン">2つ (マクロ機能対応)</SpecsItem>
+  <SpecsItem label="ジャイロ">6軸ジャイロセンサー搭載</SpecsItem>
+  <SpecsItem label="バッテリー駆動時間">約 10〜15時間</SpecsItem>
+  <SpecsItem label="充電時間">約 2時間</SpecsItem>
+  <SpecsItem label="重量">約 230g</SpecsItem>
+</Specs>
+
+
+<div className="bg-background border border-border rounded-xl p-5 md:p-6 mb-4">
+  <div className="mb-4">
+    <div className="flex items-center gap-2 mb-1">
+      <div className="w-1 h-3.5 bg-primary rounded-full"></div>
+      <div className="text-sm font-black text-primary font-outfit tracking-widest leading-none">POINT 01</div>
+    </div>
+    <div className="text-lg md:text-xl font-bold text-foreground pl-3">ホールエフェクトセンサースティック</div>
+  </div>
+  <div className="flex flex-col md:flex-row gap-4 items-start">
+    <div className="text-muted-foreground text-sm leading-relaxed flex-1">
+      スティックの入力検知に磁気を利用した<strong className="text-foreground">ホールエフェクトセンサー</strong>を採用しています。物理的な接点がないため摩耗に強く、コントローラー最大の敵である<strong className="text-foreground">ドリフト現象</strong><sup id="fn1-ref"><a href="#fn1">[1]</a></sup>が極めて発生しにくいのが最大の特徴です。また、デッドゾーン<sup id="fn2-ref"><a href="#fn2">[2]</a></sup>を極小に設定できるため、FPSなどでの微細なエイム操作にも適しています。
+    </div>
+    <div className="shrink-0 w-full md:w-1/3">
+      <ImageModal src="/images/posts/grapht-omni-plus/sticks.jpg" alt="スティック部分のアップ" className="rounded-lg w-full object-cover aspect-[4/3] border border-border shadow-sm" />
+    </div>
+  </div>
+</div>
+
+<div className="bg-background border border-border rounded-xl p-5 md:p-6 mb-4">
+  <div className="mb-4">
+    <div className="flex items-center gap-2 mb-1">
+      <div className="w-1 h-3.5 bg-primary rounded-full"></div>
+      <div className="text-sm font-black text-primary font-outfit tracking-widest leading-none">POINT 02</div>
+    </div>
+    <div className="text-lg md:text-xl font-bold text-foreground pl-3">メカニカルスイッチボタン</div>
+  </div>
+  <div className="flex flex-col md:flex-row gap-4 items-start">
+    <div className="text-muted-foreground text-sm leading-relaxed flex-1">
+      ABXYボタンには、高速・高精度・高耐久の<strong className="text-foreground">メカニカルスイッチ</strong>を採用。0.3mmのアクチュエーションポイントで、FPSなどの反応速度が要求されるゲームでも瞬時に反応してくれます。
+    </div>
+    <div className="shrink-0 w-full md:w-1/3">
+      <ImageModal src="/images/posts/grapht-omni-plus/buttons.jpg" alt="ABXYボタンのアップ" className="rounded-lg w-full object-cover aspect-[4/3] border border-border shadow-sm" />
+    </div>
+  </div>
+</div>
+
+<div className="bg-background border border-border rounded-xl p-5 md:p-6 mb-4">
+  <div className="mb-4">
+    <div className="flex items-center gap-2 mb-1">
+      <div className="w-1 h-3.5 bg-primary rounded-full"></div>
+      <div className="text-sm font-black text-primary font-outfit tracking-widest leading-none">POINT 03</div>
+    </div>
+    <div className="text-lg md:text-xl font-bold text-foreground pl-3">マルチプラットフォーム対応</div>
+  </div>
+  <div className="text-muted-foreground text-sm leading-relaxed">
+    USBドングルを使った低遅延2.4GHz接続でPCゲームを本格的にプレイできるだけでなく、Bluetoothでスマホやタブレットに接続したり、Switchモードに切り替えてNintendo Switchのプロコンとして使ったりと、これ1台でほぼ全ての環境をカバーできます。
+  </div>
+</div>
+
+<div className="bg-background border border-border rounded-xl p-5 md:p-6 mb-8">
+  <div className="mb-4">
+    <div className="flex items-center gap-2 mb-1">
+      <div className="w-1 h-3.5 bg-primary rounded-full"></div>
+      <div className="text-sm font-black text-primary font-outfit tracking-widest leading-none">POINT 04</div>
+    </div>
+    <div className="text-lg md:text-xl font-bold text-foreground pl-3">数量限定で充電ドックが付属</div>
+  </div>
+  <div className="text-muted-foreground text-sm leading-relaxed">
+    初回1000台限定<sup id="fn3-ref"><a href="#fn3">[3]</a></sup>で充電ドックが付属します。コントローラーは置き場所に困りがちですが、専用ドックがあれば定位置が決まり、置くだけで充電もされるので非常に快適です。
+  </div>
+</div>
+
+<div className="mt-8 pt-4 border-t border-border">
+  <div className="text-sm text-foreground" id="fn1">
+    <div className="mb-4">
+      <div className="font-bold mb-1 flex items-center gap-2">
+        <a href="#fn1-ref" className="text-foreground hover:underline">[1]</a>
+        <span>ドリフト現象</span>
+      </div>
+      <div className="pl-6 text-muted-foreground leading-relaxed">
+        スティックに触れていないのに勝手に視点やキャラクターが動いてしまう不具合のこと。内部パーツの摩耗によって発生することが多い。
+      </div>
+    </div>
+
+    <div className="mb-4">
+      <div className="font-bold mb-1 flex items-center gap-2">
+        <a href="#fn2-ref" className="text-foreground hover:underline">[2]</a>
+        <span>デッドゾーン</span>
+      </div>
+      <div className="pl-6 text-muted-foreground leading-relaxed">
+        スティックを傾けても反応しない、中心付近の**遊び**の領域のこと。これを小さく設定できると、わずかな指の動きで繊細な操作が可能になる。
+      </div>
+    </div>
+
+    <div className="mb-4">
+      <div className="font-bold mb-1 flex items-center gap-2">
+        <a href="#fn3-ref" className="text-foreground hover:underline">[3]</a>
+        <span>初回1000台限定</span>
+      </div>
+      <div className="pl-6 text-muted-foreground leading-relaxed">
+        2026年2月21日現在、充電ドックセットの在庫を確認しています。
+      </div>
+    </div>
+  </div>
+</div> 
+
+## 開封・付属品
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+  <div className="space-y-2">
+    <ImageModal src="/images/posts/grapht-omni-plus/package.jpg" alt="パッケージ全体" className="rounded-lg shadow-sm border border-border w-full object-cover aspect-[4/3]" />
+    <div className="text-xs text-center text-muted-foreground">パッケージ全体</div>
+  </div>
+  <div className="space-y-2">
+    <ImageModal src="/images/posts/grapht-omni-plus/content.jpg" alt="開封時の様子" className="rounded-lg shadow-sm border border-border w-full object-cover aspect-[4/3]" />
+    <div className="text-xs text-center text-muted-foreground">開封時の様子</div>
+  </div>
+</div>
+
+付属品は以下のとおりです。
+
+**【コントローラー本体の付属品】**
+*   コントローラー本体
+*   2.4GHz ワイヤレスレシーバー 
+*   USB-C to USB-A ケーブル 
+*   スティック交換用パーツ 
+*   十字キー交換用パーツ 
+*   取扱説明書
+
+**【充電ドックセットの付属品】**
+*   専用充電ドック
+*   USB-C to USB-A ケーブル 
+*   取扱説明書
+
+取扱説明書は日本語で書かれており、とてもわかりやすいです。
+レシーバーは本体内部に収納されています。また、充電ドックの底に収納することができ、PCと充電ドックを繋いでおくことで、充電とレシーバーの2つの役割をしてくれます。
+
+<div className="my-8 flex justify-center">
+  <ImageModal src="/images/posts/grapht-omni-plus/dock.jpg" alt="専用充電ドックに置いた様子" className="rounded-lg shadow-sm border border-border w-full max-w-md object-cover" />
+</div>
+
+## 外観・デザイン
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+  <div className="space-y-2">
+    <ImageModal src="/images/posts/grapht-omni-plus/front.jpg" alt="コントローラー正面" className="rounded-lg shadow-sm border border-border w-full object-cover aspect-[4/3]" />
+    <div className="text-xs text-center text-muted-foreground">全体像</div>
+  </div>
+  <div className="space-y-2">
+    <ImageModal src="/images/posts/grapht-omni-plus/grip.jpg" alt="手に持ったサイズ感" className="rounded-lg shadow-sm border border-border w-full object-cover aspect-[4/3]" />
+    <div className="text-xs text-center text-muted-foreground">グリップの様子</div>
+  </div>
+</div>
+
+表面はマットな質感で指紋が目立ちにくい仕上がりになっています。LEDライティングも搭載されており、ゲーミングデバイスらしい**映え**も演出できます。
+
+とくに目を惹くのが、透明感のある<Text bg="#7babff" className="font-bold">クラウドホワイト</Text>のカラーリングです。
+私はデスク周りを白で統一しているのですが、ガジェットの「白」は製品によって色味が異なり、少しでも**クリーム色**だとデスク上で浮いてしまうのが悩みの種でした。
+しかし、Omni Plusは純度の高いツヤ消しのホワイトを採用しており、**白デスク環境に美しく溶け込みます**。使わない時でもデスクのアクセントとして映えるため、環境構築にこだわっている方にもおすすめできるデザインです。
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+  <div className="space-y-2">
+    <ImageModal src="/images/posts/grapht-omni-plus/desk-setup-1.jpg" alt="白デスク環境の配置 (1)" className="rounded-lg shadow-sm border border-border w-full object-cover aspect-[4/3]" />
+    <div className="text-xs text-center text-muted-foreground">デスク全体の雰囲気</div>
+  </div>
+  <div className="space-y-2">
+    <ImageModal src="/images/posts/grapht-omni-plus/desk-setup-2.jpg" alt="白デスク環境の配置 (2)" className="rounded-lg shadow-sm border border-border w-full object-cover aspect-[4/3]" />
+    <div className="text-xs text-center text-muted-foreground">配置のアップ</div>
+  </div>
+</div>
+
+## 機能・カスタマイズ
+
+背面に搭載された2つの追加ボタンには、任意のボタン入力を割り当てたり、複数の入力手順を記録させる**マクロ**を設定したりすることが可能です。アクションRPGで**回避**や**スキル**を割り当てて、スティックから親指を離さずにカメラ操作と回避を両立させるなど、プレイの快適性がグッと上がります。
+
+<div className="my-8 flex justify-center">
+  <ImageModal src="/images/posts/grapht-omni-plus/back.jpg" alt="背面ボタン" className="rounded-lg shadow-sm border border-border w-full max-w-md object-cover" />
+</div>
+
+設定に専用ソフトウェアは不要で、コントローラー単体の操作だけで完結するのも嬉しいポイントです。
+面倒なインストール作業やアカウント作成がいらず、PCに繋ぐだけですぐに使えるのは初心者にとって大きなメリットだと感じました。**常駐ソフトを増やしたくない**というPCゲーマーにもおすすめです。
+
+また、付属のパーツでスティックの高さを変更したり、方向キーも3タイプから選んで交換できたりと、自分のプレイスタイルに合わせた物理的なカスタマイズも楽しめます。
+
+<div className="my-8 flex justify-center">
+  <ImageModal src="/images/posts/grapht-omni-plus/parts.jpg" alt="豊富な交換用パーツ" className="rounded-lg shadow-sm border border-border w-full max-w-md object-cover" />
+</div>
+
+## 使用感レビュー
+
+私はこれまでコントローラーでのゲームプレイ経験がほとんどなく、**最初はうまく立ち回れるか少し不安を感じていました**。
+しかし、本機はPCゲームで標準的なXbox配列を採用しているため、画面のボタン表記と手元の操作が一致しやすく、初心者でもすぐに操作に慣れることができました。
+今回は、激しいアクションが特徴のオープンワールドRPG『鳴潮』でテストしてみました。これまでキーマウ操作に慣れきっていた私ですが、ホールエフェクトセンサー特有の滑らかなスティック入力に驚かされました。指の繊細な動きがそのままキャラコンと視点移動に反映されるため、コントローラー初心者でもすぐに直感的な操作を楽しむことができました。
+
+さらに手放せなくなったのが、背面に配置された2つの追加ボタンです。右側のスティックから一切親指を離さずに**回避**を行ったり、ローテーション用の**スキル**を回したりできるため、一瞬の判断遅れが命取りになるボス戦において、操作が慣れていなくても感覚的に行える点が非常に助かりました。
+
+### ボタンのクリック感
+ABXYボタンの**カチッ、カチッ**というクリック音と感触はとても心地よく、押したことが指先にはっきりと伝わります。キーボードやマウスのマウスクリックに近い反応のため、普段PCゲーマーとして慣れ親しんでいる感触そのままに操作へ入り込めました。
+ストロークが浅く設計されているため反応が極めて良く、鳴潮のようなスピーディーなアクションゲームにおける素早い連打入力もやりやすいと感じました。
+
+### 接続安定性
+2.4GHzワイヤレス接続で使用しましたが、体感できるような遅延や接続切れは全く発生しませんでした。ポーリングレート1000Hzに対応しているため、ジャスト回避やパリィが要求されるシビアなアクションゲームでも十分通用するレスポンスです。
+
+### 没入感を高める振動機能
+今回コントローラーを使ってみて一番感動したのが、**振動機能による没入感の向上**です。
+『鳴潮』で敵の重い攻撃をパリィしたときや、強力なスキルを使用した瞬間に手元へ「ブルッ」と振動が伝わってくるため、キーマウでプレイしていた時よりもバトルに確かな**手応え**を感じられます。
+
+### 長時間使用の快適性
+本体重量は約230gで、多機能コントローラーとしては比較的軽量な部類に入ります。実際に数時間連続でプレイしていても手首への負担はほとんど感じませんでした。
+バッテリー持ちに関しても、公称値で10時間以上あります。休日のゲームプレイでもバッテリー切れを心配することなく存分にゲームを満喫できました。
+
+また、コントローラー導入の最大のメリットは**リラックスした姿勢で遊べる**ことかもしれません。
+キーボードとマウスではどうしても前傾姿勢になりがちですが、Omni Plusならリクライニングチェアに深く腰掛けながら、ゆったりとRPGなどを楽しむことができます。
+**FPSなどガチでやるゲームはキーマウ、アクションやRPGはコントローラー**という使い分けができるようになり、ゲームライフの質が一段上がった気がします。
+
+## まとめ
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+  {/* Favorites Wrapper */}
+  <div>
+    <div className="pl-4 border-l-4 border-primary/50 mb-4">
+      <h3 className="text-xl font-bold text-foreground m-0">良かった点</h3>
+    </div>
+    <div className="space-y-3">
+      <div className="flex items-start gap-4 p-4 rounded-xl border border-primary/20 bg-primary/5 transition-colors hover:bg-primary/10">
+        <div className="mt-1 shrink-0 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div className="text-sm leading-relaxed">
+          <strong className="block text-foreground mb-1 text-base">高耐久</strong>
+          <span className="text-muted-foreground">ホールエフェクトスティックによる長寿命</span>
+        </div>
+      </div>
+      <div className="flex items-start gap-4 p-4 rounded-xl border border-primary/20 bg-primary/5 transition-colors hover:bg-primary/10">
+        <div className="mt-1 shrink-0 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div className="text-sm leading-relaxed">
+          <strong className="block text-foreground mb-1 text-base">操作性</strong>
+          <span className="text-muted-foreground">メカニカルボタンの応答性とクリック感</span>
+        </div>
+      </div>
+      <div className="flex items-start gap-4 p-4 rounded-xl border border-primary/20 bg-primary/5 transition-colors hover:bg-primary/10">
+        <div className="mt-1 shrink-0 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div className="text-sm leading-relaxed">
+          <strong className="block text-foreground mb-1 text-base">軽量</strong>
+          <span className="text-muted-foreground">約230gで長時間プレイも快適</span>
+        </div>
+      </div>
+      <div className="flex items-start gap-4 p-4 rounded-xl border border-primary/20 bg-primary/5 transition-colors hover:bg-primary/10">
+        <div className="mt-1 shrink-0 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div className="text-sm leading-relaxed">
+          <strong className="block text-foreground mb-1 text-base">多機能</strong>
+          <span className="text-muted-foreground">背面ボタン、マクロ、連射機能を搭載</span>
+        </div>
+      </div>
+      <div className="flex items-start gap-4 p-4 rounded-xl border border-primary/20 bg-primary/5 transition-colors hover:bg-primary/10">
+        <div className="mt-1 shrink-0 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div className="text-sm leading-relaxed">
+          <strong className="block text-foreground mb-1 text-base">コスパ</strong>
+          <span className="text-muted-foreground">これだけの機能を搭載しながらリーズナブルな価格</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Points to Note Wrapper */}
+  <div>
+    <div className="pl-4 border-l-4 border-red-500/50 mb-4">
+      <h3 className="text-xl font-bold text-foreground m-0">気になった点</h3>
+    </div>
+    <div className="space-y-3">
+      <div className="flex items-start gap-4 p-4 rounded-xl border border-red-500/20 bg-red-500/5 transition-colors hover:bg-red-500/10">
+        <div className="mt-1 shrink-0 text-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div className="text-sm leading-relaxed">
+          <strong className="block text-foreground mb-1 text-base">外観</strong>
+          <span className="text-muted-foreground">背面に黒い部分があるため、完全な白ではない</span>
+        </div>
+      </div>
+      <div className="flex items-start gap-4 p-4 rounded-xl border border-red-500/20 bg-red-500/5 transition-colors hover:bg-red-500/10">
+        <div className="mt-1 shrink-0 text-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div className="text-sm leading-relaxed">
+          <strong className="block text-foreground mb-1 text-base">ソフトウェア</strong>
+          <span className="text-muted-foreground">専用ソフトがないため手軽な反面、PC画面上でミリ単位の細かな設定はできない</span>
+        </div>
+      </div>
+      <div className="flex items-start gap-4 p-4 rounded-xl border border-red-500/20 bg-red-500/5 transition-colors hover:bg-red-500/10">
+        <div className="mt-1 shrink-0 text-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div className="text-sm leading-relaxed">
+          <strong className="block text-foreground mb-1 text-base">振動</strong>
+          <span className="text-muted-foreground">HD振動ではなく一般的な振動モーター</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+### 総評
+
+GRAPHT Omni Plusは、**初めてのコントローラー**や**高耐久コントローラーが欲しい**という方に最適な一台です。数万円するハイエンドモデルに匹敵するホールエフェクトスティックやメカニカルスイッチを搭載しながら、6,980円という手頃な価格を実現している点は非常に魅力的です。PC、Switch、スマホと複数のデバイスでゲームを楽しむゲーマーにとって、これ1台あれば全てに対応できる頼もしい相棒になるはずです。
+
+特に、<Text bg="#7babff" className="font-bold">白デスク環境</Text>**を構築している方には心からおすすめできます**。この清潔感のあるマットホワイトは、デスクの雰囲気にとても良く合うので、使っていないときでもインテリアとして活躍します。
+
+私自身、まだすべての機能を使いこなせてはいないものの、これを機にコントローラーでのプレイにも本格的に挑戦していくつもりです。気づいたことがあれば、またブログで紹介したいと思います！
