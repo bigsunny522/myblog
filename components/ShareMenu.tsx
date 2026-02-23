@@ -176,7 +176,7 @@ export const ShareMenu = ({ title, slug, label = "Share", variant = 'default', p
                   w-[90vw] max-w-sm rounded-2xl p-2
                   
                   /* Desktop (md): Absolute popup dropdown */
-                  md:absolute md:left-0 md:w-48 md:rounded-xl md:p-0
+                  md:absolute md:left-0 md:w-48 md:rounded-xl md:p-0 md:z-50
                   ${placementClasses}
                 `}
               >

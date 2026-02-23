@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const ogImage = post.coverImage || '/images/main/logo.svg';
+  const ogImage = post.coverImage?.trim() || '/images/main/logo.svg';
   const description = post.excerpt || `Read more about ${post.title}`;
 
   return {
