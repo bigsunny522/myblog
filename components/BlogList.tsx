@@ -21,7 +21,7 @@ export function BlogList({ posts }: BlogListProps) {
           transition={{ duration: 0.4, delay: index * 0.1 }}
           className="group flex flex-col bg-card border border-border/50 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300"
         >
-          <Link href={`/blog/${post.slug}`} className="block w-full aspect-[4/3] overflow-hidden">
+          <Link href={`/blog/${post.slug}`} className="block w-full aspect-video overflow-hidden">
             <img
               src={post.coverImage}
               alt={post.title}

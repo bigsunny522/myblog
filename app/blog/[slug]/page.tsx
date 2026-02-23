@@ -7,6 +7,7 @@ import { ArrowLeft } from 'lucide-react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { mdxComponents } from '@/components/MDXComponents';
 import rehypeSlug from 'rehype-slug';
+import remarkBreaks from 'remark-breaks';
 import { TableOfContents } from '@/components/TableOfContents';
 import GithubSlugger from 'github-slugger';
 import { BudouxText } from '@/components/ui/BudouxText';
@@ -130,6 +131,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-outfit text-foreground tracking-tight leading-tight">
               <BudouxText>{post.title}</BudouxText>
             </h1>
+            {post.subtitle && (
+              <p className="text-xl md:text-2xl text-muted-foreground font-medium mt-2 leading-relaxed">
+                <BudouxText>{post.subtitle}</BudouxText>
+              </p>
+            )}
 
             <div className="flex flex-wrap gap-2">
               {post.tags?.map((tag) => (

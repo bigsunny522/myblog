@@ -1,3 +1,5 @@
+'use client';
+
 import { loadDefaultJapaneseParser } from 'budoux';
 import React, { HTMLAttributes, ReactNode, useMemo } from 'react';
 import { cn } from '@/lib/utils';
@@ -23,7 +25,7 @@ export const BudouxText = ({
         const segments = parser.parse(node);
         return segments.map((segment, i) => (
           <span 
-            key={i} 
+            key={`${segment}-${i}`} 
             className="inline-block"
           >
             {segment}
@@ -57,6 +59,7 @@ export const BudouxText = ({
   return (
     <Component
       className={cn('break-normal break-words', className)}
+      suppressHydrationWarning
       {...props}
     >
       {parsedChildren}
