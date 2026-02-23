@@ -6,8 +6,15 @@ import localFont from 'next/font/local';
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 const keifont = localFont({ src: './fonts/keifont.ttf', variable: '--font-keifont' });
 
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return 'http://localhost:3000';
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(getBaseUrl()),
   title: {
     default: 'ざっくらぼ',
     template: '%s | ざっくらぼ',
