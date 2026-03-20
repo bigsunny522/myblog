@@ -1,7 +1,10 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { getBaseUrl } from '@/lib/utils';
 import { getAllPosts } from '@/lib/mdx';
 import { FilteredBlogList } from '@/components/FilteredBlogList';
+
+const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
 
 export const metadata: Metadata = {
   title: '記事一覧',
@@ -12,13 +15,13 @@ export const metadata: Metadata = {
     url: '/reviews',
     siteName: 'ざっくらぼ',
     type: 'website',
-    images: [{ url: '/images/main/skyblue.png', width: 1200, height: 630, alt: 'ざっくらぼ' }],
+    images: [{ url: siteImage, width: 1200, height: 630, alt: 'ざっくらぼ' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: '記事一覧 | ざっくらぼ',
     description: '最新のガジェットレビューとニュース一覧',
-    images: ['/images/main/skyblue.png'],
+    images: [siteImage],
   },
 };
 

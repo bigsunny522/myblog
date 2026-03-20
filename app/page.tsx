@@ -1,6 +1,9 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getBaseUrl } from '@/lib/utils';
+
+const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
 
 export const metadata: Metadata = {
   openGraph: {
@@ -9,13 +12,13 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'ざっくらぼ',
     type: 'website',
-    images: [{ url: '/images/main/skyblue.png', width: 1200, height: 630, alt: 'ざっくらぼ' }],
+    images: [{ url: siteImage, width: 1200, height: 630, alt: 'ざっくらぼ' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ざっくらぼ',
     description: 'The best gadget reviews and tech news.',
-    images: ['/images/main/skyblue.png'],
+    images: [siteImage],
   },
 };
 import { HomePostTabs } from '@/components/HomePostTabs';

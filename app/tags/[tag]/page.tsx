@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { getBaseUrl } from '@/lib/utils';
 import { getAllPosts } from '@/lib/mdx';
 import { BlogList } from '@/components/BlogList';
 import { notFound } from 'next/navigation';
@@ -14,6 +15,8 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
   const { tag } = await params;
   const decodedTag = decodeURIComponent(tag);
   
+  const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
+
   return {
     title: `Posts tagged with #${decodedTag}`,
     description: `Articles tagged with #${decodedTag}`,
@@ -23,13 +26,13 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
       url: `/tags/${tag}`,
       siteName: 'ざっくらぼ',
       type: 'website',
-      images: [{ url: '/images/main/skyblue.png', width: 1200, height: 630, alt: 'ざっくらぼ' }],
+      images: [{ url: siteImage, width: 1200, height: 630, alt: 'ざっくらぼ' }],
     },
     twitter: {
       card: 'summary_large_image',
       title: `#${decodedTag} | ざっくらぼ`,
       description: `Articles tagged with #${decodedTag}`,
-      images: ['/images/main/skyblue.png'],
+      images: [siteImage],
     },
   };
 }
