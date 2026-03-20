@@ -49,7 +49,7 @@ export const ViewCounter = ({ slug }: ViewCounterProps) => {
           const { error: rpcError } = await supabase.rpc('increment', { slug_text: slug });
           
           if (rpcError) {
-            console.error('Error incrementing view:', rpcError);
+            console.error('Error incrementing view:', rpcError.message, rpcError.code, rpcError.details);
           } else {
             sessionStorage.setItem(viewedKey, 'true');
           }
@@ -62,7 +62,7 @@ export const ViewCounter = ({ slug }: ViewCounterProps) => {
           .single();
 
         if (error && error.code !== 'PGRST116') { // PGRST116 is "not found"
-            console.error('Error fetching views:', error);
+            console.error('Error fetching views:', error.message, error.code, error.details);
         }
 
         if (data) {

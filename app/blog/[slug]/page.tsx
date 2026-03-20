@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const ogImage = post.coverImage?.trim() || '/images/main/logo.svg';
+  const ogImage = post.coverImage?.trim() || '/images/main/skyblue.png';
   const description = post.excerpt || `Read more about ${post.title}`;
 
   return {
@@ -44,6 +44,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       images: [
         {
           url: ogImage,
+          width: 1200,
+          height: 630,
           alt: post.title,
         },
       ],
