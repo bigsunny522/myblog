@@ -7,9 +7,18 @@ export const metadata: Metadata = {
   title: '記事一覧',
   description: '最新のガジェットレビューとニュース一覧',
   openGraph: {
-    title: '記事一覧',
+    title: '記事一覧 | ざっくらぼ',
     description: '最新のガジェットレビューとニュース一覧',
     url: '/reviews',
+    siteName: 'ざっくらぼ',
+    type: 'website',
+    images: [{ url: '/images/main/skyblue.png', width: 1200, height: 630, alt: 'ざっくらぼ' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '記事一覧 | ざっくらぼ',
+    description: '最新のガジェットレビューとニュース一覧',
+    images: ['/images/main/skyblue.png'],
   },
 };
 

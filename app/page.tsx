@@ -1,5 +1,23 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  openGraph: {
+    title: 'ざっくらぼ',
+    description: 'The best gadget reviews and tech news.',
+    url: '/',
+    siteName: 'ざっくらぼ',
+    type: 'website',
+    images: [{ url: '/images/main/skyblue.png', width: 1200, height: 630, alt: 'ざっくらぼ' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ざっくらぼ',
+    description: 'The best gadget reviews and tech news.',
+    images: ['/images/main/skyblue.png'],
+  },
+};
 import { HomePostTabs } from '@/components/HomePostTabs';
 import { getAllPosts } from '@/lib/mdx';
 import { getAllGearItems } from '@/lib/gear-data';
