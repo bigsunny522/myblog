@@ -18,9 +18,18 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
     title: `Posts tagged with #${decodedTag}`,
     description: `Articles tagged with #${decodedTag}`,
     openGraph: {
-      title: `Posts tagged with #${decodedTag}`,
+      title: `#${decodedTag} | ざっくらぼ`,
       description: `Articles tagged with #${decodedTag}`,
       url: `/tags/${tag}`,
+      siteName: 'ざっくらぼ',
+      type: 'website',
+      images: [{ url: '/images/main/skyblue.png', width: 1200, height: 630, alt: 'ざっくらぼ' }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `#${decodedTag} | ざっくらぼ`,
+      description: `Articles tagged with #${decodedTag}`,
+      images: ['/images/main/skyblue.png'],
     },
   };
 }

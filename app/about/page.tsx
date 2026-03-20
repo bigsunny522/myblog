@@ -10,9 +10,18 @@ export const metadata: Metadata = {
   title: 'About',
   description: 'About Zack Lab and the operator.',
   openGraph: {
-    title: 'About',
+    title: 'About | ざっくらぼ',
     description: 'About Zack Lab and the operator.',
     url: '/about',
+    siteName: 'ざっくらぼ',
+    type: 'website',
+    images: [{ url: '/images/main/skyblue.png', width: 1200, height: 630, alt: 'ざっくらぼ' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About | ざっくらぼ',
+    description: 'About Zack Lab and the operator.',
+    images: ['/images/main/skyblue.png'],
   },
 };
 
