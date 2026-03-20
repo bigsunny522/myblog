@@ -13,6 +13,7 @@ import GithubSlugger from 'github-slugger';
 import { BudouxText } from '@/components/ui/BudouxText';
 import { ViewCounter } from '@/components/ViewCounter';
 import { ShareMenu } from '@/components/ShareMenu';
+import { getBaseUrl } from '@/lib/utils';
 
 interface BlogPostPageProps {
   params: {
@@ -30,7 +31,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const ogImage = post.coverImage?.trim() || '/images/main/skyblue.png';
+  const baseUrl = getBaseUrl();
+  const ogImage = `${baseUrl}${post.coverImage?.trim() || '/images/main/skyblue.png'}`;
   const description = post.excerpt || `Read more about ${post.title}`;
 
   return {
