@@ -38,16 +38,21 @@ export const ViewCounter = ({ slug }: ViewCounterProps) => {
     }
 
     // Real implementation
-    const incrementView = async () => {
+    const fetchAndIncrementView = async () => {
       if (!slug) return;
 
+      const viewedKey = `viewed_${slug}`;
+      const hasViewed = sessionStorage.getItem(viewedKey);
+
       try {
-        // Optimistic update if needed, but here we just fetch
-        const { error: rpcError } = await supabase.rpc('increment', { slug_text: slug });
-        
-        if (rpcError) {
-          console.error('Error incrementing view:', rpcError);
-          // Fallback to simpler fetch if RPC fails or not set up
+        if (!hasViewed) {
+          const { error: rpcError } = await supabase.rpc('increment', { slug_text: slug });
+          
+          if (rpcError) {
+            console.error('Error incrementing view:', rpcError.message, rpcError.code, rpcError.details);
+          } else {
+            sessionStorage.setItem(viewedKey, 'true');
+          }
         }
 
         const { data, error } = await supabase
@@ -57,7 +62,7 @@ export const ViewCounter = ({ slug }: ViewCounterProps) => {
           .single();
 
         if (error && error.code !== 'PGRST116') { // PGRST116 is "not found"
-            console.error('Error fetching views:', error);
+            console.error('Error fetching views:', error.message, error.code, error.details);
         }
 
         if (data) {
@@ -72,7 +77,7 @@ export const ViewCounter = ({ slug }: ViewCounterProps) => {
       }
     };
 
-    incrementView();
+    fetchAndIncrementView();
   }, [slug, isDemoMode]);
 
   if (isLoading && !views) {
