@@ -7,20 +7,20 @@ import { BudouxText } from './ui/BudouxText';
 
 export function Footer() {
   return (
-    <footer className="relative mt-auto border-t border-primary/10 bg-blue-50 dark:bg-[#0B1120] pt-20 pb-10">
+    <footer className="relative mt-auto border-t border-primary/10 bg-blue-50 dark:bg-[#0B1120] pt-lk-2xl pb-lk-xl">
       <SectionDivider type="curve" position="top" fill="fill-blue-50 dark:fill-[#0B1120]" height="h-16 md:h-24" />
       
       <div className="container mx-auto flex flex-col items-center gap-6 px-4 relative z-10">
         
         {/* Navigation Links */}
-        <div className="flex flex-wrap justify-center gap-8 text-sm font-medium text-foreground/80">
+        <div className="flex flex-wrap justify-center gap-lk-xl text-sm font-medium text-foreground/80">
           <Link href="/reviews" className="hover:text-primary transition-colors">
             Reviews
           </Link>
           <Link href="/gear" className="hover:text-primary transition-colors">
             Gear
           </Link>
-          <Link href="/about" className="hover:text-primary transition-colors">
+<Link href="/about" className="hover:text-primary transition-colors">
             About
           </Link>
         </div>

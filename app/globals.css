@@ -1,4 +1,22 @@
 @import "tailwindcss";
+@import "../src/lib/css/liftkitvars.css";
+
+@theme inline {
+  /* LiftKit golden ratio spacing */
+  --spacing-lk-2xs: var(--lk-size-2xs);
+  --spacing-lk-xs: var(--lk-size-xs);
+  --spacing-lk-sm: var(--lk-size-sm);
+  --spacing-lk-md: var(--lk-size-md);
+  --spacing-lk-lg: var(--lk-size-lg);
+  --spacing-lk-xl: var(--lk-size-xl);
+  --spacing-lk-2xl: var(--lk-size-2xl);
+
+  /* LiftKit golden ratio border radius */
+  --radius-lk-xs: var(--lk-size-xs);
+  --radius-lk-sm: var(--lk-size-sm);
+  --radius-lk-md: var(--lk-size-md);
+  --radius-lk-lg: var(--lk-size-lg);
+}
 
 :root {
   --background: #ffffff;
@@ -47,6 +65,31 @@ body {
 
 .font-keifont {
   font-family: var(--font-keifont);
+}
+
+/* LiftKit golden ratio component styles */
+.lk-card {
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.lk-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.lk-nav {
+  gap: var(--lk-size-xl);
+}
+
+.lk-section-padding {
+  padding-top: var(--lk-size-2xl);
+  padding-bottom: var(--lk-size-2xl);
+}
+
+/* Underline styling for MDX content (matches Text component marker style) */
+.prose u {
+  text-decoration: none;
+  background: linear-gradient(transparent 60%, #7BABFF80 60%, #7BABFF80 90%, transparent 90%);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BlogPost } from '@/lib/mdx';
 import { BudouxText } from './ui/BudouxText';
+import { SafeImage } from './SafeImage';
+
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -19,24 +21,29 @@ export function BlogList({ posts }: BlogListProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: index * 0.1 }}
-          className="group flex flex-col bg-card border border-border/50 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300"
+          className="lk-card group flex flex-col bg-card border border-border/50 rounded-lk-sm overflow-hidden"
         >
           <Link href={`/blog/${post.slug}`} className="block w-full aspect-video overflow-hidden">
-            <img
+            <SafeImage
               src={post.coverImage}
               alt={post.title}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
             />
           </Link>
-          <div className="flex-1 p-6 flex flex-col">
+          <div className="flex-1 p-lk-lg flex flex-col">
             <div className="flex flex-wrap items-center gap-2 mb-3 text-xs font-medium text-muted-foreground">
               <span className="bg-secondary px-2.5 py-1 rounded-full text-secondary-foreground">
                 {post.category}
               </span>
               {post.tags?.slice(0, 2).map(tag => (
-                <span key={tag} className="text-primary bg-primary/10 px-2 py-0.5 rounded-md">
+                <Link
+                  key={tag}
+                  href={`/tags/${encodeURIComponent(tag)}`}
+                  className="text-primary bg-primary/10 px-2 py-0.5 rounded-md hover:bg-primary/20 transition-colors"
+                >
                   #{tag}
-                </span>
+                </Link>
               ))}
               <time dateTime={post.date} className="ml-auto">{post.date}</time>
             </div>

@@ -30,8 +30,8 @@ import { SectionDivider } from '@/components/ui/SectionDivider';
 
 import { OpeningAnimation } from '@/components/OpeningAnimation';
 
-export default function Home() {
-  const posts = getAllPosts();
+export default async function Home() {
+  const posts = await getAllPosts();
   const gearItems = getAllGearItems();
   const latestPosts = posts.slice(0, 3);
   const recommendedPosts = posts.filter(post => post.recommended).slice(0, 3);

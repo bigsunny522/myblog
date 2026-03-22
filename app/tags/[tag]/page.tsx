@@ -37,22 +37,24 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
   };
 }
 
-export function generateStaticParams() {
-  const posts = getAllPosts();
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
   const tags = new Set<string>();
   posts.forEach((post) => {
     post.tags?.forEach((tag) => tags.add(tag));
   });
 
   return Array.from(tags).map((tag) => ({
-    tag: tag,
+    tag: encodeURIComponent(tag),
   }));
 }
 
 export default async function TagPage({ params }: TagPageProps) {
   const { tag } = await params;
   const decodedTag = decodeURIComponent(tag);
-  const posts = getAllPosts().filter((post) => post.tags?.includes(decodedTag));
+  const posts = (await getAllPosts()).filter((post) => post.tags?.includes(decodedTag));
 
   if (posts.length === 0) {
     notFound();
@@ -62,10 +64,10 @@ export default async function TagPage({ params }: TagPageProps) {
     <div className="container mx-auto px-4 py-16 min-h-screen">
       <div className="text-center mb-16 space-y-4">
         <h1 className="text-3xl md:text-4xl font-bold font-outfit text-foreground">
-          Posts tagged with <span className="text-primary">#{decodedTag}</span>
+          <span className="text-primary">#{decodedTag}</span> の記事一覧
         </h1>
         <p className="text-muted-foreground">
-          Found {posts.length} articles.
+          {posts.length}件の記事
         </p>
       </div>
 

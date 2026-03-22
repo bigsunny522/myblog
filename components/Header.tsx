@@ -43,14 +43,14 @@ export function Header() {
         </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
+        <nav className="lk-nav hidden md:flex items-center text-sm font-medium">
           <Link href="/reviews" className="transition-colors hover:text-primary text-foreground/80 font-bold">
             Reviews
           </Link>
           <Link href="/gear" className="transition-colors hover:text-primary text-foreground/80 font-bold">
             Gear
           </Link>
-          <Link href="/about" className="transition-colors hover:text-primary text-foreground/80 font-bold">
+<Link href="/about" className="transition-colors hover:text-primary text-foreground/80 font-bold">
             About
           </Link>
         </nav>
@@ -71,22 +71,22 @@ export function Header() {
             className="md:hidden border-t border-border/40 bg-background"
           >
             <nav className="flex flex-col space-y-4 p-6 text-sm font-medium">
-              <Link 
-                href="/reviews" 
+              <Link
+                href="/reviews"
                 className="transition-colors hover:text-primary text-foreground/80 font-bold text-lg"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Reviews
               </Link>
-              <Link 
-                href="/gear" 
+              <Link
+                href="/gear"
                 className="transition-colors hover:text-primary text-foreground/80 font-bold text-lg"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Gear
               </Link>
-              <Link 
-                href="/about" 
+<Link
+                href="/about"
                 className="transition-colors hover:text-primary text-foreground/80 font-bold text-lg"
                 onClick={() => setIsMenuOpen(false)}
               >

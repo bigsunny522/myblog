@@ -144,6 +144,17 @@ const LI = ({ children, className, ...props }: React.DetailedHTMLProps<React.LiH
 
 import { ImageModal } from '@/components/ImageModal';
 
+const U = ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
+  <span
+    style={{
+      background: 'linear-gradient(transparent 60%, #7BABFF80 60%, #7BABFF80 90%, transparent 90%)',
+    }}
+    {...props}
+  >
+    {children}
+  </span>
+);
+
 // Export the components mapping
 export const mdxComponents = {
   Text,
@@ -155,6 +166,7 @@ export const mdxComponents = {
   ul: UL,
   ol: OL,
   li: LI,
+  u: U,
   img: (props: any) => <ImageModal {...props} />, // Use functional wrapper to ensure props are passed correctly
   ImageModal, // Named component for direct JSX use in MDX: <ImageModal src="..." />
   Specs,
