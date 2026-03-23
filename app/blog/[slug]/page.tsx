@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { getPostBySlug, getAllPosts, getPostSlugs } from '@/lib/mdx';
+import { getPostBySlug, getAllPosts, getPostSlugs, getMdxOnlySlugs } from '@/lib/mdx';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ChevronLeft } from 'lucide-react';
@@ -83,10 +83,15 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 }
 
 export async function generateStaticParams() {
-  const slugs = await getPostSlugs();
-  return slugs.map((slug) => ({
-    slug: slug.replace(/\.mdx$/, ''),
-  }));
+  try {
+    const slugs = await getPostSlugs();
+    return slugs
+      .map((slug) => slug.replace(/\.mdx$/, ''))
+      .filter(Boolean)
+      .map((slug) => ({ slug }));
+  } catch {
+    return getMdxOnlySlugs().map((slug) => ({ slug }));
+  }
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {

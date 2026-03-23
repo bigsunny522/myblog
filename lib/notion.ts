@@ -3,20 +3,20 @@ import type { BlogPost } from './mdx';
 import fs from 'fs';
 import path from 'path';
 
-const IMAGE_DIR = path.join(process.cwd(), 'public/images/notion');
+const POSTS_IMAGES_DIR = path.join(process.cwd(), 'public/images/posts');
 
-function ensureImageDir() {
-  if (!fs.existsSync(IMAGE_DIR)) {
-    fs.mkdirSync(IMAGE_DIR, { recursive: true });
+// Valid image filename pattern (e.g. "main.jpg", "product-front.webp")
+const IMAGE_FILENAME_RE = /^[\w][\w\- ]*\.(jpg|jpeg|png|gif|webp|avif|svg)$/i;
+
+async function downloadImage(url: string, filename: string, slug: string): Promise<string> {
+  const dir = path.join(POSTS_IMAGES_DIR, slug);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
   }
-}
-
-async function downloadImage(url: string, filename: string): Promise<string> {
-  ensureImageDir();
-  const localPath = path.join(IMAGE_DIR, filename);
+  const localPath = path.join(dir, filename);
 
   if (fs.existsSync(localPath)) {
-    return `/images/notion/${filename}`;
+    return `/images/posts/${slug}/${filename}`;
   }
 
   const response = await fetch(url);
@@ -24,21 +24,29 @@ async function downloadImage(url: string, filename: string): Promise<string> {
 
   const buffer = await response.arrayBuffer();
   fs.writeFileSync(localPath, Buffer.from(buffer));
-  return `/images/notion/${filename}`;
+  return `/images/posts/${slug}/${filename}`;
 }
 
-async function localizeMarkdownImages(markdown: string, prefix: string): Promise<string> {
+// captionがファイル名形式なら使用、そうでなければURLハッシュから生成
+function resolveImageFilename(caption: string, url: string): string {
+  if (IMAGE_FILENAME_RE.test(caption.trim())) return caption.trim();
+  const ext = url.split('?')[0].split('.').pop()?.toLowerCase() || 'jpg';
+  const hash = Buffer.from(url).toString('base64').replace(/[^a-zA-Z0-9]/g, '').slice(0, 16);
+  return `${hash}.${ext}`;
+}
+
+async function localizeMarkdownImages(markdown: string, slug: string): Promise<string> {
   const imgRegex = /!\[([^\]]*)\]\((https?:\/\/[^)]+)\)/g;
   const replacements: { original: string; replacement: string }[] = [];
 
   for (const match of markdown.matchAll(imgRegex)) {
     const [original, alt, url] = match;
     try {
-      const ext = url.split('?')[0].split('.').pop()?.toLowerCase() || 'jpg';
-      const hash = Buffer.from(url).toString('base64').replace(/[^a-zA-Z0-9]/g, '').slice(0, 16);
-      const filename = `${prefix}-${hash}.${ext}`;
-      const localPath = await downloadImage(url, filename);
-      replacements.push({ original, replacement: `![${alt}](${localPath})` });
+      const filename = resolveImageFilename(alt, url);
+      const localPath = await downloadImage(url, filename, slug);
+      // captionがファイル名として使われた場合はaltを空にする
+      const newAlt = IMAGE_FILENAME_RE.test(alt.trim()) ? '' : alt;
+      replacements.push({ original, replacement: `![${newAlt}](${localPath})` });
     } catch {
       // Keep original URL on failure
     }
@@ -63,6 +71,23 @@ function getCoverUrl(cover: any): string | null {
   return null;
 }
 
+// Map Notion annotation colors to CSS values for <Text> component
+const BG_COLOR_MAP: Record<string, string> = {
+  blue_background: '#7babff',
+  yellow_background: '#ffd600',
+  green_background: '#4ade80',
+  red_background: '#f87171',
+  purple_background: '#c084fc',
+  pink_background: '#f472b6',
+  gray_background: '#9ca3af',
+  orange_background: '#fb923c',
+};
+const TEXT_COLOR_MAP: Record<string, string> = {
+  blue: '#7babff', green: '#4ade80', red: '#f87171',
+  purple: '#c084fc', pink: '#f472b6', gray: '#9ca3af',
+  orange: '#fb923c', yellow: '#ffd600', brown: '#92400e',
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function richTextToMarkdown(richText: any[]): string {
   return richText
@@ -76,9 +101,23 @@ function richTextToMarkdown(richText: any[]): string {
       if (t.annotations?.strikethrough) s = `~~${s}~~`;
       if (t.annotations?.underline) s = `<u>${s}</u>`;
       if (t.href) s = `[${s}](${t.href})`;
+      // Notion color annotations → <Text> component
+      const color: string = t.annotations?.color ?? 'default';
+      if (color !== 'default') {
+        if (BG_COLOR_MAP[color]) s = `<Text bg="${BG_COLOR_MAP[color]}">${s}</Text>`;
+        else if (TEXT_COLOR_MAP[color]) s = `<Text color="${TEXT_COLOR_MAP[color]}">${s}</Text>`;
+      }
       return s;
     })
     .join('');
+}
+
+// Detect if an emoji string represents a digit (for FeaturePoint cards)
+function getPointNumber(emoji: string): number | null {
+  if (/^\d$/.test(emoji)) return parseInt(emoji, 10);
+  const numberEmojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
+  const idx = numberEmojis.indexOf(emoji);
+  return idx !== -1 ? idx + 1 : null;
 }
 
 // Render a Notion table block.
@@ -124,7 +163,7 @@ async function tableToMarkdown(notion: Client, block: any): Promise<string> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function blockToMarkdown(notion: Client, block: any, depth: number): Promise<string> {
+async function blockToMarkdown(notion: Client, block: any, slug: string, depth: number): Promise<string> {
   const indent = '  '.repeat(depth);
   const type: string = block.type;
   const data = block[type];
@@ -132,11 +171,24 @@ async function blockToMarkdown(notion: Client, block: any, depth: number): Promi
   // Table is handled separately to access all rows at once
   if (type === 'table') return tableToMarkdown(notion, block);
 
+  // column_list: multi-column layout → <ImageGrid>
+  if (type === 'column_list') {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const colsResponse: any = await notion.blocks.children.list({ block_id: block.id, page_size: 100 });
+    const columnMds: string[] = await Promise.all(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      colsResponse.results.map((col: any) => blocksToMarkdown(notion, col.id, slug, 0))
+    );
+    const count = columnMds.length;
+    const cols = columnMds.map((md) => `<div>\n\n${md}\n</div>`).join('\n');
+    return `<ImageGrid columns={${count}}>\n${cols}\n</ImageGrid>\n\n`;
+  }
+
   const text = data?.rich_text ? richTextToMarkdown(data.rich_text) : '';
 
   let children = '';
   if (block.has_children) {
-    children = await blocksToMarkdown(notion, block.id, depth + 1);
+    children = await blocksToMarkdown(notion, block.id, slug, depth + 1);
   }
 
   switch (type) {
@@ -159,8 +211,15 @@ async function blockToMarkdown(notion: Client, block: any, depth: number): Promi
     case 'quote':
       return `${indent}> ${text}\n\n${children}`;
     case 'callout': {
-      const emoji = data.icon?.emoji ? `${data.icon.emoji} ` : '';
-      return `> ${emoji}${text}\n\n${children}`;
+      const emoji: string = data.icon?.emoji ?? '';
+      const pointNum = getPointNumber(emoji);
+      if (pointNum !== null) {
+        // Number emoji → FeaturePoint card
+        const title = getPlainText(data.rich_text).replace(/"/g, '&quot;');
+        return `<FeaturePoint number={${pointNum}} title="${title}">\n\n${children}\n\n</FeaturePoint>\n\n`;
+      }
+      const emojiPrefix = emoji ? `${emoji} ` : '';
+      return `> ${emojiPrefix}${text}\n\n${children}`;
     }
     case 'divider':
       return `---\n\n`;
@@ -179,8 +238,10 @@ async function blockToMarkdown(notion: Client, block: any, depth: number): Promi
 
 // Convert Notion blocks to Markdown
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function blocksToMarkdown(notion: Client, blockId: string, depth = 0): Promise<string> {
-  const chunks: string[] = [];
+async function blocksToMarkdown(notion: Client, blockId: string, slug: string, depth = 0): Promise<string> {
+  // Collect all blocks first to enable context-aware pattern detection
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const allBlocks: any[] = [];
   let cursor: string | undefined = undefined;
 
   do {
@@ -190,20 +251,157 @@ async function blocksToMarkdown(notion: Client, blockId: string, depth = 0): Pro
       start_cursor: cursor,
       page_size: 100,
     });
-
-    for (const block of response.results) {
-      const md = await blockToMarkdown(notion, block, depth);
-      if (md) chunks.push(md);
-    }
-
+    allBlocks.push(...response.results);
     cursor = response.has_more ? response.next_cursor : undefined;
   } while (cursor);
 
+  const chunks: string[] = [];
+  let reviewSection: 'good' | 'con' | null = null;
+  let goodItems: { title: string; description: string }[] = [];
+  let pendingItems: { title: string; description: string }[] = [];
+  let buyLinksSection = false;
+  let buyLinks: { type: string; href: string; label: string }[] = [];
+  let buyLinksImage: string | undefined = undefined;
+  let buyLinksTitle: string | undefined = undefined;
+  let buyLinksDescription: string | undefined = undefined;
+
+  const flushBuyLinks = () => {
+    if (buyLinks.length > 0) {
+      const attrs: string[] = [];
+      if (buyLinksImage) attrs.push(`image="${buyLinksImage}"`);
+      if (buyLinksTitle) attrs.push(`title="${buyLinksTitle.replace(/"/g, '&quot;')}"`);
+      if (buyLinksDescription) attrs.push(`description="${buyLinksDescription.replace(/"/g, '&quot;')}"`);
+      const attrsStr = attrs.length ? ' ' + attrs.join(' ') : '';
+      const items = buyLinks.map(({ type, href, label }) =>
+        `<BuyLink type="${type}" href="${href}">${label}</BuyLink>`
+      ).join('\n');
+      chunks.push(`<BuyLinks${attrsStr}>\n${items}\n</BuyLinks>\n\n`);
+    }
+    buyLinks = [];
+    buyLinksImage = undefined;
+    buyLinksTitle = undefined;
+    buyLinksDescription = undefined;
+    buyLinksSection = false;
+  };
+
+  const renderReviewItems = (items: { title: string; description: string }[], type: 'good' | 'con') =>
+    items.map(({ title, description }) =>
+      `<ReviewPoint type="${type}" title="${title.replace(/"/g, '&quot;')}">${description}</ReviewPoint>`
+    ).join('\n');
+
+  const flushReview = () => {
+    if (!reviewSection) return;
+    if (reviewSection === 'good' && pendingItems.length) {
+      chunks.push(`<ReviewPoints type="good">\n${renderReviewItems(pendingItems, 'good')}\n</ReviewPoints>\n\n`);
+    } else if (reviewSection === 'con') {
+      const goodMdx = renderReviewItems(goodItems, 'good');
+      const conMdx = renderReviewItems(pendingItems, 'con');
+      chunks.push(
+        `<ReviewSummary>\n` +
+        `<ReviewPoints type="good">\n${goodMdx}\n</ReviewPoints>\n` +
+        `<ReviewPoints type="con">\n${conMdx}\n</ReviewPoints>\n` +
+        `</ReviewSummary>\n\n`
+      );
+    }
+    reviewSection = null;
+    goodItems = [];
+    pendingItems = [];
+  };
+
+  for (const block of allBlocks) {
+    const type = block.type;
+    const plainText = block[type]?.rich_text ? getPlainText(block[type].rich_text) : '';
+
+    if (type === 'heading_3') {
+      flushBuyLinks();
+      if (plainText === 'GOOD') {
+        flushReview();
+        reviewSection = 'good';
+        continue;
+      } else if (plainText === '気になる点' && reviewSection === 'good') {
+        goodItems = [...pendingItems];
+        pendingItems = [];
+        reviewSection = 'con';
+        continue;
+      } else if (plainText === '購入リンク') {
+        flushReview();
+        buyLinksSection = true;
+        continue;
+      } else {
+        flushReview();
+      }
+    }
+
+    if (buyLinksSection && type === 'image') {
+      const url = getCoverUrl(block.image);
+      if (url && !buyLinksImage) {
+        try {
+            const caption = getPlainText(block.image?.caption || []);
+          const filename = resolveImageFilename(caption, url);
+          buyLinksImage = await downloadImage(url, filename, slug);
+        } catch {
+          buyLinksImage = url;
+        }
+      }
+      continue;
+    }
+
+    if (buyLinksSection && type === 'paragraph' && buyLinks.length === 0) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const richText: any[] = block.paragraph.rich_text;
+      const text = getPlainText(richText);
+      if (text) {
+        if (!buyLinksTitle) {
+          buyLinksTitle = text;
+        } else if (!buyLinksDescription) {
+          buyLinksDescription = text;
+        }
+      }
+      // Always continue (including empty paragraphs) to prevent premature flush
+      continue;
+    }
+
+    if (buyLinksSection && type === 'bulleted_list_item') {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const richText: any[] = block.bulleted_list_item.rich_text;
+      const href = richText.find((t: any) => t.href)?.href || '';
+      const label = getPlainText(richText);
+      if (href) {
+        let linkType = 'official';
+        if (/amazon|amzn/i.test(href)) linkType = 'amazon';
+        else if (/rakuten/i.test(href)) linkType = 'rakuten';
+        buyLinks.push({ type: linkType, href, label });
+        continue;
+      }
+      flushBuyLinks();
+    } else if (buyLinksSection && type !== 'bulleted_list_item') {
+      flushBuyLinks();
+    }
+
+    if (reviewSection && type === 'bulleted_list_item') {
+      const text = richTextToMarkdown(block.bulleted_list_item.rich_text);
+      const match = text.match(/^\*\*(.+?)\*\*\s*[—\-]\s*(.+)$/);
+      if (match) {
+        pendingItems.push({ title: match[1], description: match[2] });
+        continue;
+      }
+      flushReview();
+    } else if (reviewSection && type !== 'bulleted_list_item') {
+      flushReview();
+    }
+
+    const md = await blockToMarkdown(notion, block, slug, depth);
+    if (md) chunks.push(md);
+  }
+
+  flushBuyLinks();
+  flushReview();
   return chunks.join('');
 }
 
 // Module-level cache
 let metadataCache: { post: BlogPost; pageId: string }[] | null = null;
+let populateCachePromise: Promise<void> | null = null;
 
 function createClient() {
   return new Client({ auth: process.env.NOTION_API_KEY });
@@ -239,7 +437,7 @@ async function pageToMetadata(page: any): Promise<{ post: BlogPost; pageId: stri
   if (coverUrl) {
     try {
       const ext = coverUrl.split('?')[0].split('.').pop()?.toLowerCase() || 'jpg';
-      coverImage = await downloadImage(coverUrl, `${slug}-cover.${ext}`);
+      coverImage = await downloadImage(coverUrl, `cover.${ext}`, slug);
     } catch {
       // Keep default
     }
@@ -287,12 +485,17 @@ async function fetchAllPages(notion: Client) {
 
 async function populateCache(): Promise<void> {
   if (metadataCache) return;
-  const notion = createClient();
-  const pages = await fetchAllPages(notion);
-  const results = await Promise.all(pages.map(pageToMetadata));
-  metadataCache = results
-    .filter((r): r is { post: BlogPost; pageId: string } => r !== null)
-    .sort((a, b) => (a.post.date > b.post.date ? -1 : 1));
+  if (populateCachePromise) return populateCachePromise;
+  populateCachePromise = (async () => {
+    const notion = createClient();
+    const pages = await fetchAllPages(notion);
+    const results = await Promise.all(pages.map(pageToMetadata));
+    metadataCache = results
+      .filter((r): r is { post: BlogPost; pageId: string } => r !== null)
+      .sort((a, b) => (a.post.date > b.post.date ? -1 : 1));
+    populateCachePromise = null;
+  })();
+  return populateCachePromise;
 }
 
 // Returns only published posts (for listing pages)
@@ -312,12 +515,12 @@ export async function getNotionPostSlugs(): Promise<string[]> {
 export async function getNotionPostBySlug(slug: string): Promise<BlogPost | undefined> {
   if (!process.env.NOTION_API_KEY || !process.env.NOTION_DATABASE_ID) return undefined;
 
-  await getAllNotionPosts();
+  await populateCache();
   const cached = metadataCache?.find((c) => c.post.slug === slug);
   if (!cached) return undefined;
 
   const notion = createClient();
-  const rawMarkdown = await blocksToMarkdown(notion, cached.pageId);
+  const rawMarkdown = await blocksToMarkdown(notion, cached.pageId, slug);
   const content = await localizeMarkdownImages(rawMarkdown, slug);
 
   return { ...cached.post, content };

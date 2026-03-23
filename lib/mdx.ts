@@ -69,12 +69,22 @@ function getAllMdxPosts(): BlogPost[] {
 // When Notion is configured, Notion posts and MDX posts are merged.
 // MDX slug takes precedence if both have the same slug.
 
+export function getMdxOnlySlugs(): string[] {
+  return getMdxPostSlugs().map((s) => s.replace(/\.mdx$/, '')).filter(Boolean);
+}
+
 export async function getPostSlugs(): Promise<string[]> {
-  const mdxSlugs = getMdxPostSlugs().map((s) => s.replace(/\.mdx$/, ''));
+  const mdxSlugs = getMdxPostSlugs()
+    .map((s) => s.replace(/\.mdx$/, ''))
+    .filter(Boolean);
   if (!useNotion()) return mdxSlugs;
 
-  const notionSlugs = await getNotionPostSlugs();
-  return Array.from(new Set([...notionSlugs, ...mdxSlugs]));
+  try {
+    const notionSlugs = (await getNotionPostSlugs()).filter(Boolean);
+    return Array.from(new Set([...notionSlugs, ...mdxSlugs]));
+  } catch {
+    return mdxSlugs;
+  }
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {

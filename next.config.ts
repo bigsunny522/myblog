@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const nextConfig: NextConfig = {
-  /* config options here */
-  output: 'export',
+  // 'export' はビルド時のみ有効。開発時は無効にしてNotionドラフト記事を直接確認できるようにする
+  output: isDev ? undefined : 'export',
   images: {
     loader: 'custom',
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
