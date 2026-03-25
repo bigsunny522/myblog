@@ -1,5 +1,6 @@
 import { Client } from '@notionhq/client';
 import type { BlogPost } from './mdx';
+import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 
@@ -8,6 +9,19 @@ const POSTS_IMAGES_DIR = path.join(process.cwd(), 'public/images/posts');
 // Valid image filename pattern (e.g. "main.jpg", "product-front.webp")
 const IMAGE_FILENAME_RE = /^[\w][\w\- ]*\.(jpg|jpeg|png|gif|webp|avif|svg)$/i;
 
+function loadManifest(dir: string): Record<string, string> {
+  const manifestPath = path.join(dir, '_manifest.json');
+  try {
+    return JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+  } catch {
+    return {};
+  }
+}
+
+function saveManifest(dir: string, manifest: Record<string, string>): void {
+  fs.writeFileSync(path.join(dir, '_manifest.json'), JSON.stringify(manifest, null, 2));
+}
+
 async function downloadImage(url: string, filename: string, slug: string): Promise<string> {
   const dir = path.join(POSTS_IMAGES_DIR, slug);
   if (!fs.existsSync(dir)) {
@@ -15,7 +29,11 @@ async function downloadImage(url: string, filename: string, slug: string): Promi
   }
   const localPath = path.join(dir, filename);
 
-  if (fs.existsSync(localPath)) {
+  // Strip query params (signed URL expires) to get the stable base URL for comparison
+  const baseUrl = url.split('?')[0];
+  const manifest = loadManifest(dir);
+
+  if (fs.existsSync(localPath) && manifest[filename] === baseUrl) {
     return `/images/posts/${slug}/${filename}`;
   }
 
@@ -24,14 +42,23 @@ async function downloadImage(url: string, filename: string, slug: string): Promi
 
   const buffer = await response.arrayBuffer();
   fs.writeFileSync(localPath, Buffer.from(buffer));
+  manifest[filename] = baseUrl;
+  saveManifest(dir, manifest);
   return `/images/posts/${slug}/${filename}`;
 }
 
-// captionがファイル名形式なら使用、そうでなければURLハッシュから生成
+// captionがあればサニタイズしてファイル名に使用、なければURLハッシュから生成
 function resolveImageFilename(caption: string, url: string): string {
-  if (IMAGE_FILENAME_RE.test(caption.trim())) return caption.trim();
   const ext = url.split('?')[0].split('.').pop()?.toLowerCase() || 'jpg';
-  const hash = Buffer.from(url).toString('base64').replace(/[^a-zA-Z0-9]/g, '').slice(0, 16);
+  const trimmed = caption.trim();
+  if (trimmed) {
+    // すでに拡張子付きファイル名形式ならそのまま使用
+    if (IMAGE_FILENAME_RE.test(trimmed)) return trimmed;
+    // それ以外はキャプション文字列をサニタイズして拡張子を付与
+    const safeName = trimmed.replace(/[<>:"/\\|?*\x00-\x1f]/g, '').replace(/\s+/g, '-').slice(0, 64);
+    if (safeName) return `${safeName}.${ext}`;
+  }
+  const hash = crypto.createHash('sha256').update(url.split('?')[0]).digest('hex').slice(0, 16);
   return `${hash}.${ext}`;
 }
 
@@ -200,6 +227,8 @@ async function blockToMarkdown(notion: Client, block: any, slug: string, depth: 
       return `## ${text}\n\n${children}`;
     case 'heading_3':
       return `### ${text}\n\n${children}`;
+    case 'heading_4':
+      return `#### ${text}\n\n${children}`;
     case 'bulleted_list_item':
       return `${indent}- ${text}\n${children}`;
     case 'numbered_list_item':
