@@ -79,7 +79,7 @@ export function GearDetails({ item }: GearDetailsProps) {
                   className="w-full md:flex-1 flex items-center justify-center gap-2 px-3 py-2 md:py-3 bg-card border border-border hover:border-primary/50 text-foreground rounded-xl transition-all hover:bg-primary/5 group md:min-w-[120px]"
                 >
                   <ExternalLink size={14} className="text-muted-foreground group-hover:text-primary transition-colors" />
-                  <span className="text-xs font-bold font-outfit whitespace-nowrap">Official</span>
+                  <span className="text-xs font-bold font-outfit whitespace-nowrap">公式ストア</span>
                 </a>
               )}
               {item.link_amazon && (

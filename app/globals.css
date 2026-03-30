@@ -109,3 +109,44 @@ body {
 }
 
 
+
+/* ===== Dashboard ===== */
+.dashboard-root {
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-root .react-resizable-handle {
+  opacity: 0.4;
+  filter: invert(1);
+}
+
+.dashboard-root .react-resizable-handle:hover {
+  opacity: 0.9;
+}
+
+.dashboard-root .react-grid-item.react-grid-placeholder {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 2px dashed rgba(255, 255, 255, 0.3) !important;
+  border-radius: 16px;
+  opacity: 1 !important;
+}
+
+.dashboard-root .react-grid-item.react-draggable-dragging {
+  opacity: 0.85;
+  z-index: 100;
+}
+
+/* ダッシュボードページ: ヘッダー/フッターを非表示 */
+body[data-dashboard] header,
+body[data-dashboard] footer {
+  display: none !important;
+}
+
+/* フルスクリーン時: ヘッダー/フッターを非表示 */
+html:fullscreen header,
+html:fullscreen footer,
+html:-webkit-full-screen header,
+html:-webkit-full-screen footer {
+  display: none !important;
+}
