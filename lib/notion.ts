@@ -69,10 +69,15 @@ async function localizeMarkdownImages(markdown: string, slug: string): Promise<s
   for (const match of markdown.matchAll(imgRegex)) {
     const [original, alt, url] = match;
     try {
-      const filename = resolveImageFilename(alt, url);
+      // サイズヒント(例: |50%, |small)をファイル名生成前に除去
+      const altForFilename = alt.replace(/\|(small|medium|large|\d+(?:\.\d+)?%)$/i, '').trim();
+      const filename = resolveImageFilename(altForFilename, url);
       const localPath = await downloadImage(url, filename, slug);
-      // captionがファイル名として使われた場合はaltを空にする
-      const newAlt = IMAGE_FILENAME_RE.test(alt.trim()) ? '' : alt;
+      // captionがファイル名として使われた場合はaltを空にする（サイズヒントは保持）
+      const sizeHintMatch = alt.match(/(\|(small|medium|large|\d+(?:\.\d+)?%))$/i);
+      const sizeHint = sizeHintMatch ? sizeHintMatch[1] : '';
+      const baseAlt = IMAGE_FILENAME_RE.test(altForFilename) ? '' : altForFilename;
+      const newAlt = baseAlt + sizeHint;
       replacements.push({ original, replacement: `![${newAlt}](${localPath})` });
     } catch {
       // Keep original URL on failure

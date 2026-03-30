@@ -55,14 +55,24 @@ const H2 = ({ children, id, ...props }: React.DetailedHTMLProps<React.HTMLAttrib
 
 const H3 = ({ children, id, ...props }: React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>) => (
   // H3: Simple bottom underlined or just larger
-  <h3 
-    id={id} 
-    className={cn("text-[clamp(1rem,2.5vw,1.25rem)] font-bold mt-8 mb-3 flex items-center gap-2 text-foreground/90 leading-tight", props.className)} 
+  <h3
+    id={id}
+    className={cn("text-[clamp(1rem,2.5vw,1.25rem)] font-bold mt-8 mb-3 flex items-center gap-2 text-foreground/90 leading-tight", props.className)}
     {...props}
   >
     <span className="text-primary/60 font-black">#</span>
     {children}
   </h3>
+);
+
+const H4 = ({ children, id, ...props }: React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>) => (
+  <h4
+    id={id}
+    className={cn("text-base font-bold mt-6 mb-2 pl-3 border-l-2 border-primary/40 text-foreground leading-tight", props.className)}
+    {...props}
+  >
+    {children}
+  </h4>
 );
 
 
@@ -280,12 +290,26 @@ export const mdxComponents = {
   h1: H1,
   h2: H2,
   h3: H3,
+  h4: H4,
   p: P,
   ul: UL,
   ol: OL,
   li: LI,
   u: U,
-  img: (props: any) => <ImageModal {...props} />, // Use functional wrapper to ensure props are passed correctly
+  img: (props: any) => {
+    const { alt, ...rest } = props;
+    const sizeMatch = (alt as string | undefined)?.match(/\|(small|medium|large|(\d+(?:\.\d+)?)%)$/i);
+    let maxWidth: string | undefined;
+    if (sizeMatch) {
+      const token = sizeMatch[1].toLowerCase();
+      if (token === 'small') maxWidth = '33%';
+      else if (token === 'medium') maxWidth = '50%';
+      else if (token === 'large') maxWidth = '75%';
+      else maxWidth = token; // e.g. "50%"
+    }
+    const cleanAlt = alt ? (alt as string).replace(/\|(small|medium|large|\d+(?:\.\d+)?%)$/i, '').trim() : alt;
+    return <ImageModal {...rest} alt={cleanAlt} maxWidth={maxWidth} />;
+  }, // Use functional wrapper to ensure props are passed correctly
   ImageModal, // Named component for direct JSX use in MDX: <ImageModal src="..." />
   Specs,
   SpecsItem,
