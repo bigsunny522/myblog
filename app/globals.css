@@ -1,4 +1,22 @@
 @import "tailwindcss";
+@import "../src/lib/css/liftkitvars.css";
+
+@theme inline {
+  /* LiftKit golden ratio spacing */
+  --spacing-lk-2xs: var(--lk-size-2xs);
+  --spacing-lk-xs: var(--lk-size-xs);
+  --spacing-lk-sm: var(--lk-size-sm);
+  --spacing-lk-md: var(--lk-size-md);
+  --spacing-lk-lg: var(--lk-size-lg);
+  --spacing-lk-xl: var(--lk-size-xl);
+  --spacing-lk-2xl: var(--lk-size-2xl);
+
+  /* LiftKit golden ratio border radius */
+  --radius-lk-xs: var(--lk-size-xs);
+  --radius-lk-sm: var(--lk-size-sm);
+  --radius-lk-md: var(--lk-size-md);
+  --radius-lk-lg: var(--lk-size-lg);
+}
 
 :root {
   --background: #ffffff;
@@ -49,6 +67,31 @@ body {
   font-family: var(--font-keifont);
 }
 
+/* LiftKit golden ratio component styles */
+.lk-card {
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.lk-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.lk-nav {
+  gap: var(--lk-size-xl);
+}
+
+.lk-section-padding {
+  padding-top: var(--lk-size-2xl);
+  padding-bottom: var(--lk-size-2xl);
+}
+
+/* Underline styling for MDX content (matches Text component marker style) */
+.prose u {
+  text-decoration: none;
+  background: linear-gradient(transparent 60%, #7BABFF80 60%, #7BABFF80 90%, transparent 90%);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0f172a;
@@ -66,3 +109,44 @@ body {
 }
 
 
+
+/* ===== Dashboard ===== */
+.dashboard-root {
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-root .react-resizable-handle {
+  opacity: 0.4;
+  filter: invert(1);
+}
+
+.dashboard-root .react-resizable-handle:hover {
+  opacity: 0.9;
+}
+
+.dashboard-root .react-grid-item.react-grid-placeholder {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 2px dashed rgba(255, 255, 255, 0.3) !important;
+  border-radius: 16px;
+  opacity: 1 !important;
+}
+
+.dashboard-root .react-grid-item.react-draggable-dragging {
+  opacity: 0.85;
+  z-index: 100;
+}
+
+/* ダッシュボードページ: ヘッダー/フッターを非表示 */
+body[data-dashboard] header,
+body[data-dashboard] footer {
+  display: none !important;
+}
+
+/* フルスクリーン時: ヘッダー/フッターを非表示 */
+html:fullscreen header,
+html:fullscreen footer,
+html:-webkit-full-screen header,
+html:-webkit-full-screen footer {
+  display: none !important;
+}
