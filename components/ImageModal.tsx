@@ -7,10 +7,11 @@ interface ImageModalProps {
   src?: string;
   alt?: string;
   className?: string;
+  maxWidth?: string;
   [key: string]: any;
 }
 
-export const ImageModal = ({ src, alt, className, ...props }: ImageModalProps) => {
+export const ImageModal = ({ src, alt, className, maxWidth, ...props }: ImageModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const open = useCallback(() => setIsOpen(true), []);
@@ -39,7 +40,8 @@ export const ImageModal = ({ src, alt, className, ...props }: ImageModalProps) =
     <>
       {/* Thumbnail wrapper */}
       <span
-        className={`relative cursor-zoom-in group block overflow-hidden ${className ?? ""}`}
+        className={`relative cursor-zoom-in group block overflow-hidden ${className ?? ""}${maxWidth ? " mx-auto" : ""}`}
+        style={maxWidth ? { maxWidth } : undefined}
         onClick={open}
         role="button"
         aria-label="画像を拡大"
