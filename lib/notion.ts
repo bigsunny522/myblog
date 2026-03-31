@@ -243,7 +243,7 @@ async function blockToMarkdown(notion: Client, block: any, slug: string, depth: 
     case 'toggle':
       return `${indent}${text}\n\n${children}`;
     case 'quote':
-      return `${indent}> ${text}\n\n${children}`;
+      return text;
     case 'callout': {
       const emoji: string = data.icon?.emoji ?? '';
       const pointNum = getPointNumber(emoji);
@@ -253,7 +253,7 @@ async function blockToMarkdown(notion: Client, block: any, slug: string, depth: 
         return `<FeaturePoint number={${pointNum}} title="${title}">\n\n${children}\n\n</FeaturePoint>\n\n`;
       }
       const emojiPrefix = emoji ? `${emoji} ` : '';
-      return `> ${emojiPrefix}${text}\n\n${children}`;
+      return `<CouponBox>\n\n${emojiPrefix}${text}\n\n${children}\n</CouponBox>\n\n`;
     }
     case 'divider':
       return `---\n\n`;
@@ -298,6 +298,13 @@ async function blocksToMarkdown(notion: Client, blockId: string, slug: string, d
   let buyLinksImage: string | undefined = undefined;
   let buyLinksTitle: string | undefined = undefined;
   let buyLinksDescription: string | undefined = undefined;
+  let quoteLines: string[] = [];
+
+  const flushQuote = () => {
+    if (quoteLines.length === 0) return;
+    chunks.push(`<CouponBox>\n\n${quoteLines.join('\n\n')}\n\n</CouponBox>\n\n`);
+    quoteLines = [];
+  };
 
   const flushBuyLinks = () => {
     if (buyLinks.length > 0) {
@@ -345,6 +352,14 @@ async function blocksToMarkdown(notion: Client, blockId: string, slug: string, d
   for (const block of allBlocks) {
     const type = block.type;
     const plainText = block[type]?.rich_text ? getPlainText(block[type].rich_text) : '';
+
+    if (type === 'quote') {
+      const text = richTextToMarkdown(block.quote.rich_text);
+      quoteLines.push(text);
+      continue;
+    }
+
+    flushQuote();
 
     if (type === 'heading_3') {
       flushBuyLinks();
@@ -428,6 +443,7 @@ async function blocksToMarkdown(notion: Client, blockId: string, slug: string, d
     if (md) chunks.push(md);
   }
 
+  flushQuote();
   flushBuyLinks();
   flushReview();
   return chunks.join('');

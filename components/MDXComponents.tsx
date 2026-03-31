@@ -283,6 +283,29 @@ const U = ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
   </span>
 );
 
+const CouponBox = ({ children }: { children: React.ReactNode }) => (
+  <div className="relative my-8 rounded-2xl overflow-hidden border-2 border-dashed border-amber-400/70 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 dark:border-amber-500/60">
+    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400/0 via-amber-400/50 to-amber-400/0" />
+    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400/0 via-amber-400/50 to-amber-400/0" />
+    <div className="px-6 py-5 [&_div.mb-3]:mb-1 [&_div.mb-3]:indent-0 [&_div.mb-3:last-child]:mb-0">
+      {children}
+    </div>
+  </div>
+);
+
+const Blockquote = ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
+  <div
+    className="relative my-8 rounded-2xl overflow-hidden border-2 border-dashed border-amber-400/70 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 dark:border-amber-500/60"
+    {...props}
+  >
+    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400/0 via-amber-400/50 to-amber-400/0" />
+    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400/0 via-amber-400/50 to-amber-400/0" />
+    <div className="px-6 py-5 [&_div.mb-3]:mb-1 [&_div.mb-3]:indent-0 [&_div.mb-3:last-child]:mb-0">
+      {children}
+    </div>
+  </div>
+);
+
 // Export the components mapping
 export const mdxComponents = {
   Text,
@@ -296,6 +319,8 @@ export const mdxComponents = {
   ol: OL,
   li: LI,
   u: U,
+  blockquote: Blockquote,
+  CouponBox,
   img: (props: any) => {
     const { alt, ...rest } = props;
     const sizeMatch = (alt as string | undefined)?.match(/\|(small|medium|large|(\d+(?:\.\d+)?)%)$/i);
