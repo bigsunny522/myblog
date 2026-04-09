@@ -18,53 +18,60 @@ export function DashboardGrid({ width, rowHeight, maxRows }: { width: number; ro
   const cols = useDashboardStore((s) => s.config.cols);
   const setLayouts = useDashboardStore((s) => s.setLayouts);
 
-  // 直前の有効なレイアウト（スナップバック用・常に最新の有効状態を保持）
   const lastValidLayout = useRef<WidgetLayout[]>(
     (layouts as WidgetLayout[]).map((item) => ({ ...item }))
   );
-  const isInteracting = useRef(false);
   const [resetKey, setResetKey] = useState(0);
-  // 再マウント直後の onLayoutChange をスキップするフラグ
   const isReverting = useRef(false);
 
+  // isDragging: onDragStart/onResizeStart〜onDragStop/onResizeStop の間だけ true
+  // hadInteraction: ドラッグ開始後、onLayoutChange が最終処理するまで true
+  const isDragging = useRef(false);
+  const hadInteraction = useRef(false);
+
   const captureLayout = useCallback(() => {
-    isInteracting.current = true;
+    isDragging.current = true;
+    hadInteraction.current = true;
     lastValidLayout.current = (layouts as WidgetLayout[]).map((item) => ({ ...item }));
-  }, [layouts, maxRows]);
+  }, [layouts]);
 
-  // isInteracting のリセットは onLayoutChange で行う（compact より後に確実に呼ばれるため）
-  const releaseInteract = useCallback(() => {}, []);
+  // onDragStop/onResizeStop: ドラッグ終了を記録（onLayoutChange より先に発火する）
+  const releaseInteract = useCallback(() => {
+    isDragging.current = false;
+  }, []);
 
-  // カスタムコンパクタ: ドラッグ中にオーバーフローが発生したら即スナップバック
+  // コンパクタ: ドラッグ中（isDragging=true）にオーバーフローしたら lastValidLayout に戻す
+  // isDragging フラグはドロップまでリセットされないため、
+  // onLayoutChange が複数回発火しても保護が維持される
   const boundedCompactor = useMemo((): Compactor => ({
     type: 'vertical' as const,
     allowOverlap: false,
     compact(layout: Layout, cols: number): Layout {
       const compacted = verticalCompactor.compact(layout, cols);
-      const overflow = compacted.some((item) => item.y + item.h > maxRows);
-      if (isInteracting.current && overflow) {
-        return lastValidLayout.current as Layout;
+      if (isDragging.current) {
+        const overflow = compacted.some((item) => item.y + item.h > maxRows);
+        if (overflow) return lastValidLayout.current as Layout;
       }
       return compacted;
     },
   }), [maxRows]);
 
-  // ドラッグ・リサイズ終了後の最終チェック
-  // onLayoutChange はドラッグ中には呼ばれず、終了時に1回だけ呼ばれる
   const onLayoutChange = useCallback(
     (newLayout: RGLLayout) => {
-      // 再マウント直後の onLayoutChange はスキップ（ストアは既に lastValidLayout）
+      // GridLayout 再マウント直後の発火をスキップ
       if (isReverting.current) {
         isReverting.current = false;
-        isInteracting.current = false;
         return;
       }
-      // ここで false にすることで compact（drop 直前）では必ず isInteracting=true を保証する
-      isInteracting.current = false;
+      // ドラッグ中の発火は無視（onDragStop より前に何度も呼ばれる）
+      if (isDragging.current) return;
+      // 初期マウント等インタラクションなしの発火は無視
+      if (!hadInteraction.current) return;
+      hadInteraction.current = false;
+
       const overflow = newLayout.some((item) => item.y + item.h > maxRows);
       if (overflow) {
-        // ストアは既に lastValidLayout（captureLayout で保存済み）なので setLayouts は不要
-        // key を変えて GridLayout を再マウントさせ、layout prop を強制的に再読み込みする
+        // コンパクタが弾けなかった場合の最終フェールセーフ: スナップバック
         isReverting.current = true;
         setResetKey((k) => k + 1);
         return;

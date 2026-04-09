@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /portfolio
+Disallow: /dashboard
+
+Sitemap: https://xyzack271.com/sitemap.xml

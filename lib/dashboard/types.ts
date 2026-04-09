@@ -158,17 +158,24 @@ export const DEFAULT_CONFIG: DashboardConfig = {
       } as WeatherConfig,
     },
     {
-      id: 'progress-1',
-      type: 'progress',
+      id: 'calendar-1',
+      type: 'calendar',
+      config: {} as WidgetConfig,
+    },
+    {
+      id: 'todo-1',
+      type: 'todo',
       config: {
-        show: ['year', 'month', 'day'],
-      } as ProgressConfig,
+        items: [],
+      } as TodoConfig,
     },
   ],
+  // 12列×12行を2×2で均等分割（各ウィジェット 6列×6行）
   layouts: [
-    { i: 'clock-1', x: 0, y: 0, w: 6, h: 4, minW: 3, minH: 2 },
-    { i: 'weather-1', x: 6, y: 0, w: 6, h: 4, minW: 4, minH: 3 },
-    { i: 'progress-1', x: 0, y: 4, w: 4, h: 3, minW: 3, minH: 2 },
+    { i: 'clock-1',    x: 0, y: 0, w: 6, h: 6, minW: 3, minH: 2 },
+    { i: 'weather-1',  x: 6, y: 0, w: 6, h: 6, minW: 4, minH: 3 },
+    { i: 'calendar-1', x: 0, y: 6, w: 6, h: 6, minW: 3, minH: 3 },
+    { i: 'todo-1',     x: 6, y: 6, w: 6, h: 6, minW: 3, minH: 3 },
   ],
   theme: DEFAULT_THEME,
   cols: 12,

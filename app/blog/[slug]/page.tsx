@@ -135,8 +135,47 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const readingTime = calcReadingTime(post.content);
 
+  const baseUrl = getBaseUrl();
+  const ogImage = `${baseUrl}${post.coverImage?.trim() || '/images/main/skyblue.png'}`;
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: ogImage,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      '@type': 'Person',
+      name: 'ざいざっく',
+      url: baseUrl,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ざっくらぼ',
+      logo: { '@type': 'ImageObject', url: `${baseUrl}/images/main/logo.svg` },
+    },
+    url: `${baseUrl}/blog/${slug}`,
+    keywords: post.tags?.join(', '),
+    articleSection: post.category,
+    inLanguage: 'ja-JP',
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'ホーム', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'ブログ', item: `${baseUrl}/reviews` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `${baseUrl}/blog/${slug}` },
+    ],
+  };
+
   return (
     <article className="min-h-screen pb-20">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <ScrollProgressBar />
       {post.published === false && (
         <div className="sticky top-0 z-50 w-full bg-yellow-400 text-yellow-900 text-sm font-semibold text-center py-2 px-4">

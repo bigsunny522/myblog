@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase, isSupabaseConfigured } from '@/lib/supabaseClient';
 import { Eye } from 'lucide-react';
 
 interface ViewCounterProps {
@@ -12,8 +12,7 @@ export const ViewCounter = ({ slug }: ViewCounterProps) => {
   const [views, setViews] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Set this to false when Supabase is configured
-  const isDemoMode = false; 
+  const isDemoMode = !isSupabaseConfigured;
 
   useEffect(() => {
     // Demo Mode implementation
