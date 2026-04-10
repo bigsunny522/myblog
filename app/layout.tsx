@@ -39,7 +39,11 @@ export const metadata: Metadata = {
     images: ['/images/main/skyblue.png'],
   },
   icons: {
-    icon: '/images/main/logo.svg',
+    icon: [
+      { url: '/images/main/skyblue.png', type: 'image/png' },
+    ],
+    apple: '/images/main/skyblue.png',
+    shortcut: '/images/main/skyblue.png',
   },
 };
 
