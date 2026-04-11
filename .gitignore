@@ -38,3 +38,5 @@ tsconfig.tsbuildinfo
 
 # Temporary images
 image.png
+# TinaCMS（public/adminはビルド時に生成されるため除外）
+public/admin
