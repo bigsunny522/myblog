@@ -115,10 +115,75 @@ input BooleanFilter {
   exists: Boolean
 }
 
+input PostBodySpecsItemsFilter {
+  label: StringFilter
+  value: StringFilter
+}
+
+input PostBodySpecsFilter {
+  items: PostBodySpecsItemsFilter
+}
+
+input PostBodyBuyLinksLinksFilter {
+  type: StringFilter
+  href: StringFilter
+  label: StringFilter
+}
+
+input PostBodyBuyLinksFilter {
+  title: StringFilter
+  image: StringFilter
+  description: StringFilter
+  links: PostBodyBuyLinksLinksFilter
+}
+
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
 input RichTextFilter {
   startsWith: String
   eq: String
   exists: Boolean
+}
+
+input PostBodyFeaturePointFilter {
+  number: NumberFilter
+  title: StringFilter
+  body: RichTextFilter
+}
+
+input PostBodyReviewSummaryGoodPointsFilter {
+  title: StringFilter
+  body: StringFilter
+}
+
+input PostBodyReviewSummaryConPointsFilter {
+  title: StringFilter
+  body: StringFilter
+}
+
+input PostBodyReviewSummaryFilter {
+  goodPoints: PostBodyReviewSummaryGoodPointsFilter
+  conPoints: PostBodyReviewSummaryConPointsFilter
+}
+
+input PostBodyCouponBoxFilter {
+  body: RichTextFilter
+}
+
+input PostBodyFilter {
+  Specs: PostBodySpecsFilter
+  BuyLinks: PostBodyBuyLinksFilter
+  FeaturePoint: PostBodyFeaturePointFilter
+  ReviewSummary: PostBodyReviewSummaryFilter
+  CouponBox: PostBodyCouponBoxFilter
 }
 
 input PostFilter {
@@ -131,7 +196,7 @@ input PostFilter {
   coverImage: StringFilter
   recommended: BooleanFilter
   published: BooleanFilter
-  body: RichTextFilter
+  body: PostBodyFilter
 }
 
 type PostConnectionEdges {

@@ -194,10 +194,75 @@ export type BooleanFilter = {
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type PostBodySpecsItemsFilter = {
+  label?: InputMaybe<StringFilter>;
+  value?: InputMaybe<StringFilter>;
+};
+
+export type PostBodySpecsFilter = {
+  items?: InputMaybe<PostBodySpecsItemsFilter>;
+};
+
+export type PostBodyBuyLinksLinksFilter = {
+  type?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+};
+
+export type PostBodyBuyLinksFilter = {
+  title?: InputMaybe<StringFilter>;
+  image?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  links?: InputMaybe<PostBodyBuyLinksLinksFilter>;
+};
+
+export type NumberFilter = {
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+};
+
 export type RichTextFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
   eq?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type PostBodyFeaturePointFilter = {
+  number?: InputMaybe<NumberFilter>;
+  title?: InputMaybe<StringFilter>;
+  body?: InputMaybe<RichTextFilter>;
+};
+
+export type PostBodyReviewSummaryGoodPointsFilter = {
+  title?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+};
+
+export type PostBodyReviewSummaryConPointsFilter = {
+  title?: InputMaybe<StringFilter>;
+  body?: InputMaybe<StringFilter>;
+};
+
+export type PostBodyReviewSummaryFilter = {
+  goodPoints?: InputMaybe<PostBodyReviewSummaryGoodPointsFilter>;
+  conPoints?: InputMaybe<PostBodyReviewSummaryConPointsFilter>;
+};
+
+export type PostBodyCouponBoxFilter = {
+  body?: InputMaybe<RichTextFilter>;
+};
+
+export type PostBodyFilter = {
+  Specs?: InputMaybe<PostBodySpecsFilter>;
+  BuyLinks?: InputMaybe<PostBodyBuyLinksFilter>;
+  FeaturePoint?: InputMaybe<PostBodyFeaturePointFilter>;
+  ReviewSummary?: InputMaybe<PostBodyReviewSummaryFilter>;
+  CouponBox?: InputMaybe<PostBodyCouponBoxFilter>;
 };
 
 export type PostFilter = {
@@ -210,7 +275,7 @@ export type PostFilter = {
   coverImage?: InputMaybe<StringFilter>;
   recommended?: InputMaybe<BooleanFilter>;
   published?: InputMaybe<BooleanFilter>;
-  body?: InputMaybe<RichTextFilter>;
+  body?: InputMaybe<PostBodyFilter>;
 };
 
 export type PostConnectionEdges = {
@@ -453,7 +518,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "https://content.tinajs.io/2.2/content/16857ead-dc21-4706-9b86-8d4341df75de/github/main",
+        url: "http://localhost:4001/graphql",
         queries,
       })
     )
