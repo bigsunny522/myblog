@@ -27,3 +27,14 @@ ts-debug.log*
 
 # vercel
 .vercel
+
+AI_INSTRUCTIONS.md
+
+# Build artifacts
+tsconfig.tsbuildinfo
+
+# Local Claude Code settings
+.claude/settings.local.json
+
+# Temporary images
+image.png

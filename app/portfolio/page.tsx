@@ -183,7 +183,7 @@ export default function PortfolioPage() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <a
-              href="https://zaclab.jp"
+              href="https://xyzack271.com"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-full font-medium text-sm hover:opacity-90 transition-opacity"
@@ -193,7 +193,7 @@ export default function PortfolioPage() {
               <ExternalLink size={14} />
             </a>
             <a
-              href="https://github.com/bigsunny"
+              href="https://github.com/bigsunny0522"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-card/50 backdrop-blur-sm border border-border/50 rounded-full font-medium text-sm hover:border-primary/50 transition-colors"
