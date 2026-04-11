@@ -154,10 +154,11 @@ const LI = ({ children, className, ...props }: React.DetailedHTMLProps<React.LiH
 
 import { ImageModal } from '@/components/ImageModal';
 
-const FeaturePoint = ({ number, title, children }: {
+const FeaturePoint = ({ number, title, children, body }: {
   number: number;
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  body?: React.ReactNode; // TinaCMS テンプレート経由
 }) => (
   <div className="bg-background border border-border rounded-xl p-5 md:p-6 mb-4">
     <div className="mb-4">
@@ -170,7 +171,7 @@ const FeaturePoint = ({ number, title, children }: {
       <div className="text-lg md:text-xl font-bold text-foreground pl-3">{title}</div>
     </div>
     <div className="flex flex-col md:flex-row gap-4 items-start text-muted-foreground text-sm leading-relaxed">
-      {children}
+      {body ?? children}
     </div>
   </div>
 );
@@ -182,12 +183,24 @@ const ImageGrid = ({ children, columns = 2 }: { children: React.ReactNode; colum
   </div>
 );
 
-const BuyLinks = ({ children, image, title, description }: {
-  children: React.ReactNode;
+type BuyLinkData = { type: 'amazon' | 'rakuten' | 'official'; href: string; label?: string };
+
+const BuyLinks = ({ children, image, title, description, links }: {
+  children?: React.ReactNode;
   image?: string;
   title?: string;
   description?: string;
+  // TinaCMS テンプレート経由のリンク配列
+  links?: BuyLinkData[];
 }) => {
+  // TinaCMS テンプレート経由の場合は links プロップからレンダリング
+  const renderedLinks = links
+    ? links.map((l, i) => (
+        <BuyLink key={i} type={l.type ?? 'official'} href={l.href}>
+          {l.label ?? l.type}
+        </BuyLink>
+      ))
+    : children;
   if (image || title) {
     return (
       <div className="my-8 p-6 bg-primary/10 rounded-2xl border border-primary/20">
@@ -202,7 +215,7 @@ const BuyLinks = ({ children, image, title, description }: {
             {description && <div className="text-sm text-muted-foreground">{description}</div>}
           </div>
           <div className="flex flex-col w-full md:w-auto gap-2 min-w-[200px]">
-            {children}
+            {renderedLinks}
           </div>
         </div>
       </div>
@@ -212,7 +225,7 @@ const BuyLinks = ({ children, image, title, description }: {
     <div className="my-8 p-6 bg-primary/10 rounded-2xl border border-primary/20">
       <p className="text-sm font-semibold text-muted-foreground mb-3">購入・詳細をチェック</p>
       <div className="flex flex-col gap-2">
-        {children}
+        {renderedLinks}
       </div>
     </div>
   );
@@ -239,9 +252,40 @@ const BuyLink = ({ type, href, children }: { type: 'amazon' | 'rakuten' | 'offic
   );
 };
 
-const ReviewSummary = ({ children }: { children: React.ReactNode }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">{children}</div>
-);
+type ReviewPointData = { title: string; body?: string };
+
+const ReviewSummary = ({
+  children,
+  goodPoints,
+  conPoints,
+}: {
+  children?: React.ReactNode;
+  goodPoints?: ReviewPointData[];
+  conPoints?: ReviewPointData[];
+}) => {
+  // TinaCMS テンプレート経由
+  if (goodPoints || conPoints) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+        {goodPoints && goodPoints.length > 0 && (
+          <ReviewPoints type="good">
+            {goodPoints.map((p, i) => (
+              <ReviewPoint key={i} type="good" title={p.title}>{p.body}</ReviewPoint>
+            ))}
+          </ReviewPoints>
+        )}
+        {conPoints && conPoints.length > 0 && (
+          <ReviewPoints type="con">
+            {conPoints.map((p, i) => (
+              <ReviewPoint key={i} type="con" title={p.title}>{p.body}</ReviewPoint>
+            ))}
+          </ReviewPoints>
+        )}
+      </div>
+    );
+  }
+  return <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">{children}</div>;
+};
 
 const ReviewPoints = ({ type, children }: { type: 'good' | 'con'; children: React.ReactNode }) => {
   const isGood = type === 'good';
@@ -283,12 +327,12 @@ const U = ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
   </span>
 );
 
-const CouponBox = ({ children }: { children: React.ReactNode }) => (
+const CouponBox = ({ children, body }: { children?: React.ReactNode; body?: React.ReactNode }) => (
   <div className="relative my-8 rounded-2xl overflow-hidden border-2 border-dashed border-amber-400/70 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 dark:border-amber-500/60">
     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400/0 via-amber-400/50 to-amber-400/0" />
     <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400/0 via-amber-400/50 to-amber-400/0" />
     <div className="px-6 py-5 [&_div.mb-3]:mb-1 [&_div.mb-3]:indent-0 [&_div.mb-3:last-child]:mb-0">
-      {children}
+      {body ?? children}
     </div>
   </div>
 );

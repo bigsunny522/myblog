@@ -1,18 +1,15 @@
 import { defineConfig } from 'tinacms';
 
 export default defineConfig({
-  // TinaCloud認証情報（app.tina.io で取得・Cloudflare Pages環境変数に設定）
-  // 未設定の場合はローカルモードで動作
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID ?? '',
   token: process.env.TINA_TOKEN ?? '',
 
   branch:
     process.env.GITHUB_BRANCH ||
-    process.env.CF_PAGES_BRANCH || // Cloudflare Pages の自動環境変数
+    process.env.CF_PAGES_BRANCH ||
     'main',
 
   build: {
-    // 管理UIを public/admin/ に出力 → Cloudflare Pages で /admin として配信
     outputFolder: 'admin',
     publicFolder: 'public',
   },
@@ -48,9 +45,7 @@ export default defineConfig({
             type: 'string',
             name: 'excerpt',
             label: '概要',
-            ui: {
-              component: 'textarea',
-            },
+            ui: { component: 'textarea' },
             required: true,
           },
           {
@@ -91,6 +86,124 @@ export default defineConfig({
             name: 'body',
             label: '本文',
             isBody: true,
+            templates: [
+              // ─── スペック表 ───────────────────────────────────────
+              {
+                name: 'Specs',
+                label: 'スペック表',
+                fields: [
+                  {
+                    name: 'items',
+                    label: 'スペック項目',
+                    type: 'object',
+                    list: true,
+                    ui: {
+                      itemProps: (item: { label?: string }) => ({
+                        label: item?.label ?? 'スペック項目',
+                      }),
+                    },
+                    fields: [
+                      { name: 'label', label: 'ラベル', type: 'string', required: true },
+                      { name: 'value', label: '値', type: 'string', required: true },
+                    ],
+                  },
+                ],
+              },
+
+              // ─── 購入リンク ───────────────────────────────────────
+              {
+                name: 'BuyLinks',
+                label: '購入リンク',
+                fields: [
+                  { name: 'title', label: '商品名', type: 'string' },
+                  { name: 'image', label: '商品画像 URL', type: 'string' },
+                  { name: 'description', label: '商品説明', type: 'string' },
+                  {
+                    name: 'links',
+                    label: 'リンク一覧',
+                    type: 'object',
+                    list: true,
+                    ui: {
+                      itemProps: (item: { label?: string; type?: string }) => ({
+                        label: item?.label ?? item?.type ?? 'リンク',
+                      }),
+                    },
+                    fields: [
+                      {
+                        name: 'type',
+                        label: '種類',
+                        type: 'string',
+                        options: [
+                          { value: 'amazon', label: 'Amazon' },
+                          { value: 'rakuten', label: '楽天市場' },
+                          { value: 'official', label: '公式サイト' },
+                        ],
+                      },
+                      { name: 'href', label: 'URL', type: 'string', required: true },
+                      { name: 'label', label: 'ボタンテキスト', type: 'string' },
+                    ],
+                  },
+                ],
+              },
+
+              // ─── 特徴ポイント ─────────────────────────────────────
+              {
+                name: 'FeaturePoint',
+                label: '特徴ポイント',
+                fields: [
+                  { name: 'number', label: '番号', type: 'number', required: true },
+                  { name: 'title', label: 'タイトル', type: 'string', required: true },
+                  { name: 'body', label: '本文', type: 'rich-text' },
+                ],
+              },
+
+              // ─── レビューまとめ ───────────────────────────────────
+              {
+                name: 'ReviewSummary',
+                label: 'レビューまとめ（良い点 / 気になる点）',
+                fields: [
+                  {
+                    name: 'goodPoints',
+                    label: 'GOOD（良い点）',
+                    type: 'object',
+                    list: true,
+                    ui: {
+                      itemProps: (item: { title?: string }) => ({
+                        label: item?.title ?? 'GOOD',
+                      }),
+                    },
+                    fields: [
+                      { name: 'title', label: 'タイトル', type: 'string', required: true },
+                      { name: 'body', label: '説明', type: 'string' },
+                    ],
+                  },
+                  {
+                    name: 'conPoints',
+                    label: '気になる点',
+                    type: 'object',
+                    list: true,
+                    ui: {
+                      itemProps: (item: { title?: string }) => ({
+                        label: item?.title ?? '気になる点',
+                      }),
+                    },
+                    fields: [
+                      { name: 'title', label: 'タイトル', type: 'string', required: true },
+                      { name: 'body', label: '説明', type: 'string' },
+                    ],
+                  },
+                ],
+              },
+
+              // ─── クーポン ─────────────────────────────────────────
+              {
+                name: 'CouponBox',
+                label: 'クーポン情報',
+                fields: [
+                  { name: 'body', label: '内容', type: 'rich-text' },
+                ],
+              },
+            ],
           },
         ],
       },

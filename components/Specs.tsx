@@ -4,9 +4,23 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { BudouxText } from './ui/BudouxText';
 
-export const Specs = ({ children }: { children: React.ReactNode }) => {
+type SpecsItemData = { label: string; value: string };
+
+export const Specs = ({
+  children,
+  items: itemsProp,
+}: {
+  children?: React.ReactNode;
+  items?: SpecsItemData[];
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const items = React.Children.toArray(children);
+
+  // TinaCMS テンプレート経由（items プロップ）と既存 MDX children の両方に対応
+  const items = itemsProp
+    ? itemsProp.map((item, i) => (
+        <SpecsItem key={i} label={item.label}>{item.value}</SpecsItem>
+      ))
+    : React.Children.toArray(children);
   const SHOWN_ITEMS_COUNT = 5;
 
   const hasMoreItems = items.length > SHOWN_ITEMS_COUNT;
