@@ -39,7 +39,7 @@ function getMdxPostBySlug(slug: string): BlogPost | undefined {
     excerpt: data.excerpt,
     date: data.date,
     category: data.category,
-    tags: data.tags || [],
+    tags: Array.from(new Set((data.tags || []).filter(Boolean))),
     coverImage: data.coverImage,
     recommended: data.recommended || false,
     published: data.published !== false,

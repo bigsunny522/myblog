@@ -238,15 +238,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             )}
 
             <div className="flex flex-wrap gap-2">
-              {post.tags?.filter((tag) => tag !== post.category).map((tag) => (
-                <Link
-                  key={tag}
-                  href={`/tags/${encodeURIComponent(tag)}`}
-                  className="px-2 py-1 bg-secondary hover:bg-secondary/80 text-xs rounded-md transition-colors text-secondary-foreground"
-                >
-                  #{tag}
-                </Link>
-              ))}
+              {Array.from(new Set((post.tags ?? []).filter(Boolean)))
+                .filter((tag) => tag !== post.category)
+                .map((tag) => (
+                  <Link
+                    key={tag}
+                    href={`/tags/${encodeURIComponent(tag)}`}
+                    className="px-2 py-1 bg-secondary hover:bg-secondary/80 text-xs rounded-md transition-colors text-secondary-foreground"
+                  >
+                    #{tag}
+                  </Link>
+                ))}
             </div>
           </div>
         </div>

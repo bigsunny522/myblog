@@ -13,8 +13,9 @@ interface BlogListProps {
 }
 
 function getVisibleTags(post: BlogPost): string[] {
-  const categoryInTags = post.tags?.includes(post.category);
-  const otherTags = post.tags?.filter(tag => tag !== post.category) ?? [];
+  const uniqueTags = Array.from(new Set((post.tags ?? []).filter(Boolean)));
+  const categoryInTags = !!post.category && uniqueTags.includes(post.category);
+  const otherTags = uniqueTags.filter(tag => tag !== post.category);
   return categoryInTags
     ? [post.category, ...otherTags].slice(0, 2)
     : otherTags.slice(0, 2);

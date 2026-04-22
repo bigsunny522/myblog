@@ -29,7 +29,7 @@ export default async function ReviewsPage() {
   const posts = await getAllPosts();
   
   // Extract all unique tags
-  const allTags = Array.from(new Set(posts.flatMap(post => post.tags)));
+  const allTags = Array.from(new Set(posts.flatMap(post => post.tags).filter(Boolean)));
 
   return (
     <div className="container mx-auto px-4 py-16 min-h-screen">
