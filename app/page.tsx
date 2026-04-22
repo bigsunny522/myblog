@@ -50,7 +50,7 @@ export default async function Home() {
           <HomePostTabs latestPosts={latestPosts} recommendedPosts={recommendedPosts} />
           
           <div className="mt-8 flex justify-center md:hidden">
-            <Link href="/reviews" className="px-6 py-3 bg-primary text-primary-foreground rounded-full font-bold shadow-lg hover:bg-primary/90 transition-all flex items-center gap-2">
+            <Link href="/reviews" className="px-lk-lg py-lk-xs bg-primary text-primary-foreground rounded-full font-bold shadow-lg hover:bg-primary/90 transition-all flex items-center gap-2">
               すべて見る <span>→</span>
             </Link>
           </div>

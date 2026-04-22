@@ -4,9 +4,9 @@ import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { TiltCard } from '@/components/TiltCard';
 import {
   Layers, Code2, Palette, Zap, Database, FileText, Server,
-  Box, Globe, BookOpen, Cpu, ExternalLink, Mail, Twitter,
+  Box, Globe, Cpu, ExternalLink, Mail, Twitter,
   GitBranch, Layout, Sparkles, Shield, Image, Package,
-  ChevronRight,
+  ChevronRight, Pencil,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 // Data
 // ────────────────────────────────────────────────────────────
 
-const techStack = [
+const commonTechStack = [
   {
     name: 'Next.js 16',
     role: 'フレームワーク',
@@ -48,24 +48,27 @@ const techStack = [
   {
     name: 'Tailwind CSS v4',
     role: 'スタイリング',
-    desc: 'PostCSS プラグイン経由で導入。CSS 変数によるダークモード対応テーマを構築。',
+    desc: 'PostCSS プラグイン経由で導入。CSS 変数によるダークモード対応テーマを構築。LiftKit デザイントークンを全コンポーネントに統一適用。',
     icon: <Palette size={22} />,
     color: 'text-teal-400 bg-teal-400/10',
   },
   {
     name: 'Framer Motion',
     role: 'アニメーション',
-    desc: 'スクロール連動アニメーション・3D チルトカード・ページトランジションを実装。',
+    desc: 'スクロール連動の ScrollReveal・3D チルトカード・ページトランジションをブログ・アプリ両方で活用。',
     icon: <Zap size={22} />,
     color: 'text-purple-400 bg-purple-400/10',
   },
   {
-    name: 'Notion API',
-    role: 'CMS',
-    desc: 'Notion データベースをヘッドレス CMS として活用。ブロックを JSX に変換する独自パーサーを実装。',
-    icon: <BookOpen size={22} />,
-    color: 'text-amber-400 bg-amber-400/10',
+    name: 'Cloudflare Pages',
+    role: 'ホスティング',
+    desc: '静的エクスポートを Cloudflare Pages でホスティング。CI/CD パイプラインと環境変数管理を含む。',
+    icon: <Server size={22} />,
+    color: 'text-orange-500 bg-orange-500/10',
   },
+];
+
+const blogTechStack = [
   {
     name: 'MDX + Shiki',
     role: 'コンテンツ',
@@ -74,25 +77,11 @@ const techStack = [
     color: 'text-orange-400 bg-orange-400/10',
   },
   {
-    name: 'Zustand',
-    role: '状態管理',
-    desc: 'ダッシュボードレイアウト・UI 状態を管理。localStorage への永続化も実装。',
-    icon: <Box size={22} />,
-    color: 'text-pink-400 bg-pink-400/10',
-  },
-  {
-    name: 'Supabase',
-    role: 'BaaS',
-    desc: 'PostgreSQL ベースの BaaS をクライアント連携。将来的な機能拡張を見据えた構成。',
-    icon: <Database size={22} />,
-    color: 'text-emerald-400 bg-emerald-400/10',
-  },
-  {
-    name: 'react-grid-layout',
-    role: 'ダッシュボード',
-    desc: 'ドラッグ＆ドロップで並べ替え可能な 11 種類のウィジェットシステムを実装。',
-    icon: <Layout size={22} />,
-    color: 'text-indigo-400 bg-indigo-400/10',
+    name: 'TinaCMS',
+    role: 'ビジュアル CMS',
+    desc: 'Git ベースのヘッドレス CMS。静的エクスポート構成のまま iPad・外出先からブラウザ上で記事編集が可能。カスタムコンポーネントを Rich Text テンプレートとして登録。',
+    icon: <Pencil size={22} />,
+    color: 'text-fuchsia-400 bg-fuchsia-400/10',
   },
   {
     name: 'sharp / next-image-export-optimizer',
@@ -101,27 +90,50 @@ const techStack = [
     icon: <Image size={22} />,
     color: 'text-rose-400 bg-rose-400/10',
   },
+];
+
+const appTechStack = [
   {
-    name: 'Cloudflare Pages',
-    role: 'デプロイ',
-    desc: '静的エクスポートを Cloudflare Pages でホスティング。CI/CD パイプラインと環境変数管理を含む。',
-    icon: <Server size={22} />,
-    color: 'text-orange-500 bg-orange-500/10',
+    name: 'Zustand',
+    role: '状態管理',
+    desc: 'ダッシュボードレイアウト・ウィジェット設定・UI 状態を管理。localStorage への永続化も実装。',
+    icon: <Box size={22} />,
+    color: 'text-pink-400 bg-pink-400/10',
+  },
+  {
+    name: 'react-grid-layout',
+    role: 'ドラッグ&ドロップ',
+    desc: 'ドラッグ＆ドロップで並べ替え・リサイズ可能な 11 種類のウィジェットレイアウトを実装。',
+    icon: <Layout size={22} />,
+    color: 'text-indigo-400 bg-indigo-400/10',
+  },
+  {
+    name: 'Supabase',
+    role: 'BaaS',
+    desc: 'PostgreSQL ベースの BaaS をクライアント連携。将来的な機能拡張を見据えた構成。',
+    icon: <Database size={22} />,
+    color: 'text-emerald-400 bg-emerald-400/10',
   },
 ];
 
 const features = [
   {
-    title: 'デュアルコンテンツソース',
-    desc: 'Notion API をプライマリ CMS、ローカル MDX ファイルをフォールバックとして機能するハイブリッド構成。ビルド時に Notion 画像を自動ダウンロード・ハッシュキャッシュする仕組みを独自実装。',
+    title: 'MDX + TinaCMS コンテンツ管理',
+    desc: 'ローカル MDX ファイルを主軸とし、TinaCMS（Git ベース）でブラウザ上からリアルタイム編集が可能。静的エクスポートのまま iPad・外出先での記事執筆に対応。',
     icon: <GitBranch size={20} />,
     color: 'text-primary bg-primary/10',
   },
   {
-    title: 'カスタム Notion ブロックパーサー',
-    desc: 'Notion API のブロックを Markdown・JSX へ変換する 500 行超の独自パーサーを実装。コールアウト → `<FeaturePoint>`、2 カラムテーブル → `<Specs>`、購入リンクセクション → `<BuyLinks>` など、コンテンツ構造をパターンマッチングで解析。',
-    icon: <Code2 size={20} />,
-    color: 'text-blue-400 bg-blue-400/10',
+    title: 'カスタム MDX コンポーネント',
+    desc: '`<ReviewPoint>` `<Specs>` `<BuyLinks>` `<CouponBox>` `<FeaturePoint>` など、レビュー記事に特化した再利用可能コンポーネントを設計・実装。TinaCMS の Rich Text テンプレートとしても登録。',
+    icon: <Package size={20} />,
+    color: 'text-teal-400 bg-teal-400/10',
+  },
+  {
+    title: 'SEO・パフォーマンス最適化',
+    desc: '動的メタデータ生成・OpenGraph 対応・`generateStaticParams` による完全 SSG。WebP 変換・ブラープレースホルダー・React Compiler による自動最適化を組み合わせた構成。',
+    icon: <Shield size={20} />,
+    color: 'text-emerald-400 bg-emerald-400/10',
   },
   {
     title: 'カスタマイズ可能なダッシュボード',
@@ -136,24 +148,18 @@ const features = [
     color: 'text-amber-400 bg-amber-400/10',
   },
   {
-    title: 'カスタム MDX コンポーネント',
-    desc: '`<ReviewPoint>` `<Specs>` `<BuyLinks>` `<CouponBox>` `<FeaturePoint>` `<ImageGrid>` など、レビュー記事に特化した再利用可能コンポーネントを設計・実装。',
-    icon: <Package size={20} />,
-    color: 'text-teal-400 bg-teal-400/10',
-  },
-  {
-    title: 'SEO・パフォーマンス最適化',
-    desc: '動的メタデータ生成・OpenGraph 対応・`generateStaticParams` による完全 SSG。WebP 変換・ブラープレースホルダー・React Compiler による自動最適化を組み合わせた構成。',
-    icon: <Shield size={20} />,
-    color: 'text-emerald-400 bg-emerald-400/10',
+    title: 'Framer Motion アニメーション',
+    desc: 'スクロール連動の ScrollReveal コンポーネント・3D チルトカード・ページ遷移アニメーションを Framer Motion で実装。パフォーマンスを意識した遅延ロード設計。',
+    icon: <Zap size={20} />,
+    color: 'text-blue-400 bg-blue-400/10',
   },
 ];
 
 const architectureItems = [
   { label: 'レンダリング戦略', value: 'SSG（静的エクスポート）+ React Server Components' },
-  { label: 'コンテンツ取得', value: 'ビルド時 Notion API → ローカルキャッシュ → 静的 HTML 生成' },
+  { label: 'コンテンツ取得', value: 'MDX ファイル + TinaCMS（Git ベース）→ 静的 HTML 生成' },
   { label: '状態管理', value: 'Zustand（ダッシュボード / UI）+ localStorage 永続化' },
-  { label: '画像パイプライン', value: 'Notion 画像自動 DL → sharp WebP 変換 → ブラー Placeholder 生成' },
+  { label: '画像パイプライン', value: 'sharp WebP 変換 → ブラー Placeholder 生成' },
   { label: 'スタイリング設計', value: 'CSS 変数によるテーマ + Tailwind v4 + LiftKit デザインシステム' },
   { label: 'フォント', value: 'Outfit（見出し）/ LINE Seed JP（本文）/ keifont（ターミナル演出）' },
 ];
@@ -178,7 +184,7 @@ export default function PortfolioPage() {
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             ターミナルテーマのパーソナルテックブログ。<br className="hidden md:block" />
-            Next.js App Router・Notion API・カスタムダッシュボードを中心とした<br className="hidden md:block" />
+            Next.js App Router・MDX・カスタムダッシュボードを中心とした<br className="hidden md:block" />
             フルスタックの個人開発プロジェクトです。
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
@@ -217,8 +223,8 @@ export default function PortfolioPage() {
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
                 <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8">
                   <OverviewStat label="フレームワーク" value="Next.js 16" sub="App Router / SSG" />
-                  <OverviewStat label="コンテンツソース" value="Notion + MDX" sub="デュアルソース構成" />
-                  <OverviewStat label="ウィジェット数" value="11種類" sub="ダッシュボードシステム" />
+                  <OverviewStat label="コンテンツ管理" value="MDX + TinaCMS" sub="Git ベース CMS" />
+                  <OverviewStat label="ウィジェット数" value="11種類以上" sub="ダッシュボードシステム" />
                 </div>
               </div>
             </TiltCard>
@@ -226,30 +232,51 @@ export default function PortfolioPage() {
         </section>
 
         {/* ── Tech Stack ── */}
-        <section className="space-y-8">
+        <section className="space-y-10">
           <ScrollReveal direction="right">
             <SectionTitle>Tech Stack</SectionTitle>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {techStack.map((tech, i) => (
-              <ScrollReveal key={tech.name} delay={Math.min(i * 0.05, 0.4)} className="h-full">
-                <div className="h-full p-5 bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl hover:border-primary/40 transition-colors duration-300 group">
-                  <div className="flex items-start gap-4">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${tech.color}`}>
-                      {tech.icon}
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <span className="font-bold font-outfit text-sm leading-tight">{tech.name}</span>
-                        <span className="text-xs text-muted-foreground px-2 py-0.5 bg-secondary rounded-full shrink-0">{tech.role}</span>
-                      </div>
-                      <p className="text-muted-foreground text-xs leading-relaxed">{tech.desc}</p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
+          {/* 共通 */}
+          <div className="space-y-4">
+            <ScrollReveal delay={0.05}>
+              <SubSectionLabel>共通（フレームワーク・インフラ）</SubSectionLabel>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {commonTechStack.map((tech, i) => (
+                <ScrollReveal key={tech.name} delay={Math.min(i * 0.05, 0.3)} className="h-full">
+                  <TechCard tech={tech} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+
+          {/* ブログ */}
+          <div className="space-y-4">
+            <ScrollReveal delay={0.05}>
+              <SubSectionLabel>ブログ・コンテンツ</SubSectionLabel>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {blogTechStack.map((tech, i) => (
+                <ScrollReveal key={tech.name} delay={Math.min(i * 0.05, 0.2)} className="h-full">
+                  <TechCard tech={tech} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+
+          {/* アプリ */}
+          <div className="space-y-4">
+            <ScrollReveal delay={0.05}>
+              <SubSectionLabel>アプリ・ダッシュボード</SubSectionLabel>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {appTechStack.map((tech, i) => (
+                <ScrollReveal key={tech.name} delay={Math.min(i * 0.05, 0.2)} className="h-full">
+                  <TechCard tech={tech} />
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -360,6 +387,34 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
       <div className="h-px bg-gradient-to-r from-transparent to-primary/50 flex-1" />
       <h2 className="text-[clamp(1.5rem,4vw,2.25rem)] font-bold font-outfit shrink-0">{children}</h2>
       <div className="h-px bg-gradient-to-l from-transparent to-primary/50 flex-1" />
+    </div>
+  );
+}
+
+function SubSectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
+      <span className="inline-block w-4 h-px bg-primary/50" />
+      {children}
+    </p>
+  );
+}
+
+function TechCard({ tech }: { tech: { name: string; role: string; desc: string; icon: React.ReactNode; color: string } }) {
+  return (
+    <div className="h-full p-5 bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl hover:border-primary/40 transition-colors duration-300 group">
+      <div className="flex items-start gap-4">
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${tech.color}`}>
+          {tech.icon}
+        </div>
+        <div className="min-w-0">
+          <div className="flex items-center gap-2 flex-wrap mb-1">
+            <span className="font-bold font-outfit text-sm leading-tight">{tech.name}</span>
+            <span className="text-xs text-muted-foreground px-2 py-0.5 bg-secondary rounded-full shrink-0">{tech.role}</span>
+          </div>
+          <p className="text-muted-foreground text-xs leading-relaxed">{tech.desc}</p>
+        </div>
+      </div>
     </div>
   );
 }

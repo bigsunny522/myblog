@@ -17,7 +17,7 @@ export function GearCard({ item, onClick }: GearCardProps) {
       whileHover={{ y: -5 }}
       whileTap={{ scale: 0.98 }}
       onClick={() => onClick(item)}
-      className="cursor-pointer group flex flex-col bg-card border border-border/40 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+      className="lk-card cursor-pointer group flex flex-col bg-card border border-border/40 rounded-lk-md overflow-hidden transition-shadow"
     >
 
       <div className="relative aspect-[4/3] overflow-hidden bg-secondary/20">
@@ -29,7 +29,7 @@ export function GearCard({ item, onClick }: GearCardProps) {
           className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
       </div>
-      <div className="p-4">
+      <div className="p-lk-md">
         <span className="text-primary text-xs font-bold uppercase tracking-wider">
           {item.category}
         </span>

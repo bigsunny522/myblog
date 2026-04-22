@@ -205,9 +205,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {/* Title & Metadata */}
           <div className="space-y-6">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold border border-primary/20">
-                {post.category}
-              </span>
+              {post.tags?.includes(post.category) ? (
+                <Link
+                  href={`/tags/${encodeURIComponent(post.category)}`}
+                  className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold border border-primary/20 hover:bg-primary/20 transition-colors"
+                >
+                  {post.category}
+                </Link>
+              ) : (
+                <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold border border-primary/20">
+                  {post.category}
+                </span>
+              )}
               <div className="flex items-center text-muted-foreground text-sm">
                 <time>{post.date}</time>
                 <span className="mx-2">•</span>
@@ -229,7 +238,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             )}
 
             <div className="flex flex-wrap gap-2">
-              {post.tags?.map((tag) => (
+              {post.tags?.filter((tag) => tag !== post.category).map((tag) => (
                 <Link
                   key={tag}
                   href={`/tags/${encodeURIComponent(tag)}`}

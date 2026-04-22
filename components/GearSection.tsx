@@ -18,7 +18,7 @@ export function GearSection({ items }: { items: GearItem[] }) {
 
   return (
     <section className="pb-8 pt-0 md:pb-20 md:pt-0 overflow-hidden relative">
-      <ScrollReveal direction="up" distance={40} className="container mx-auto px-6 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-0">
+      <ScrollReveal direction="up" distance={40} className="container mx-auto px-lk-lg mb-lk-xl flex flex-col md:flex-row md:items-end justify-between gap-lk-md md:gap-0">
         <div className="space-y-1">
             <h2 className="text-[clamp(1.875rem,4vw,2.25rem)] font-bold font-outfit leading-tight">My Gear</h2>
             <BudouxText as="p" className="text-muted-foreground text-sm">実際に愛用しているガジェットのレビュー</BudouxText>
@@ -34,8 +34,8 @@ export function GearSection({ items }: { items: GearItem[] }) {
           <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-          <motion.div 
-            className="flex gap-6 w-max"
+          <motion.div
+            className="flex gap-lk-lg w-max"
             animate={{ x: "-50%" }}
             transition={{ 
                 duration: 40, 

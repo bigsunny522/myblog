@@ -30,11 +30,11 @@ export function Hero() {
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] -z-10 pointer-events-none opacity-50 -translate-x-1/2 -translate-y-1/2" />
       
       {/* Container for Text Content */}
-      <div className="w-full px-6 lg:h-full relative z-10 flex flex-1 items-center py-12 lg:py-0 order-2 lg:order-1">
+      <div className="w-full px-lk-lg lg:h-full relative z-10 flex flex-1 items-center py-lk-xl lg:py-0 order-2 lg:order-1">
         <div className="w-full lg:w-[45%]">
             
             {/* Left Column: Text */}
-            <div className="space-y-8 max-w-2xl">
+            <div className="space-y-lk-xl max-w-2xl">
                 <motion.div
                     initial="hidden"
                     animate="visible"
@@ -95,13 +95,13 @@ export function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-                    className="flex flex-nowrap gap-2 sm:gap-4 justify-center lg:justify-start"
+                    className="flex flex-nowrap gap-lk-sm sm:gap-lk-md justify-center lg:justify-start"
                 >
-                    <Link href="/reviews" className="group px-5 py-4 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all font-bold shadow-xl shadow-primary/20 relative overflow-hidden whitespace-nowrap text-sm sm:text-base">
+                    <Link href="/reviews" className="group px-lk-lg py-lk-md bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all font-bold shadow-xl shadow-primary/20 relative overflow-hidden whitespace-nowrap text-sm sm:text-base">
                         <span className="relative z-10">記事を読む</span>
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                     </Link>
-                    <Link href="/about" className="px-5 py-4 bg-secondary text-secondary-foreground rounded-full hover:bg-secondary/80 transition-all font-bold border border-border/50 whitespace-nowrap text-sm sm:text-base">
+                    <Link href="/about" className="px-lk-lg py-lk-md bg-secondary text-secondary-foreground rounded-full hover:bg-secondary/80 transition-all font-bold border border-border/50 whitespace-nowrap text-sm sm:text-base">
                         サイトについて
                     </Link>
                 </motion.div>

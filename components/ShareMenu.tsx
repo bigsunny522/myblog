@@ -188,7 +188,7 @@ export const ShareMenu = ({ title, slug, label = "Share", variant = 'default', p
                         link.action();
                         if (link.name !== 'Copy Link') setIsOpen(false);
                       }}
-                      className={`w-full text-left px-4 py-3 md:py-2 text-base md:text-sm transition-colors flex items-center gap-3 text-muted-foreground ${link.color} hover:bg-muted/50 rounded-lg md:rounded-none`}
+                      className={`w-full text-left px-lk-md py-lk-xs md:py-lk-2xs text-base md:text-sm transition-colors flex items-center gap-lk-xs text-muted-foreground ${link.color} hover:bg-muted/50 rounded-lk-sm md:rounded-none`}
                     >
                       <span className="w-8 md:w-5 flex justify-center items-center text-xl md:text-lg">
                         {link.icon}

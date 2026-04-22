@@ -26,24 +26,24 @@ export function Footer() {
         </div>
 
         {/* Social Icons */}
-        <div className="flex gap-6">
-          <a href="https://x.com/xyzack271" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-secondary">
+        <div className="flex gap-lk-lg">
+          <a href="https://x.com/xyzack271" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-lk-xs rounded-full hover:bg-secondary">
             <FontAwesomeIcon icon={faXTwitter} className="w-5 h-5" />
             <span className="sr-only">X (Twitter)</span>
           </a>
-          <a href="https://www.instagram.com/xyzack271/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-secondary">
+          <a href="https://www.instagram.com/xyzack271/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-lk-xs rounded-full hover:bg-secondary">
             <FontAwesomeIcon icon={faInstagram} className="w-5 h-5" />
             <span className="sr-only">Instagram</span>
           </a>
-          <a href="https://www.youtube.com/@xyzack271" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-secondary">
+          <a href="https://www.youtube.com/@xyzack271" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-lk-xs rounded-full hover:bg-secondary">
             <FontAwesomeIcon icon={faYoutube} className="w-5 h-5" />
             <span className="sr-only">YouTube</span>
           </a>
-          <a href="https://www.tiktok.com/@xyzack271" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-secondary">
+          <a href="https://www.tiktok.com/@xyzack271" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-lk-xs rounded-full hover:bg-secondary">
             <FontAwesomeIcon icon={faTiktok} className="w-5 h-5" />
             <span className="sr-only">TikTok</span>
           </a>
-          <a href="https://mail.google.com/mail/?view=cm&to=xyzack271@gmail.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-secondary">
+          <a href="https://mail.google.com/mail/?view=cm&to=xyzack271@gmail.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-lk-xs rounded-full hover:bg-secondary">
             <FontAwesomeIcon icon={faEnvelope} className="w-5 h-5" />
             <span className="sr-only">Contact</span>
           </a>
