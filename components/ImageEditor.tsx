@@ -148,17 +148,18 @@ function drawHContent(ctx: CanvasRenderingContext2D, cfg: FrameConfig,
     ctx.fillText(cfg.subTitle, cx, rowA + mainSz * 0.16 + subTitleSz);
   }
 
-  // ── Left column: date (top) · logo+username or location (bottom) ─────────
-  if (cfg.showDate && cfg.shootDate) {
+  // ── Left column: date @location (top) · logo+username (bottom) ─────────
+  const dateLocStr = [
+    cfg.showDate && cfg.shootDate ? cfg.shootDate : '',
+    cfg.showLocation && cfg.location ? `@${cfg.location}` : '',
+  ].filter(Boolean).join('  ');
+  if (dateLocStr) {
     ctx.font = `${subSz}px ${font}`; ctx.fillStyle = cfg.subColor;
-    ctx.textAlign = 'left'; ctx.fillText(cfg.shootDate, leftX, s1Y);
+    ctx.textAlign = 'left'; ctx.fillText(dateLocStr, leftX, s1Y);
   }
   if (logoImg && logo) {
     const circleSize = Math.round(tinySz * 2.2 * (logo.sizePct / 55));
     drawCircleLogo(ctx, logoImg, logo, leftX, s3Y, circleSize, font, cfg.subColor);
-  } else if (cfg.showLocation && cfg.location) {
-    ctx.font = `${tinySz}px ${font}`; ctx.fillStyle = cfg.subColor;
-    ctx.textAlign = 'left'; ctx.fillText(cfg.location, leftX, s3Y);
   }
 
   // ── Right column: camera model · lens · settings (3 lines) ───────────────
@@ -199,8 +200,8 @@ function drawVContent(ctx: CanvasRenderingContext2D, cfg: FrameConfig,
   // Sub info offset from main text (toward top/bottom of image)
   const offset = Math.min(mainHalfW + mainSz * 0.55, imgH * 0.3);
   ctx.font = `${subSz}px ${font}`; ctx.fillStyle = cfg.subColor; ctx.textAlign = 'center';
-  if (cfg.showDate && cfg.shootDate)         ctx.fillText(cfg.shootDate,  offset, 0);
-  if (cfg.showLocation && cfg.location)      ctx.fillText(cfg.location,  -offset, 0);
+  if (cfg.showDate && cfg.shootDate)         ctx.fillText(cfg.shootDate,           offset, 0);
+  if (cfg.showLocation && cfg.location)      ctx.fillText(`@${cfg.location}`,     -offset, 0);
   ctx.restore();
 }
 
@@ -323,9 +324,13 @@ function decorateAnalog(ctx: CanvasRenderingContext2D, cfg: FrameConfig,
     ctx.fillStyle=cfg.accentColor; ctx.textBaseline='alphabetic';
     const cx=totalW/2, rowA=stripY+stripH*.44, rowB=stripY+stripH*.76;
     drawSpaced(ctx,(cfg.mainText||'ORIGINAL FILM').toUpperCase(),cx,rowA,mainSz*.09);
-    if (cfg.showDate && cfg.shootDate) {
+    const analogDateLoc = [
+      cfg.showDate && cfg.shootDate ? cfg.shootDate : '',
+      cfg.showLocation && cfg.location ? `@${cfg.location}` : '',
+    ].filter(Boolean).join('  ');
+    if (analogDateLoc) {
       ctx.font=`${subSz}px ${SAN}`; ctx.fillStyle=cfg.subColor;
-      ctx.textAlign='right'; ctx.fillText(cfg.shootDate,totalW-Math.round(stripH*.12),rowB);
+      ctx.textAlign='right'; ctx.fillText(analogDateLoc, totalW-Math.round(stripH*.12), rowB);
     }
     // Logo takes left slot; fall back to shootInfo only when no logo
     if (logoImg && logo) {
@@ -398,7 +403,10 @@ function decorateRetro(ctx: CanvasRenderingContext2D, cfg: FrameConfig,
 
     // ── Right column: camera model + date/location ──────────────────────────
     const hasCamera = cfg.showCamera && cfg.cameraModel;
-    const dateLoc   = [cfg.showDate?cfg.shootDate:'', cfg.showLocation?cfg.location:''].filter(Boolean).join('  ·  ');
+    const dateLoc   = [
+      cfg.showDate && cfg.shootDate ? cfg.shootDate : '',
+      cfg.showLocation && cfg.location ? `@${cfg.location}` : '',
+    ].filter(Boolean).join('  ');
     if (hasCamera) {
       ctx.font=`${subSz}px ${SERIF}`; ctx.fillStyle=cfg.subColor;
       ctx.textAlign='right'; ctx.textBaseline='alphabetic';
@@ -910,7 +918,7 @@ export function ImageEditor() {
                       </div>
                       <div>
                         <div className="flex items-center justify-between mb-1">
-                          <Lbl>{frame.style==='retro'?'サブ':'場所'}</Lbl>
+                          <Lbl>場所</Lbl>
                           <Toggle on={frame.showLocation} onChange={v=>setFF('showLocation',v)}/>
                         </div>
                         <Txt value={frame.location} onChange={v=>setFF('location',v)} placeholder="Tokyo"/>
