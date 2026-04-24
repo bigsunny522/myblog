@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "scripts": {
     "dev": "node --env-file=.env.local node_modules/@tinacms/cli/bin/tinacms dev -c \"next dev\"",
-    "build": "tinacms build && next build && next-image-export-optimizer && node scripts/generate-sitemap.mjs",
+    "build": "( test -z \"$NEXT_PUBLIC_TINA_CLIENT_ID\" || tinacms build ) && next build && next-image-export-optimizer && node scripts/generate-sitemap.mjs",
     "build:local": "node --env-file=.env.local node_modules/@tinacms/cli/bin/tinacms build",
     "start": "next start",
     "lint": "next lint",
@@ -24,6 +24,7 @@
     "budoux": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "exifr": "^7.1.3",
     "framer-motion": "^12.23.25",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
