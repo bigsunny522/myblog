@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXTwitter, faInstagram, faYoutube, faTiktok } from '@fortawesome/free-brands-svg-icons';
+import { faXTwitter, faInstagram, faYoutube, faTiktok, faAmazon } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { SectionDivider } from './ui/SectionDivider';
 import { BudouxText } from './ui/BudouxText';
@@ -46,6 +46,10 @@ export function Footer() {
           <a href="https://mail.google.com/mail/?view=cm&to=xyzack271@gmail.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-lk-xs rounded-full hover:bg-secondary">
             <FontAwesomeIcon icon={faEnvelope} className="w-5 h-5" />
             <span className="sr-only">Contact</span>
+          </a>
+          <a href="https://www.amazon.jp/hz/wishlist/ls/1STJ1FJAUP72F?ref_=wl_share" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-lk-xs rounded-full hover:bg-secondary">
+            <FontAwesomeIcon icon={faAmazon} className="w-5 h-5" />
+            <span className="sr-only">Amazon Wishlist</span>
           </a>
         </div>
 
