@@ -1,0 +1,125 @@
+---
+title: "Minecraft MODまとめ【Fabric編】"
+subtitle: "最近マイクラのMODを増やしたので、備忘録も兼ねてまとめておきます。前提MODの導入からシェーダー、おすすめMODまで一通り紹介します。"
+excerpt: "最近マイクラのMODを増やしたので、備忘録も兼ねてまとめておきます。前提MODの導入からシェーダー、おすすめMODまで一通り紹介します。"
+date: "2025-08-17"
+category: "ゲーム"
+published: true
+recommended: false
+tags: ["Minecraft", "ゲーム", "MOD"]
+coverImage: "/images/main/skyblue.png"
+---
+
+最近マイクラのMODを増やしたので、備忘録も兼ねてまとめておきます。
+
+MODローダーには大きく分けてForgeとFabricがありますが、今回はFabricのほうを紹介します。
+
+---
+
+## 前提MOD
+
+### 1. Fabric
+
+MODを導入するために必要なものです。まず公式サイトから「Fabric Loader」をダウンロード・インストールします。
+
+**公式サイト:** [fabricmc.net](https://fabricmc.net)
+
+個人的には、MOD導入時にゲームが壊れるのを防ぐために別ディレクトリを用意するほうが良いと思っているため、インストーラーの「起動構成を作成」チェックは入れずに進めています。
+
+インストールが完了すると、指定したディレクトリ内に `mods` フォルダが作成され、そこにMODファイルを入れていく形になります。
+
+### 2. Fabric API
+
+FabricでMODを使用するために**必須**となるMODです。インストールしたFabricと同じバージョンのAPIをダウンロードし、`mods` フォルダに入れます。
+
+配布先: [Fabric API (Modrinth)](https://modrinth.com/mod/fabric-api)
+
+### 3. 起動方法
+
+Fabricを使用して起動するには、起動構成の作成が必要です。
+
+- **作成済みの場合:** Minecraft Launcherを起動すると自動的に選択されています。
+- **新規作成する場合:** Launcher上部の「起動構成」タブから新規作成を選びます。
+
+設定のポイントは以下の通りです。
+
+| 項目 | 設定内容 |
+| --- | --- |
+| バージョン | `release fabric-loader-0.xx.x-1.xx.x` を選択 |
+| ゲームディレクトリ | 任意の場所を指定。デフォルトは `C:\Users\ユーザー名\AppData\Roaming` |
+
+筆者は `...\MinecraftMod` という別フォルダを作成して指定しています。
+
+---
+
+## シェーダー（影MOD）
+
+影MODを使用するために必要な2つの基本ツールと、おすすめのシェーダーパックを紹介します。
+
+### 必須ツール
+
+**Iris Shaders**
+
+公式サイトの「DOWNLOAD UNIVERSAL JAR」から導入します。
+
+**公式サイト:** [irisshaders.dev](https://irisshaders.dev)
+
+> 実行できない場合は、[Adoptium](https://adoptium.net) などからJavaのインストールが必要です。
+
+**Sodium**
+
+Fabricにおける軽量化MODです。Modrinthからダウンロードして `mods` フォルダに入れます。
+
+配布先: [Sodium (Modrinth)](https://modrinth.com/mod/sodium)
+
+### 人気のシェーダー
+
+**AstraLex Shaders**
+
+夜空が非常に綺麗なシェーダー。空の表現にこだわりたい方におすすめです。
+
+配布先: [AstraLex Shaders (Modrinth)](https://modrinth.com/shader/astralex-shaders)
+
+**BSL Shaders**
+
+水の表現が美しく、世界的に大人気のシェーダー。バランスが取れていて使いやすいです。
+
+配布先: [BSL Shaders (Modrinth)](https://modrinth.com/shader/bsl-shaders)
+
+**Kappa Shader**
+
+高品質でリアル、かつスタイリッシュな光の表現が特徴です。
+
+配布先: [Kappa Shader (Modrinth)](https://modrinth.com/shader/kappa-shader)
+
+**Solas Shader**
+
+幻想的な雰囲気で、**鉱石が光るため洞窟探検にも便利**です。探索重視の方に特におすすめ。
+
+配布先: [Solas Shader (Modrinth)](https://modrinth.com/shader/solas-shader)
+
+---
+
+## 便利ツール（おすすめMOD）
+
+| MOD名 | 概要 |
+| --- | --- |
+| Armor Hud | 防具の耐久値を常に画面上に表示 |
+| BoxLib | 画面表示系MODを動かすための前提ライブラリ |
+| Continuity | ガラスなどブロックの継ぎ目をなくす（リソースパック設定も必要） |
+| Coordinates Display | 座標を常にHUDに表示（BoxLib必須） |
+| Durability Viewer | 装備・防具の耐久値を数値で表示 |
+| Jade | 視線を合わせたブロックの詳細やMOBのHPを表示。チェストを閉じたまま中身確認も可能 |
+| ModMenu | 導入済みMODの一覧表示や設定管理 |
+| Tweakeroo | アイテムの自動補充など細かな調整が可能 |
+| WorldEdit | 言わずとしれた建築支援MOD |
+
+各MODはすべてModrinthで配布されています。バージョンをFabricのバージョンと揃えてダウンロードし、`mods` フォルダに入れるだけで使えます。
+
+---
+
+## まとめ
+
+Fabricは軽量で導入がシンプルなため、最初のMOD環境としておすすめです。シェーダーだけでもビジュアルが大きく変わるので、まずはSodium + Iris + 好みのシェーダーから試してみると良いと思います。
+
+MODを増やすときはバージョンの互換性に注意しつつ、少しずつ追加していくのが壊れにくくておすすめです。
