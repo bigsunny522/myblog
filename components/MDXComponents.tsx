@@ -337,6 +337,79 @@ const CouponBox = ({ children, body }: { children?: React.ReactNode; body?: Reac
   </div>
 );
 
+const Table = ({ children, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
+  <div className="my-6 overflow-x-auto rounded-xl border border-border not-prose">
+    <table className="w-full text-sm border-collapse" {...props}>
+      {children}
+    </table>
+  </div>
+);
+
+const THead = ({ children, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
+  <thead className="bg-primary/10" {...props}>
+    {children}
+  </thead>
+);
+
+const TBody = ({ children, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
+  <tbody className="divide-y divide-border" {...props}>
+    {children}
+  </tbody>
+);
+
+const TR = ({ children, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
+  <tr className="hover:bg-muted/40 transition-colors" {...props}>
+    {children}
+  </tr>
+);
+
+const TH = ({ children, ...props }: React.ThHTMLAttributes<HTMLTableCellElement>) => (
+  <th className="px-4 py-3 text-left font-bold text-primary/90 whitespace-nowrap" {...props}>
+    {children}
+  </th>
+);
+
+const TD = ({ children, ...props }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+  <td className="px-4 py-3 text-foreground/80 leading-relaxed" {...props}>
+    {children}
+  </td>
+);
+
+const Pre = ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
+  <pre
+    className="my-5 p-4 rounded-xl bg-zinc-900 dark:bg-zinc-950 text-zinc-100 overflow-x-auto text-sm leading-relaxed not-prose font-mono"
+    {...props}
+  >
+    {children}
+  </pre>
+);
+
+const InlineCode = ({ children, className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+  if (className) return <code className={cn('font-mono text-sm', className)} {...props}>{children}</code>;
+  return (
+    <code className="px-1.5 py-0.5 rounded-md bg-muted/70 text-foreground font-mono text-[0.875em]" {...props}>
+      {children}
+    </code>
+  );
+};
+
+const Details = ({ summary, children }: { summary: string; children: React.ReactNode }) => (
+  <details className="group my-6 rounded-xl border border-border overflow-hidden not-prose">
+    <summary className="flex items-center justify-between px-4 py-3 cursor-pointer bg-muted/30 hover:bg-muted/50 transition-colors list-none select-none">
+      <span className="font-semibold text-sm text-foreground">{summary}</span>
+      <svg
+        className="w-4 h-4 shrink-0 text-muted-foreground transition-transform duration-200 group-open:rotate-180"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </summary>
+    <div className="px-5 py-4 border-t border-border text-sm leading-relaxed space-y-3">
+      {children}
+    </div>
+  </details>
+);
+
 const Blockquote = ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
   <div
     className="relative my-8 rounded-2xl overflow-hidden border-2 border-dashed border-amber-400/70 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 dark:border-amber-500/60"
@@ -364,6 +437,15 @@ export const mdxComponents = {
   li: LI,
   u: U,
   blockquote: Blockquote,
+  table: Table,
+  thead: THead,
+  tbody: TBody,
+  tr: TR,
+  th: TH,
+  td: TD,
+  pre: Pre,
+  code: InlineCode,
+  Details,
   CouponBox,
   img: (props: any) => {
     const { alt, ...rest } = props;
