@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ざっくらぼ',
     description: 'The best gadget reviews and tech news.',
-    creator: '@xyzack271', // Assuming the twitter handle from previous context or generic
+    creator: '@xyzack271',
     images: ['/images/main/skyblue.png'],
   },
   icons: {
@@ -52,6 +52,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { GlobalUIController } from '@/components/GlobalUIController';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import GoogleAdsense from '@/components/GoogleAdsense';
 
 export default function RootLayout({
   children,
@@ -67,6 +68,7 @@ export default function RootLayout({
       </head>
       <body className={`${outfit.variable} ${keifont.variable} antialiased min-h-screen flex flex-col font-line`} suppressHydrationWarning>
         <GoogleAnalytics />
+        <GoogleAdsense />
         <GlobalUIController />
         <Header />
         <main className="flex-1">
