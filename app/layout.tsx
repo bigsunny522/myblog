@@ -52,7 +52,6 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { GlobalUIController } from '@/components/GlobalUIController';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
-import GoogleAdsense from '@/components/GoogleAdsense';
 
 export default function RootLayout({
   children,
@@ -65,10 +64,15 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@300;400;700&display=swap" rel="stylesheet" />
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6628382645135412"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`${outfit.variable} ${keifont.variable} antialiased min-h-screen flex flex-col font-line`} suppressHydrationWarning>
         <GoogleAnalytics />
-        <GoogleAdsense />
         <GlobalUIController />
         <Header />
         <main className="flex-1">
