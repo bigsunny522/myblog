@@ -15,8 +15,6 @@ export default function AdUnit({
   fullWidthResponsive = true,
   className,
 }: AdUnitProps) {
-  const publisherId = process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID;
-
   useEffect(() => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,14 +26,12 @@ export default function AdUnit({
     }
   }, []);
 
-  if (!publisherId) return null;
-
   return (
     <div className={className}>
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}
-        data-ad-client={publisherId}
+        data-ad-client="ca-pub-6628382645135412"
         data-ad-slot={adSlot}
         data-ad-format={adFormat}
         data-full-width-responsive={fullWidthResponsive.toString()}
