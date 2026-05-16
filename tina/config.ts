@@ -83,6 +83,12 @@ export default defineConfig({
             ui: { defaultValue: false },
           },
           {
+            type: 'boolean',
+            name: 'listed',
+            label: '一覧に表示する',
+            ui: { defaultValue: true },
+          },
+          {
             type: 'rich-text',
             name: 'body',
             label: '本文',
