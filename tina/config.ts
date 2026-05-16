@@ -80,6 +80,7 @@ export default defineConfig({
             type: 'boolean',
             name: 'published',
             label: '公開する',
+            ui: { defaultValue: false },
           },
           {
             type: 'rich-text',

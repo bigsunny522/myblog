@@ -54,7 +54,7 @@ category: ""
 tags: []
 coverImage: "/images/blog/filename.jpg"
 recommended: false    # shows in "おすすめ" tab on home
-published: true       # false = hidden from all lists
+published: false      # false = hidden from all lists — set true only when ready to publish
 ---
 ```
 
