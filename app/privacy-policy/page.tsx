@@ -4,7 +4,8 @@ import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { BudouxText } from '@/components/ui/BudouxText';
 import { Shield, Cookie, BarChart2, Link2, Mail, ExternalLink } from 'lucide-react';
 
-const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
+const BASE_URL = getBaseUrl();
+const siteImage = `${BASE_URL}/images/main/skyblue.png`;
 
 export const metadata: Metadata = {
   title: 'プライバシーポリシー',

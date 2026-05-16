@@ -42,7 +42,17 @@ const staticPages = [
   { url: '/reviews', priority: '0.8', changefreq: 'weekly', lastmod: today },
   { url: '/gear', priority: '0.7', changefreq: 'monthly', lastmod: today },
   { url: '/about', priority: '0.5', changefreq: 'monthly', lastmod: today },
+  { url: '/privacy-policy', priority: '0.3', changefreq: 'yearly', lastmod: today },
 ];
+
+// Gear items
+const gearDir = path.join(__dirname, '../content/my-gear');
+const gearSlugs = fs.existsSync(gearDir)
+  ? fs.readdirSync(gearDir)
+      .filter((f) => f.endsWith('.mdx'))
+      .filter((f) => getPublished(path.join(gearDir, f)))
+      .map((f) => f.replace(/\.mdx$/, ''))
+  : [];
 
 const slugs = getMdxSlugs();
 
@@ -64,6 +74,12 @@ const urlEntries = [
     <priority>0.7</priority>
   </url>`;
   }),
+  ...gearSlugs.map((slug) => `  <url>
+    <loc>${baseUrl}/gear/${slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`),
 ];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -77,12 +93,15 @@ if (!fs.existsSync(outDir)) {
 }
 
 fs.writeFileSync(path.join(outDir, 'sitemap.xml'), xml, 'utf8');
-console.log(`✓ sitemap.xml generated: ${staticPages.length} static + ${slugs.length} posts = ${urlEntries.length} URLs`);
+console.log(`✓ sitemap.xml generated: ${staticPages.length} static + ${slugs.length} posts + ${gearSlugs.length} gear = ${urlEntries.length} URLs`);
 
-// robots.txt を public/ から out/ へコピー（next-image-export-optimizer が上書きする場合の保険）
-const robotsSrc = path.join(__dirname, '../public/robots.txt');
-const robotsDst = path.join(outDir, 'robots.txt');
-if (fs.existsSync(robotsSrc)) {
-  fs.copyFileSync(robotsSrc, robotsDst);
-  console.log('✓ robots.txt copied to out/');
-}
+// robots.txt を out/ へ動的生成（サイトマップ URL を正しいドメインで書き出す）
+const robotsTxt = `User-agent: *
+Allow: /
+Disallow: /portfolio
+Disallow: /dashboard
+
+Sitemap: ${baseUrl}/sitemap.xml
+`;
+fs.writeFileSync(path.join(outDir, 'robots.txt'), robotsTxt, 'utf8');
+console.log(`✓ robots.txt generated: Sitemap → ${baseUrl}/sitemap.xml`);
