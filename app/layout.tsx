@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ざっくらぼ',
     description: 'The best gadget reviews and tech news.',
-    creator: '@xyzack271', // Assuming the twitter handle from previous context or generic
+    creator: '@xyzack271',
     images: ['/images/main/skyblue.png'],
   },
   icons: {
@@ -64,6 +64,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@300;400;700&display=swap" rel="stylesheet" />
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6628382645135412"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`${outfit.variable} ${keifont.variable} antialiased min-h-screen flex flex-col font-line`} suppressHydrationWarning>
         <GoogleAnalytics />
