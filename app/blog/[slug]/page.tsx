@@ -8,6 +8,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { mdxComponents } from '@/components/MDXComponents';
 import rehypeSlug from 'rehype-slug';
 import remarkBreaks from 'remark-breaks';
+import remarkGfm from 'remark-gfm';
 import { TableOfContents } from '@/components/TableOfContents';
 import GithubSlugger from 'github-slugger';
 import { BudouxText } from '@/components/ui/BudouxText';
@@ -263,7 +264,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           options={{
             mdxOptions: {
               rehypePlugins: [rehypeSlug],
-              remarkPlugins: [],
+              remarkPlugins: [remarkGfm, remarkBreaks],
             },
           }}
         />
