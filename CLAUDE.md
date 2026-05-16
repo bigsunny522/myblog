@@ -55,6 +55,7 @@ tags: []
 coverImage: "/images/blog/filename.jpg"
 recommended: false    # shows in "おすすめ" tab on home
 published: false      # false = hidden from all lists — set true only when ready to publish
+listed: true          # false = published (Google-indexable) but hidden from article lists
 ---
 ```
 

@@ -16,6 +16,7 @@ export interface BlogPost {
   recommended?: boolean;
   content: string;
   published?: boolean;
+  listed?: boolean;
 }
 
 function getMdxPostSlugs(): string[] {
@@ -43,6 +44,7 @@ function getMdxPostBySlug(slug: string): BlogPost | undefined {
     coverImage: data.coverImage,
     recommended: data.recommended || false,
     published: data.published !== false,
+    listed: data.listed !== false,
     content,
   };
 }
@@ -62,7 +64,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | undefined>
 export async function getAllPosts(): Promise<BlogPost[]> {
   return getMdxPostSlugs()
     .map((slug) => getMdxPostBySlug(slug))
-    .filter((post): post is BlogPost => post !== undefined && post.published !== false)
+    .filter((post): post is BlogPost => post !== undefined && post.published !== false && post.listed !== false)
     .sort((a, b) => (a.date > b.date ? -1 : 1));
 }
 
