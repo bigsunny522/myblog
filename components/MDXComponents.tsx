@@ -337,6 +337,18 @@ const CouponBox = ({ children, body }: { children?: React.ReactNode; body?: Reac
   </div>
 );
 
+const Details = ({ summary, children }: { summary: string; children: React.ReactNode }) => (
+  <details className="group my-4 rounded-xl border border-border overflow-hidden">
+    <summary className="flex items-center justify-between px-4 py-3 cursor-pointer bg-muted/50 hover:bg-muted font-semibold select-none list-none">
+      <span>{summary}</span>
+      <span className="text-muted-foreground transition-transform duration-200 group-open:rotate-180">▼</span>
+    </summary>
+    <div className="px-4 py-4 text-sm leading-relaxed">
+      {children}
+    </div>
+  </details>
+);
+
 const Blockquote = ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
   <div
     className="relative my-8 rounded-2xl overflow-hidden border-2 border-dashed border-amber-400/70 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 dark:border-amber-500/60"
@@ -389,4 +401,5 @@ export const mdxComponents = {
   ReviewPoint,
   FeaturePoint,
   ImageGrid,
+  Details,
 };
