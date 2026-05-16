@@ -46,9 +46,7 @@ export async function generateStaticParams() {
     post.tags?.forEach((tag) => tags.add(tag));
   });
 
-  return Array.from(tags).map((tag) => ({
-    tag: encodeURIComponent(tag),
-  }));
+  return Array.from(tags).map((tag) => ({ tag }));
 }
 
 export default async function TagPage({ params }: TagPageProps) {
