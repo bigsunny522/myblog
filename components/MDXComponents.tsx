@@ -206,8 +206,8 @@ const BuyLinks = ({ children, image, title, description, links }: {
       <div className="my-8 p-6 bg-primary/10 rounded-2xl border border-primary/20">
         <div className="flex flex-col md:flex-row items-center gap-6">
           {image && (
-            <div className="shrink-0 w-32 h-32 bg-white rounded-xl overflow-hidden shadow-sm flex items-center justify-center p-2">
-              <img src={image} alt={title || ''} className="w-full h-full object-contain" />
+            <div className="shrink-0 w-32 bg-white rounded-xl overflow-hidden shadow-sm">
+              <img src={image} alt={title || ''} className="w-full h-auto" />
             </div>
           )}
           <div className="flex-1 space-y-2 text-center md:text-left">
