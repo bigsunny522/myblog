@@ -17,6 +17,9 @@ export interface BlogPost {
   content: string;
   published?: boolean;
   listed?: boolean;
+  rating?: number;
+  price?: string;
+  faqs?: Array<{ question: string; answer: string }>;
 }
 
 function getMdxPostSlugs(): string[] {
@@ -46,6 +49,9 @@ function getMdxPostBySlug(slug: string): BlogPost | undefined {
     published: data.published !== false,
     listed: data.listed !== false,
     content,
+    rating: data.rating,
+    price: data.price,
+    faqs: data.faqs,
   };
 }
 
@@ -67,4 +73,3 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     .filter((post): post is BlogPost => post !== undefined && post.published !== false && post.listed !== false)
     .sort((a, b) => (a.date > b.date ? -1 : 1));
 }
-
