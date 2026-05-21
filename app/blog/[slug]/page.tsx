@@ -26,16 +26,11 @@ interface BlogPostPageProps {
 
 function calcReadingTime(content: string): number {
   let text = content;
-  // コードブロック・インラインコードを除去
   text = text.replace(/```[\s\S]*?```/g, '');
   text = text.replace(/`[^`]*`/g, '');
-  // JSX/HTMLタグを除去
   text = text.replace(/<[^>]*>/g, '');
-  // 画像記法を除去
   text = text.replace(/!\[.*?\]\(.*?\)/g, '');
-  // リンク記法はテキスト部分だけ残す
   text = text.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1');
-  // 見出し・装飾記号を除去
   text = text.replace(/#{1,6}\s/g, '');
   text = text.replace(/[*_~>`|#-]/g, '');
   const charCount = text.replace(/\s+/g, '').length;
@@ -59,7 +54,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   return {
     title: post.title,
     description: description,
-    // 未公開記事はインデックスさせない
     robots: post.published === false ? { index: false, follow: false } : undefined,
     openGraph: {
       title: post.title,
@@ -110,7 +104,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const prevPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
   const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
 
-  // 関連記事: 同じカテゴリまたはタグが一致する記事（自身を除く最大3件）
   const relatedPosts = allPosts
     .filter((p) => p.slug !== slug)
     .map((p) => {
@@ -123,7 +116,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     .slice(0, 3)
     .map(({ post }) => post);
 
-  // Extract headings using github-slugger to match rehype-slug IDs
   const slugger = new GithubSlugger();
 
   const headings = post.content
@@ -175,17 +167,74 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     ],
   };
 
+  const reviewJsonLd = post.rating
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Review',
+        name: post.title,
+        reviewBody: post.excerpt,
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: post.rating,
+          bestRating: 5,
+          worstRating: 1,
+        },
+        author: {
+          '@type': 'Person',
+          name: 'ざいざっく',
+          url: baseUrl,
+        },
+        itemReviewed: {
+          '@type': 'Product',
+          name: post.title,
+          description: post.excerpt,
+          image: ogImage,
+          ...(post.price
+            ? {
+                offers: {
+                  '@type': 'Offer',
+                  price: post.price,
+                  priceCurrency: 'JPY',
+                  availability: 'https://schema.org/InStock',
+                },
+              }
+            : {}),
+        },
+      }
+    : null;
+
+  const faqJsonLd =
+    post.faqs?.length
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: post.faqs.map((faq: { question: string; answer: string }) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          })),
+        }
+      : null;
+
   return (
     <article className="min-h-screen pb-20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {reviewJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewJsonLd) }} />
+      )}
+      {faqJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      )}
       <ScrollProgressBar />
       {post.published === false && (
         <div className="sticky top-0 z-50 w-full bg-yellow-400 text-yellow-900 text-sm font-semibold text-center py-2 px-4">
           🚧 この記事は非公開のプレビューです。リンクを知っている人のみ閲覧できます。
         </div>
       )}
-      {/* Hero Header */}
       <div className="container mx-auto px-4 pt-8 md:pt-12 pb-8">
         <Link
           href="/"
@@ -196,7 +245,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </Link>
 
         <div className="max-w-4xl mx-auto">
-          {/* Cover Image */}
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden mb-8 border border-border/50 shadow-sm">
             <SafeImage
               src={post.coverImage}
@@ -205,7 +253,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             />
           </div>
 
-          {/* Title & Metadata */}
           <div className="space-y-6">
             <div className="flex flex-wrap items-center gap-3">
               {post.tags?.includes(post.category) ? (
@@ -257,7 +304,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </div>
 
-      {/* Content */}
       <div className="container mx-auto px-4 max-w-3xl mt-12 prose prose-lg prose-gray dark:prose-invert">
         <TableOfContents headings={headings} />
         <MDXRemote
@@ -271,7 +317,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           }}
         />
 
-        {/* Share Section */}
         <div className="relative my-20 pt-10 pb-12 px-6 rounded-3xl border border-border/50 bg-gradient-to-b from-secondary/20 to-background">
           <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
             <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#888_1px,transparent_1px)] [background-size:16px_16px]" />
@@ -299,7 +344,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </div>
 
-        {/* 関連記事 */}
         {relatedPosts.length > 0 && (
           <div className="my-16 not-prose">
             <h2 className="text-xl font-bold font-outfit mb-6 text-foreground">関連記事</h2>
@@ -331,7 +375,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         )}
 
-        {/* 前後ナビゲーション */}
         <nav className="my-16 not-prose grid grid-cols-1 sm:grid-cols-2 gap-4">
           {prevPost ? (
             <Link
