@@ -59,6 +59,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   return {
     title: post.title,
     description: description,
+    // 未公開記事はインデックスさせない
+    robots: post.published === false ? { index: false, follow: false } : undefined,
     openGraph: {
       title: post.title,
       description: description,
