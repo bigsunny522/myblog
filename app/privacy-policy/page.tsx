@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 const LAST_UPDATED = '2025年5月16日';
 const EFFECTIVE_DATE = '2025年5月16日';
 const SITE_NAME = 'ざっくらぼ';
-const SITE_URL = 'https://zacklabo.com';
+const SITE_URL = 'https://xyzack271.com';
 const OPERATOR_NAME = 'ざいざっく（xyzack）';
 const CONTACT_EMAIL = 'xyzack271@gmail.com';
 const CONTACT_TWITTER = 'https://x.com/xyzack271';
@@ -260,6 +260,10 @@ export default function PrivacyPolicyPage() {
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">サイト名</p>
                   <p className="font-semibold">{SITE_NAME}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">サイトURL</p>
+                  <p className="font-semibold">{SITE_URL}</p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">メール</p>
