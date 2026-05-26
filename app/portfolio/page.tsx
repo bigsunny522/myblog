@@ -71,6 +71,12 @@ const skillGroups = [
     dot: 'bg-red-400',
     items: ['Premiere Pro', 'DaVinci Resolve'],
   },
+  {
+    category: 'AI 開発',
+    color: 'bg-violet-400/10 text-violet-400 border-violet-400/20',
+    dot: 'bg-violet-400',
+    items: ['Claude Code', 'Gemini'],
+  },
 ];
 
 const works = [
