@@ -27,7 +27,7 @@ const skillGroups = [
     category: '言語',
     color: 'bg-blue-400/10 text-blue-400 border-blue-400/20',
     dot: 'bg-blue-400',
-    items: ['TypeScript', 'JavaScript', 'HTML / CSS'],
+    items: ['TypeScript', 'JavaScript', 'HTML / CSS', 'Python'],
   },
   {
     category: 'フレームワーク',
@@ -58,6 +58,18 @@ const skillGroups = [
     color: 'bg-orange-400/10 text-orange-400 border-orange-400/20',
     dot: 'bg-orange-400',
     items: ['Cloudflare Pages', 'Git / GitHub', 'sharp'],
+  },
+  {
+    category: 'デザイン系',
+    color: 'bg-pink-400/10 text-pink-400 border-pink-400/20',
+    dot: 'bg-pink-400',
+    items: ['Illustrator', 'Photoshop', 'Lightroom', 'Affinity', 'Canva', 'Figma'],
+  },
+  {
+    category: '映像系',
+    color: 'bg-red-400/10 text-red-400 border-red-400/20',
+    dot: 'bg-red-400',
+    items: ['Premiere Pro', 'DaVinci Resolve'],
   },
 ];
 
