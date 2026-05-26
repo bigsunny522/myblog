@@ -5,8 +5,7 @@ import { TiltCard } from '@/components/TiltCard';
 import {
   Layers, Code2, Palette, Zap, Database, FileText, Server,
   Box, Globe, Cpu, ExternalLink, Mail, Twitter,
-  GitBranch, Layout, Sparkles, Shield, Image, Package,
-  ChevronRight, Pencil, Terminal, Gamepad2,
+  Layout, Image, ChevronRight, Pencil, Terminal, Gamepad2,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -207,12 +206,10 @@ export default function PortfolioPage() {
             Personal Developer Portfolio
           </div>
           <h1 className="text-[clamp(2.25rem,5vw,3.75rem)] font-bold font-outfit tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-400 to-purple-400 leading-tight pb-1">
-            Zack / ざっくらぼ
+            ざっくらぼ
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            フロントエンド開発を中心とした個人開発者。<br className="hidden md:block" />
-            Next.js・React・TypeScript を主軸に、ブログシステムから<br className="hidden md:block" />
-            ゲーム向け Web ツールまで複数のプロダクトを設計・開発・運用しています。
+            フロントエンド開発を中心とした個人開発者。Next.js・React・TypeScript を主軸に、ブログシステムからゲーム向け Web ツールまで複数のプロダクトを設計・開発・運用しています。
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <a
@@ -382,22 +379,14 @@ export default function PortfolioPage() {
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl overflow-hidden">
-              {architectureItems.map((item, i) => (
-                <div
-                  key={item.label}
-                  className={`flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 px-6 py-4 ${
-                    i < architectureItems.length - 1 ? 'border-b border-border/50' : ''
-                  }`}
-                >
-                  <dt className="text-xs font-medium text-muted-foreground shrink-0 sm:w-44 flex items-center gap-1.5">
-                    <ChevronRight size={12} className="text-primary" />
-                    {item.label}
-                  </dt>
+            <dl className="grid grid-cols-1 gap-3">
+              {architectureItems.map((item) => (
+                <div key={item.label} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 px-5 py-3 bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl">
+                  <dt className="text-xs font-semibold text-muted-foreground shrink-0 sm:w-44">{item.label}</dt>
                   <dd className="font-medium text-sm">{item.value}</dd>
                 </div>
               ))}
-            </div>
+            </dl>
           </ScrollReveal>
         </section>
 
