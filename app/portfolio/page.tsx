@@ -6,12 +6,12 @@ import {
   Layers, Code2, Palette, Zap, Database, FileText, Server,
   Box, Globe, Cpu, ExternalLink, Mail, Twitter,
   GitBranch, Layout, Sparkles, Shield, Image, Package,
-  ChevronRight, Pencil,
+  ChevronRight, Pencil, Terminal, Gamepad2,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Portfolio | ざっくらぼ',
-  description: 'ざっくらぼ（Zack Lab）の技術構成・実装内容のポートフォリオページです。',
+  description: 'フロントエンド開発を中心とした個人開発者のポートフォリオ。Next.js・React・TypeScript を使った Web アプリ開発が得意です。',
   robots: {
     index: false,
     follow: false,
@@ -22,6 +22,72 @@ export const metadata: Metadata = {
 // ────────────────────────────────────────────────────────────
 // Data
 // ────────────────────────────────────────────────────────────
+
+const skillGroups = [
+  {
+    category: '言語',
+    color: 'bg-blue-400/10 text-blue-400 border-blue-400/20',
+    dot: 'bg-blue-400',
+    items: ['TypeScript', 'JavaScript', 'HTML / CSS'],
+  },
+  {
+    category: 'フレームワーク',
+    color: 'bg-sky-400/10 text-sky-400 border-sky-400/20',
+    dot: 'bg-sky-400',
+    items: ['Next.js (App Router)', 'React 19'],
+  },
+  {
+    category: 'スタイリング',
+    color: 'bg-teal-400/10 text-teal-400 border-teal-400/20',
+    dot: 'bg-teal-400',
+    items: ['Tailwind CSS v4', 'Framer Motion'],
+  },
+  {
+    category: 'データ / BaaS',
+    color: 'bg-emerald-400/10 text-emerald-400 border-emerald-400/20',
+    dot: 'bg-emerald-400',
+    items: ['Supabase (PostgreSQL)', 'Zustand'],
+  },
+  {
+    category: 'コンテンツ / CMS',
+    color: 'bg-fuchsia-400/10 text-fuchsia-400 border-fuchsia-400/20',
+    dot: 'bg-fuchsia-400',
+    items: ['MDX', 'TinaCMS', 'Shiki'],
+  },
+  {
+    category: 'インフラ / ツール',
+    color: 'bg-orange-400/10 text-orange-400 border-orange-400/20',
+    dot: 'bg-orange-400',
+    items: ['Cloudflare Pages', 'Git / GitHub', 'sharp'],
+  },
+];
+
+const works = [
+  {
+    title: 'ざっくらぼ',
+    subtitle: 'パーソナルテックブログ',
+    desc: 'ターミナルテーマのパーソナルブログ。ゲームレビュー・ガジェット・開発メモを発信。Next.js App Router + MDX + TinaCMS による静的生成とブラウザ上での記事編集を両立。カスタムダッシュボード（11 種ウィジェット）や対話型 404 ターミナルなど独自機能を実装。',
+    url: 'https://xyzack271.com',
+    github: 'https://github.com/bigsunny0522',
+    tech: ['Next.js 16', 'MDX', 'TinaCMS', 'Tailwind CSS v4', 'Framer Motion', 'Supabase'],
+    icon: <Terminal size={24} />,
+    iconColor: 'text-primary bg-primary/10',
+    accentFrom: 'from-primary/20',
+    accentTo: 'to-purple-500/10',
+  },
+  {
+    title: '音骸シミュレーター',
+    subtitle: '鳴潮（Wuthering Waves）ゲームツール',
+    desc: '鳴潮（Wuthering Waves）プレイヤー向けの音骸ビルドシミュレーター。キャラクターに装備する音骸の組み合わせをシミュレーション・比較できる Web ツール。スマートフォンでも快適に操作できるレスポンシブ設計。',
+    url: 'https://wuwaechosimu.xyzack271.com',
+    github: null,
+    tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+    icon: <Gamepad2 size={24} />,
+    iconColor: 'text-amber-400 bg-amber-400/10',
+    accentFrom: 'from-amber-500/20',
+    accentTo: 'to-orange-500/10',
+  },
+];
 
 const commonTechStack = [
   {
@@ -110,48 +176,9 @@ const appTechStack = [
   {
     name: 'Supabase',
     role: 'BaaS',
-    desc: 'PostgreSQL ベースの BaaS をクライアント連携。将来的な機能拡張を見据えた構成。',
+    desc: 'PostgreSQL ベースの BaaS をクライアント連携。閲覧数カウンターなどの動的機能に活用。',
     icon: <Database size={22} />,
     color: 'text-emerald-400 bg-emerald-400/10',
-  },
-];
-
-const features = [
-  {
-    title: 'MDX + TinaCMS コンテンツ管理',
-    desc: 'ローカル MDX ファイルを主軸とし、TinaCMS（Git ベース）でブラウザ上からリアルタイム編集が可能。静的エクスポートのまま iPad・外出先での記事執筆に対応。',
-    icon: <GitBranch size={20} />,
-    color: 'text-primary bg-primary/10',
-  },
-  {
-    title: 'カスタム MDX コンポーネント',
-    desc: '`<ReviewPoint>` `<Specs>` `<BuyLinks>` `<CouponBox>` `<FeaturePoint>` など、レビュー記事に特化した再利用可能コンポーネントを設計・実装。TinaCMS の Rich Text テンプレートとしても登録。',
-    icon: <Package size={20} />,
-    color: 'text-teal-400 bg-teal-400/10',
-  },
-  {
-    title: 'SEO・パフォーマンス最適化',
-    desc: '動的メタデータ生成・OpenGraph 対応・`generateStaticParams` による完全 SSG。WebP 変換・ブラープレースホルダー・React Compiler による自動最適化を組み合わせた構成。',
-    icon: <Shield size={20} />,
-    color: 'text-emerald-400 bg-emerald-400/10',
-  },
-  {
-    title: 'カスタマイズ可能なダッシュボード',
-    desc: '11 種類のウィジェット（時計・天気・Todo・ポモドーロ・カウントダウン・年間進捗など）をドラッグ＆ドロップで配置できるダッシュボードを実装。設定は Zustand + localStorage で永続化。',
-    icon: <Layout size={20} />,
-    color: 'text-purple-400 bg-purple-400/10',
-  },
-  {
-    title: 'インタラクティブ 404 ターミナル',
-    desc: 'ターミナルテーマに合わせた 404 ページ。`help`・`dir`・`whoami`・`date`・`type` などのコマンドを実際に実行できるインタラクティブな UI を React で実装。',
-    icon: <Sparkles size={20} />,
-    color: 'text-amber-400 bg-amber-400/10',
-  },
-  {
-    title: 'Framer Motion アニメーション',
-    desc: 'スクロール連動の ScrollReveal コンポーネント・3D チルトカード・ページ遷移アニメーションを Framer Motion で実装。パフォーマンスを意識した遅延ロード設計。',
-    icon: <Zap size={20} />,
-    color: 'text-blue-400 bg-blue-400/10',
   },
 ];
 
@@ -177,15 +204,15 @@ export default function PortfolioPage() {
         <ScrollReveal className="text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium mb-4">
             <Globe size={14} />
-            Technical Portfolio
+            Personal Developer Portfolio
           </div>
           <h1 className="text-[clamp(2.25rem,5vw,3.75rem)] font-bold font-outfit tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-400 to-purple-400 leading-tight pb-1">
-            ざっくらぼ
+            Zack / ざっくらぼ
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            ターミナルテーマのパーソナルテックブログ。<br className="hidden md:block" />
-            Next.js App Router・MDX・カスタムダッシュボードを中心とした<br className="hidden md:block" />
-            フルスタックの個人開発プロジェクトです。
+            フロントエンド開発を中心とした個人開発者。<br className="hidden md:block" />
+            Next.js・React・TypeScript を主軸に、ブログシステムから<br className="hidden md:block" />
+            ゲーム向け Web ツールまで複数のプロダクトを設計・開発・運用しています。
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <a
@@ -210,30 +237,98 @@ export default function PortfolioPage() {
           </div>
         </ScrollReveal>
 
-        {/* ── Overview ── */}
+        {/* ── Skills ── */}
         <section className="space-y-8">
           <ScrollReveal direction="left">
-            <SectionTitle>Overview</SectionTitle>
+            <SectionTitle>Skills</SectionTitle>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.1}>
-            <TiltCard>
-              <div className="bg-gradient-to-br from-card to-secondary/50 border border-white/10 p-8 md:p-10 rounded-2xl shadow-xl relative overflow-hidden backdrop-blur-xl">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-                <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <OverviewStat label="フレームワーク" value="Next.js 16" sub="App Router / SSG" />
-                  <OverviewStat label="コンテンツ管理" value="MDX + TinaCMS" sub="Git ベース CMS" />
-                  <OverviewStat label="ウィジェット数" value="11種類以上" sub="ダッシュボードシステム" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {skillGroups.map((group, i) => (
+              <ScrollReveal key={group.category} delay={Math.min(i * 0.06, 0.3)}>
+                <div className="h-full p-5 bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl hover:border-primary/30 transition-colors duration-300">
+                  <div className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full border mb-3 ${group.color}`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${group.dot}`} />
+                    {group.category}
+                  </div>
+                  <ul className="space-y-1.5">
+                    {group.items.map((item) => (
+                      <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <ChevronRight size={12} className="text-primary shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-            </TiltCard>
+              </ScrollReveal>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Works ── */}
+        <section className="space-y-8">
+          <ScrollReveal direction="right">
+            <SectionTitle>Works</SectionTitle>
           </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {works.map((work, i) => (
+              <ScrollReveal key={work.title} delay={i * 0.1} className="h-full">
+                <TiltCard>
+                  <div className={`h-full bg-gradient-to-br ${work.accentFrom} ${work.accentTo} border border-white/10 rounded-2xl p-6 backdrop-blur-xl shadow-lg flex flex-col gap-4 relative overflow-hidden`}>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                    <div className="relative z-10 flex items-start gap-3">
+                      <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${work.iconColor}`}>
+                        {work.icon}
+                      </div>
+                      <div>
+                        <h3 className="font-bold font-outfit text-lg leading-tight">{work.title}</h3>
+                        <p className="text-xs text-muted-foreground mt-0.5">{work.subtitle}</p>
+                      </div>
+                    </div>
+                    <p className="relative z-10 text-sm text-muted-foreground leading-relaxed flex-1">
+                      {work.desc}
+                    </p>
+                    <div className="relative z-10 flex flex-wrap gap-1.5">
+                      {work.tech.map((t) => (
+                        <span key={t} className="text-xs px-2 py-0.5 bg-background/50 border border-border/50 rounded-full">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="relative z-10 flex items-center gap-3 pt-1 border-t border-white/10">
+                      <a
+                        href={work.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
+                      >
+                        <Globe size={12} />
+                        サイトを見る
+                        <ExternalLink size={11} />
+                      </a>
+                      {work.github && (
+                        <a
+                          href={work.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          GitHub
+                          <ExternalLink size={11} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </TiltCard>
+              </ScrollReveal>
+            ))}
+          </div>
         </section>
 
         {/* ── Tech Stack ── */}
         <section className="space-y-10">
-          <ScrollReveal direction="right">
+          <ScrollReveal direction="left">
             <SectionTitle>Tech Stack</SectionTitle>
           </ScrollReveal>
 
@@ -254,7 +349,7 @@ export default function PortfolioPage() {
           {/* ブログ */}
           <div className="space-y-4">
             <ScrollReveal delay={0.05}>
-              <SubSectionLabel>ブログ・コンテンツ</SubSectionLabel>
+              <SubSectionLabel>ざっくらぼ — ブログ・コンテンツ</SubSectionLabel>
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {blogTechStack.map((tech, i) => (
@@ -268,7 +363,7 @@ export default function PortfolioPage() {
           {/* アプリ */}
           <div className="space-y-4">
             <ScrollReveal delay={0.05}>
-              <SubSectionLabel>アプリ・ダッシュボード</SubSectionLabel>
+              <SubSectionLabel>ざっくらぼ — アプリ・ダッシュボード</SubSectionLabel>
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {appTechStack.map((tech, i) => (
@@ -277,29 +372,6 @@ export default function PortfolioPage() {
                 </ScrollReveal>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ── Key Features ── */}
-        <section className="space-y-8">
-          <ScrollReveal direction="left">
-            <SectionTitle>Key Features</SectionTitle>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {features.map((feat, i) => (
-              <ScrollReveal key={feat.title} delay={Math.min(i * 0.08, 0.4)} className="h-full">
-                <div className="h-full p-6 bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl hover:border-primary/40 transition-colors duration-300">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${feat.color}`}>
-                      {feat.icon}
-                    </div>
-                    <h3 className="font-bold font-outfit text-base">{feat.title}</h3>
-                  </div>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{feat.desc}</p>
-                </div>
-              </ScrollReveal>
-            ))}
           </div>
         </section>
 
@@ -318,7 +390,7 @@ export default function PortfolioPage() {
                     i < architectureItems.length - 1 ? 'border-b border-border/50' : ''
                   }`}
                 >
-                  <dt className="text-xs font-medium text-muted-foreground shrink-0 sm:w-40 flex items-center gap-1.5">
+                  <dt className="text-xs font-medium text-muted-foreground shrink-0 sm:w-44 flex items-center gap-1.5">
                     <ChevronRight size={12} className="text-primary" />
                     {item.label}
                   </dt>
@@ -415,16 +487,6 @@ function TechCard({ tech }: { tech: { name: string; role: string; desc: string; 
           <p className="text-muted-foreground text-xs leading-relaxed">{tech.desc}</p>
         </div>
       </div>
-    </div>
-  );
-}
-
-function OverviewStat({ label, value, sub }: { label: string; value: string; sub: string }) {
-  return (
-    <div className="text-center">
-      <div className="text-xs text-muted-foreground mb-1">{label}</div>
-      <div className="text-2xl font-bold font-outfit text-primary">{value}</div>
-      <div className="text-xs text-muted-foreground mt-1">{sub}</div>
     </div>
   );
 }
