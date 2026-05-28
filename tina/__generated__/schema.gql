@@ -97,6 +97,7 @@ type Post implements Node & Document {
   coverImage: String
   recommended: Boolean
   published: Boolean
+  listed: Boolean
   body: JSON
   id: ID!
   _sys: SystemInfo!
@@ -196,6 +197,7 @@ input PostFilter {
   coverImage: StringFilter
   recommended: BooleanFilter
   published: BooleanFilter
+  listed: BooleanFilter
   body: PostBodyFilter
 }
 
@@ -239,6 +241,7 @@ input PostMutation {
   coverImage: String
   recommended: Boolean
   published: Boolean
+  listed: Boolean
   body: JSON
 }
 

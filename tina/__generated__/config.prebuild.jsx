@@ -72,7 +72,14 @@ var config_default = defineConfig({
           {
             type: "boolean",
             name: "published",
-            label: "\u516C\u958B\u3059\u308B"
+            label: "\u516C\u958B\u3059\u308B",
+            ui: { defaultValue: false }
+          },
+          {
+            type: "boolean",
+            name: "listed",
+            label: "\u4E00\u89A7\u306B\u8868\u793A\u3059\u308B",
+            ui: { defaultValue: true }
           },
           {
             type: "rich-text",

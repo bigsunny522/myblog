@@ -6,7 +6,7 @@ import {
   Layers, Code2, Palette, Zap, Database, FileText, Server,
   Box, Globe, Cpu, ExternalLink, Mail, Twitter,
   GitBranch, Layout, Sparkles, Shield, Image, Package,
-  ChevronRight, Pencil,
+  ChevronRight, Pencil, Sliders, Timer,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -22,6 +22,42 @@ export const metadata: Metadata = {
 // ────────────────────────────────────────────────────────────
 // Data
 // ────────────────────────────────────────────────────────────
+
+const projects = [
+  {
+    name: 'ざっくらぼ ブログ',
+    desc: 'ターミナルテーマのパーソナルテックブログ。Next.js App Router・MDX・TinaCMS を組み合わせた完全静的エクスポート構成。',
+    badge: 'Next.js 16 / Cloudflare Pages',
+    tags: ['MDX', 'TinaCMS', 'Shiki', 'SSG'],
+    href: 'https://xyzack271.com',
+    icon: <Globe size={20} />,
+    iconColor: 'text-primary bg-primary/10',
+    borderColor: 'hover:border-primary/40',
+    accentGlow: 'bg-primary/10',
+  },
+  {
+    name: 'カスタムダッシュボード',
+    desc: '11 種類のウィジェットをドラッグ＆ドロップで自由に配置できる新しいスタートページ。Cloudflare Workers 上で動作。',
+    badge: 'Next.js 16 / Cloudflare Workers',
+    tags: ['react-grid-layout', 'Zustand', 'date-fns', 'Framer Motion'],
+    href: null,
+    icon: <Layout size={20} />,
+    iconColor: 'text-purple-400 bg-purple-400/10',
+    borderColor: 'hover:border-purple-400/40',
+    accentGlow: 'bg-purple-500/10',
+  },
+  {
+    name: 'フォトフレームエディター',
+    desc: '写真にフォトフレームを追加するブラウザ完結型ツール。EXIF 自動取得・6 種類スタイル・ロゴ合成対応。',
+    badge: 'Vite + React 19 / Cloudflare Workers',
+    tags: ['Canvas API', 'exifr', 'Tailwind v4', 'TypeScript'],
+    href: null,
+    icon: <Image size={20} />,
+    iconColor: 'text-rose-400 bg-rose-400/10',
+    borderColor: 'hover:border-rose-400/40',
+    accentGlow: 'bg-rose-500/10',
+  },
+] as const;
 
 const commonTechStack = [
   {
@@ -92,6 +128,68 @@ const blogTechStack = [
   },
 ];
 
+const dashboardTechStack = [
+  {
+    name: 'react-grid-layout',
+    role: 'グリッド D&D',
+    desc: '列数・行高さをレスポンシブに計算しながら、ウィジェットをドラッグ＆リサイズ可能なグリッドで管理。ResizeObserver で動的に行高さを再計算。',
+    icon: <Layout size={22} />,
+    color: 'text-indigo-400 bg-indigo-400/10',
+  },
+  {
+    name: 'Zustand v5',
+    role: '状態管理',
+    desc: 'ウィジェット設定・テーマ（背景グラデーション／画像）・レイアウト状態を一元管理。localStorage ミドルウェアで永続化。',
+    icon: <Box size={22} />,
+    color: 'text-pink-400 bg-pink-400/10',
+  },
+  {
+    name: 'date-fns v4',
+    role: '日付処理',
+    desc: '世界時計・カレンダー・カウントダウン・年間進捗ウィジェットの日時演算を国際化対応で実装。',
+    icon: <Timer size={22} />,
+    color: 'text-teal-400 bg-teal-400/10',
+  },
+  {
+    name: 'opennextjs-cloudflare',
+    role: 'デプロイ',
+    desc: 'Next.js アプリを Cloudflare Workers にデプロイ。SSR + エッジランタイム対応で低レイテンシを実現。',
+    icon: <Server size={22} />,
+    color: 'text-orange-500 bg-orange-500/10',
+  },
+];
+
+const imageEditorTechStack = [
+  {
+    name: 'Canvas API',
+    role: '画像処理',
+    desc: 'ブラウザネイティブ Canvas でフレームをピクセルパーフェクトに描画。テキスト・装飾・ロゴをすべてクライアントサイドで合成し高解像度 PNG 出力。',
+    icon: <Image size={22} />,
+    color: 'text-rose-400 bg-rose-400/10',
+  },
+  {
+    name: 'exifr',
+    role: 'EXIF 抽出',
+    desc: 'JPEG/TIFF アップロード時にカメラモデル・レンズ・F 値・シャッター速度・ISO・撮影日を自動取得してフレームに直接入力。',
+    icon: <Cpu size={22} />,
+    color: 'text-sky-400 bg-sky-400/10',
+  },
+  {
+    name: 'Vite 8 + @cloudflare/vite-plugin',
+    role: 'ビルド & デプロイ',
+    desc: 'Cloudflare Workers SPA モードで高速ビルド。PostCSS 不要の Tailwind v4 vite プラグインと組み合わせたゼロコンフィグ構成。',
+    icon: <Zap size={22} />,
+    color: 'text-yellow-400 bg-yellow-400/10',
+  },
+  {
+    name: 'TypeScript 6',
+    role: '型システム',
+    desc: '最新 TS 6 を採用。フレームスタイル・配置・カラー設定など複雑な設定オブジェクトを型安全に管理。',
+    icon: <Code2 size={22} />,
+    color: 'text-blue-400 bg-blue-400/10',
+  },
+];
+
 const appTechStack = [
   {
     name: 'Zustand',
@@ -152,6 +250,60 @@ const features = [
     desc: 'スクロール連動の ScrollReveal コンポーネント・3D チルトカード・ページ遷移アニメーションを Framer Motion で実装。パフォーマンスを意識した遅延ロード設計。',
     icon: <Zap size={20} />,
     color: 'text-blue-400 bg-blue-400/10',
+  },
+];
+
+const dashboardFeatures = [
+  {
+    title: '11 種類のウィジェット',
+    desc: '時計・世界時計・カレンダー・Todo・ポモドーロ・年間進捗・天気・カウントダウン・名言・ブックマーク・テキストメモの 11 種類を実装。',
+    icon: <Layout size={20} />,
+    color: 'text-purple-400 bg-purple-400/10',
+  },
+  {
+    title: 'レスポンシブグリッドレイアウト',
+    desc: 'ResizeObserver でコンテナサイズを監視し、ウィンドウ高さに合わせて行高さをリアルタイム計算。フルスクリーンモード対応。',
+    icon: <Layers size={20} />,
+    color: 'text-indigo-400 bg-indigo-400/10',
+  },
+  {
+    title: 'カスタムテーマ',
+    desc: '背景をグラデーション・単色・画像（URL or Base64 アップロード）から選択可能。グラデーション方向・カラーも自由に設定。',
+    icon: <Palette size={20} />,
+    color: 'text-teal-400 bg-teal-400/10',
+  },
+  {
+    title: 'Zustand + localStorage 永続化',
+    desc: 'ウィジェットのレイアウト・個別設定・テーマ設定を Zustand で管理し、ページ再読み込み後も復元。',
+    icon: <Database size={20} />,
+    color: 'text-emerald-400 bg-emerald-400/10',
+  },
+];
+
+const imageEditorFeatures = [
+  {
+    title: 'EXIF 自動取得・自動入力',
+    desc: 'JPEG/TIFF アップロード時に exifr でカメラ・レンズ・露出設定・撮影日を読み取り、フレームテキストに自動セット。手入力を最小化。',
+    icon: <Cpu size={20} />,
+    color: 'text-sky-400 bg-sky-400/10',
+  },
+  {
+    title: '6 種類のフレームスタイル',
+    desc: 'Minimal・Pro・Analog（フィルム風）・Retro・Tech の 5 スタイル。各スタイルで背景・アクセント・テキスト・サブカラーを独自プリセットで提供。',
+    icon: <Image size={20} />,
+    color: 'text-rose-400 bg-rose-400/10',
+  },
+  {
+    title: 'Canvas ベース高品質合成',
+    desc: '文字間隔付きスペーシングテキスト・角丸矩形・hairline 罫線・円形ロゴクリッピングをすべてブラウザ Canvas で実装。サーバーレスで高解像度 PNG 出力。',
+    icon: <Sparkles size={20} />,
+    color: 'text-amber-400 bg-amber-400/10',
+  },
+  {
+    title: 'ロゴ・ユーザー名ウォーターマーク',
+    desc: 'アイコン画像を円形クロップしてフレームに配置。ユーザー名・サイズ（20〜90%）・不透明度（10〜100%）をリアルタイム調整可能。',
+    icon: <Shield size={20} />,
+    color: 'text-emerald-400 bg-emerald-400/10',
   },
 ];
 
@@ -221,14 +373,54 @@ export default function PortfolioPage() {
               <div className="bg-gradient-to-br from-card to-secondary/50 border border-white/10 p-8 md:p-10 rounded-2xl shadow-xl relative overflow-hidden backdrop-blur-xl">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-                <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <OverviewStat label="フレームワーク" value="Next.js 16" sub="App Router / SSG" />
+                <div className="relative z-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+                  <OverviewStat label="プロジェクト数" value="3" sub="Blog / Dashboard / Editor" />
+                  <OverviewStat label="フレームワーク" value="Next.js + Vite" sub="App Router / Workers" />
                   <OverviewStat label="コンテンツ管理" value="MDX + TinaCMS" sub="Git ベース CMS" />
-                  <OverviewStat label="ウィジェット数" value="11種類以上" sub="ダッシュボードシステム" />
+                  <OverviewStat label="ウィジェット数" value="11種類" sub="ダッシュボードシステム" />
                 </div>
               </div>
             </TiltCard>
           </ScrollReveal>
+        </section>
+
+        {/* ── Projects ── */}
+        <section className="space-y-8">
+          <ScrollReveal direction="left">
+            <SectionTitle>Projects</SectionTitle>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {projects.map((proj, i) => (
+              <ScrollReveal key={proj.name} delay={Math.min(i * 0.08, 0.24)} className="h-full">
+                <div className={`h-full p-6 bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl ${proj.borderColor} transition-colors duration-300 group flex flex-col`}>
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${proj.iconColor}`}>
+                      {proj.icon}
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-bold font-outfit text-sm leading-tight mb-1">{proj.name}</h3>
+                      <span className="text-[10px] text-muted-foreground px-2 py-0.5 bg-secondary rounded-full">{proj.badge}</span>
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground text-xs leading-relaxed mb-4 flex-1">{proj.desc}</p>
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {proj.tags.map(tag => (
+                      <span key={tag} className="text-[10px] font-mono px-2 py-0.5 bg-secondary/60 rounded-md text-muted-foreground">{tag}</span>
+                    ))}
+                  </div>
+                  {proj.href ? (
+                    <a href={proj.href} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline mt-auto">
+                      サイトを見る <ExternalLink size={11} />
+                    </a>
+                  ) : (
+                    <span className="text-[10px] text-muted-foreground/50 mt-auto">開発中 / 非公開</span>
+                  )}
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </section>
 
         {/* ── Tech Stack ── */}
@@ -268,10 +460,38 @@ export default function PortfolioPage() {
           {/* アプリ */}
           <div className="space-y-4">
             <ScrollReveal delay={0.05}>
-              <SubSectionLabel>アプリ・ダッシュボード</SubSectionLabel>
+              <SubSectionLabel>アプリ・ダッシュボード（ブログ統合）</SubSectionLabel>
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {appTechStack.map((tech, i) => (
+                <ScrollReveal key={tech.name} delay={Math.min(i * 0.05, 0.2)} className="h-full">
+                  <TechCard tech={tech} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+
+          {/* ダッシュボード */}
+          <div className="space-y-4">
+            <ScrollReveal delay={0.05}>
+              <SubSectionLabel>カスタムダッシュボード（独立アプリ）</SubSectionLabel>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {dashboardTechStack.map((tech, i) => (
+                <ScrollReveal key={tech.name} delay={Math.min(i * 0.05, 0.2)} className="h-full">
+                  <TechCard tech={tech} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+
+          {/* イメージエディター */}
+          <div className="space-y-4">
+            <ScrollReveal delay={0.05}>
+              <SubSectionLabel>フォトフレームエディター（独立アプリ）</SubSectionLabel>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {imageEditorTechStack.map((tech, i) => (
                 <ScrollReveal key={tech.name} delay={Math.min(i * 0.05, 0.2)} className="h-full">
                   <TechCard tech={tech} />
                 </ScrollReveal>
@@ -290,6 +510,60 @@ export default function PortfolioPage() {
             {features.map((feat, i) => (
               <ScrollReveal key={feat.title} delay={Math.min(i * 0.08, 0.4)} className="h-full">
                 <div className="h-full p-6 bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl hover:border-primary/40 transition-colors duration-300">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${feat.color}`}>
+                      {feat.icon}
+                    </div>
+                    <h3 className="font-bold font-outfit text-base">{feat.title}</h3>
+                  </div>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{feat.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Dashboard Features ── */}
+        <section className="space-y-8">
+          <ScrollReveal direction="right">
+            <SectionTitle>Dashboard Features</SectionTitle>
+          </ScrollReveal>
+          <ScrollReveal delay={0.05}>
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
+              ブログから独立した Next.js 製スタートページ。Cloudflare Workers 上で動作し、11 種類のウィジェットをドラッグ＆ドロップで自由に配置できます。
+            </p>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {dashboardFeatures.map((feat, i) => (
+              <ScrollReveal key={feat.title} delay={Math.min(i * 0.08, 0.3)} className="h-full">
+                <div className="h-full p-6 bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl hover:border-purple-400/40 transition-colors duration-300">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${feat.color}`}>
+                      {feat.icon}
+                    </div>
+                    <h3 className="font-bold font-outfit text-base">{feat.title}</h3>
+                  </div>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{feat.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Image Editor Features ── */}
+        <section className="space-y-8">
+          <ScrollReveal direction="left">
+            <SectionTitle>Image Editor Features</SectionTitle>
+          </ScrollReveal>
+          <ScrollReveal delay={0.05}>
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
+              Vite + React 19 で構築したブラウザ完結型フォトフレームツール。Canvas API を直接操作し、サーバーレスで高品質なフレーム合成を実現します。
+            </p>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {imageEditorFeatures.map((feat, i) => (
+              <ScrollReveal key={feat.title} delay={Math.min(i * 0.08, 0.3)} className="h-full">
+                <div className="h-full p-6 bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl hover:border-rose-400/40 transition-colors duration-300">
                   <div className="flex items-center gap-3 mb-3">
                     <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${feat.color}`}>
                       {feat.icon}
