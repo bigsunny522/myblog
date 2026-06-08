@@ -24,7 +24,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden min-h-screen lg:min-h-[600px] flex flex-col lg:flex-row items-center">
+    <section className="relative overflow-hidden min-h-screen lg:min-h-[600px] flex flex-col lg:flex-row items-center max-w-screen-2xl mx-auto w-full">
       
       {/* Background Decor (Left Side only) */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] -z-10 pointer-events-none opacity-50 -translate-x-1/2 -translate-y-1/2" />
