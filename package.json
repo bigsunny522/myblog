@@ -3,7 +3,8 @@
   "version": "1.1.0",
   "scripts": {
     "dev": "node --env-file=.env.local node_modules/@tinacms/cli/bin/tinacms dev -c \"next dev\"",
-    "build": "( test -z \"$NEXT_PUBLIC_TINA_CLIENT_ID\" || tinacms build || echo 'Warning: TinaCMS schema sync pending, continuing build...' ) && next build && next-image-export-optimizer && node scripts/generate-sitemap.mjs && node scripts/ping-indexnow.mjs",
+    "build": "( test -z \"$NEXT_PUBLIC_TINA_CLIENT_ID\" || tinacms build || echo 'Warning: TinaCMS schema sync pending, continuing build...' ) && next build && node scripts/setup-image-cache.mjs && next-image-export-optimizer && node scripts/generate-sitemap.mjs && node scripts/ping-indexnow.mjs",
+    "build:images": "next-image-export-optimizer",
     "build:local": "node --env-file=.env.local node_modules/@tinacms/cli/bin/tinacms build",
     "start": "next start",
     "lint": "next lint",
