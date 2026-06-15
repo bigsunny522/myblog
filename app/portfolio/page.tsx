@@ -6,7 +6,7 @@ import {
   Layers, Code2, Palette, Zap, Database, FileText, Server,
   Box, Globe, Cpu, ExternalLink, Mail, Twitter,
   GitBranch, Layout, Sparkles, Shield, Image, Package,
-  ChevronRight, Pencil, Sliders, Timer,
+  ChevronRight, Pencil, Sliders, Timer, Gamepad2, BarChart2,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -56,6 +56,17 @@ const projects = [
     iconColor: 'text-rose-400 bg-rose-400/10',
     borderColor: 'hover:border-rose-400/40',
     accentGlow: 'bg-rose-500/10',
+  },
+  {
+    name: '音骸シミュレーター（鳴潮）',
+    desc: '鳴潮（Wuthering Waves）の音骸強化・厳選を無料でシミュレート。50,000 回のモンテカルロ法によるスコア予測・30+ キャラクター別評価・結果 PNG 出力対応。',
+    badge: 'Next.js 16 / Cloudflare Pages',
+    tags: ['Monte Carlo', 'Canvas API', 'i18n', 'TypeScript'],
+    href: 'https://wuwaechosimu.xyzack271.com',
+    icon: <Gamepad2 size={20} />,
+    iconColor: 'text-cyan-400 bg-cyan-400/10',
+    borderColor: 'hover:border-cyan-400/40',
+    accentGlow: 'bg-cyan-500/10',
   },
 ] as const;
 
@@ -307,6 +318,64 @@ const imageEditorFeatures = [
   },
 ];
 
+const wuwaTechStack = [
+  {
+    name: 'Next.js 16 + opennextjs-cloudflare',
+    role: 'フレームワーク / デプロイ',
+    desc: 'App Router + TypeScript。opennextjs-cloudflare で Cloudflare Pages にデプロイ。SSR + エッジランタイム対応。',
+    icon: <Layers size={22} />,
+    color: 'text-foreground bg-foreground/10',
+  },
+  {
+    name: 'モンテカルロシミュレーション',
+    role: 'アルゴリズム',
+    desc: '50,000 回の反復で音骸スコアの期待値・A+/S+/S+★ 達成確率をリアルタイム計算。「強化継続 / 継続 / ボーダー / 廃棄」を自動レコメンド。',
+    icon: <BarChart2 size={22} />,
+    color: 'text-cyan-400 bg-cyan-400/10',
+  },
+  {
+    name: 'Canvas API',
+    role: '画像出力',
+    desc: '強化結果カードを Canvas でピクセルパーフェクトにレンダリングし、高解像度 PNG としてエクスポート。Twitter シェア連携対応。',
+    icon: <Image size={22} />,
+    color: 'text-rose-400 bg-rose-400/10',
+  },
+  {
+    name: 'i18n（日本語 / English）',
+    role: '多言語対応',
+    desc: '翻訳辞書・キャラクター名・音骸名すべてをロケール切替対応。echo-list.csv を正規ソースとしたデータ駆動型翻訳管理。',
+    icon: <Globe size={22} />,
+    color: 'text-indigo-400 bg-indigo-400/10',
+  },
+];
+
+const wuwaFeatures = [
+  {
+    title: 'キャラ別スコア評価エンジン',
+    desc: '30+ キャラクターそれぞれのビルドに応じたサブステ優先度（推奨 / 好ましい / 許容 / 不要）でスコアを自動算出。GOD・S+・S・A・B・C・D の 7 段階ランク表示とデバッグパネルで内訳も確認可能。',
+    icon: <Sliders size={20} />,
+    color: 'text-cyan-400 bg-cyan-400/10',
+  },
+  {
+    title: 'モンテカルロ確率シミュレーション',
+    desc: '50,000 回の反復計算で現在の音骸から高ランク到達確率と期待スコアを予測。現在のサブステ構成を踏まえた「強化継続 / 継続 / ボーダー / 廃棄」の 4 段階レコメンドで強化判断をサポート。',
+    icon: <BarChart2 size={20} />,
+    color: 'text-purple-400 bg-purple-400/10',
+  },
+  {
+    title: '広告ボーナスシステム',
+    desc: '広告視聴でメインステ固定・サブステ再抽選（最大 3 項目）・高速強化（+25 一発）の 3 種類のボーナスを 5 分間付与。ゲーム内仕様を忠実に再現したフリーミアム設計。',
+    icon: <Zap size={20} />,
+    color: 'text-amber-400 bg-amber-400/10',
+  },
+  {
+    title: '結果保存 & PNG エクスポート',
+    desc: '強化完了した音骸を保存スロットで管理し、Canvas API で結果カードを PNG 出力。Twitter シェア機能を内蔵。セーブスロットは広告ボーナスで段階的にアップグレード可能。',
+    icon: <Image size={20} />,
+    color: 'text-rose-400 bg-rose-400/10',
+  },
+];
+
 const architectureItems = [
   { label: 'レンダリング戦略', value: 'SSG（静的エクスポート）+ React Server Components' },
   { label: 'コンテンツ取得', value: 'MDX ファイル + TinaCMS（Git ベース）→ 静的 HTML 生成' },
@@ -374,7 +443,7 @@ export default function PortfolioPage() {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
                 <div className="relative z-10 grid grid-cols-1 md:grid-cols-4 gap-8">
-                  <OverviewStat label="プロジェクト数" value="3" sub="Blog / Dashboard / Editor" />
+                  <OverviewStat label="プロジェクト数" value="4" sub="Blog / Dashboard / Editor / Simu" />
                   <OverviewStat label="フレームワーク" value="Next.js + Vite" sub="App Router / Workers" />
                   <OverviewStat label="コンテンツ管理" value="MDX + TinaCMS" sub="Git ベース CMS" />
                   <OverviewStat label="ウィジェット数" value="11種類" sub="ダッシュボードシステム" />
@@ -498,6 +567,20 @@ export default function PortfolioPage() {
               ))}
             </div>
           </div>
+
+          {/* 鳴潮シミュレーター */}
+          <div className="space-y-4">
+            <ScrollReveal delay={0.05}>
+              <SubSectionLabel>音骸シミュレーター — 鳴潮（独立アプリ）</SubSectionLabel>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {wuwaTechStack.map((tech, i) => (
+                <ScrollReveal key={tech.name} delay={Math.min(i * 0.05, 0.2)} className="h-full">
+                  <TechCard tech={tech} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* ── Key Features ── */}
@@ -575,6 +658,45 @@ export default function PortfolioPage() {
               </ScrollReveal>
             ))}
           </div>
+        </section>
+
+        {/* ── Wuthering Waves Echo Simulator Features ── */}
+        <section className="space-y-8">
+          <ScrollReveal direction="right">
+            <SectionTitle>Echo Simulator Features</SectionTitle>
+          </ScrollReveal>
+          <ScrollReveal delay={0.05}>
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
+              鳴潮（Wuthering Waves）の音骸厳選を支援する無料 Web ツール。Next.js + Cloudflare Pages で動作し、モンテカルロ法によるスコア予測や 30+ キャラクターに対応したビルド評価を提供します。
+            </p>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {wuwaFeatures.map((feat, i) => (
+              <ScrollReveal key={feat.title} delay={Math.min(i * 0.08, 0.3)} className="h-full">
+                <div className="h-full p-6 bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl hover:border-cyan-400/40 transition-colors duration-300">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${feat.color}`}>
+                      {feat.icon}
+                    </div>
+                    <h3 className="font-bold font-outfit text-base">{feat.title}</h3>
+                  </div>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{feat.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+          <ScrollReveal delay={0.2}>
+            <a
+              href="https://wuwaechosimu.xyzack271.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 rounded-full font-medium text-sm hover:bg-cyan-400/20 transition-colors"
+            >
+              <Gamepad2 size={16} />
+              ツールを試す
+              <ExternalLink size={14} />
+            </a>
+          </ScrollReveal>
         </section>
 
         {/* ── Architecture ── */}
