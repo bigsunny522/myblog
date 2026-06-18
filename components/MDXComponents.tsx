@@ -131,8 +131,8 @@ const LI = ({ children, className, ...props }: React.DetailedHTMLProps<React.LiH
 
     return (
       <li className={cn("leading-relaxed pl-1", className)} {...props}>
-        <div className="flex items-start">
-          <span className="shrink-0 mr-2 text-foreground font-bold">
+        <div className="flex flex-col sm:flex-row sm:items-start">
+          <span className="shrink-0 sm:mr-2 text-foreground font-bold">
             {keyNode}{separator.trim()}
           </span>
           <span className="font-normal text-foreground min-w-0">
@@ -181,6 +181,15 @@ const ImageGrid = ({ children, columns = 2 }: { children: React.ReactNode; colum
   <div className={cn('grid grid-cols-1 gap-4 my-8', colClasses[columns] ?? 'md:grid-cols-2')}>
     {children}
   </div>
+);
+
+const Figure = ({ src, alt, caption, className }: { src: string; alt: string; caption?: string; className?: string }) => (
+  <figure className="m-0 flex flex-col">
+    <ImageModal src={src} alt={alt} className={cn('w-full', className)} />
+    {caption && (
+      <figcaption className="text-center text-xs text-muted-foreground mt-2 px-1 leading-snug">{caption}</figcaption>
+    )}
+  </figure>
 );
 
 type BuyLinkData = { type: 'amazon' | 'rakuten' | 'official'; href: string; label?: string };
@@ -393,6 +402,52 @@ const InlineCode = ({ children, className, ...props }: React.HTMLAttributes<HTML
   );
 };
 
+const Video = ({ src, caption }: { src: string; caption?: string }) => (
+  <figure className="m-0 my-6 flex flex-col">
+    <video
+      src={src}
+      controls
+      playsInline
+      className="w-full rounded-xl border border-border shadow-sm"
+    />
+    {caption && (
+      <figcaption className="text-center text-xs text-muted-foreground mt-2 px-1 leading-snug">{caption}</figcaption>
+    )}
+  </figure>
+);
+
+const CheckList = ({ type = 'good', children }: { type?: 'good' | 'bad'; children: React.ReactNode }) => {
+  const isGood = type === 'good';
+  return (
+    <div className={cn(
+      'my-4 rounded-xl border overflow-hidden',
+      isGood ? 'border-primary/30' : 'border-red-500/30'
+    )}>
+      <div className={cn(
+        'px-5 py-3 text-sm font-bold flex items-center gap-2',
+        isGood ? 'bg-primary/10 text-primary' : 'bg-red-500/10 text-red-500'
+      )}>
+        {isGood ? '✓ こんな人におすすめ' : '✗ こんな人には向かない'}
+      </div>
+      <div className="px-5 py-4 space-y-2">
+        {children}
+      </div>
+    </div>
+  );
+};
+
+const CheckItem = ({ children, type = 'good' }: { children: React.ReactNode; type?: 'good' | 'bad' }) => {
+  const isGood = type === 'good';
+  return (
+    <div className="flex items-start gap-3 text-sm leading-relaxed">
+      <span className={cn('mt-0.5 shrink-0 font-bold', isGood ? 'text-primary' : 'text-red-500')}>
+        {isGood ? '✓' : '✗'}
+      </span>
+      <span className="text-foreground/80">{children}</span>
+    </div>
+  );
+};
+
 const Details = ({ summary, children }: { summary: string; children: React.ReactNode }) => (
   <details className="group my-6 rounded-xl border border-border overflow-hidden not-prose">
     <summary className="flex items-center justify-between px-4 py-3 cursor-pointer bg-muted/30 hover:bg-muted/50 transition-colors list-none select-none">
@@ -446,6 +501,9 @@ export const mdxComponents = {
   pre: Pre,
   code: InlineCode,
   Details,
+  Video,
+  CheckList,
+  CheckItem,
   CouponBox,
   img: (props: any) => {
     const { alt, ...rest } = props;
@@ -471,4 +529,5 @@ export const mdxComponents = {
   ReviewPoint,
   FeaturePoint,
   ImageGrid,
+  Figure,
 };

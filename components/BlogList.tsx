@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BlogPost } from '@/lib/mdx';
 import { BudouxText } from './ui/BudouxText';
-import { SafeImage } from './SafeImage';
+import ExportedImage from 'next-image-export-optimizer';
 
 
 interface BlogListProps {
@@ -36,12 +36,14 @@ export function BlogList({ posts }: BlogListProps) {
             transition={{ duration: 0.4, delay: index * 0.1 }}
             className="lk-card group flex flex-col bg-card border border-border/50 rounded-lk-sm overflow-hidden"
           >
-            <Link href={`/blog/${post.slug}`} className="block w-full aspect-video overflow-hidden">
-              <SafeImage
-                src={post.coverImage}
+            <Link href={`/blog/${post.slug}`} className="block w-full aspect-video overflow-hidden relative">
+              <ExportedImage
+                src={post.coverImage || '/images/main/skyblue.png'}
                 alt={post.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                priority={index < 3}
               />
             </Link>
             <div className="flex-1 p-lk-lg flex flex-col">

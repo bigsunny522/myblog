@@ -271,8 +271,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <time>{post.date}</time>
                 <span className="mx-2">•</span>
                 <span>{readingTime} 分で読めます</span>
-                <span className="mx-2">•</span>
-                <ViewCounter slug={slug} />
+                <span className="mx-2 hidden sm:inline">•</span>
+                <span className="hidden sm:inline-flex">
+                  <ViewCounter slug={slug} />
+                </span>
                 <span className="mx-2">•</span>
                 <ShareMenu title={post.title} slug={slug} />
               </div>
@@ -282,7 +284,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <BudouxText>{post.title}</BudouxText>
             </h1>
             {post.subtitle && (
-              <p className="text-xl md:text-2xl text-muted-foreground font-medium mt-2 leading-relaxed">
+              <p className="text-sm md:text-base text-muted-foreground font-medium mt-2 leading-relaxed">
                 <BudouxText>{post.subtitle}</BudouxText>
               </p>
             )}
