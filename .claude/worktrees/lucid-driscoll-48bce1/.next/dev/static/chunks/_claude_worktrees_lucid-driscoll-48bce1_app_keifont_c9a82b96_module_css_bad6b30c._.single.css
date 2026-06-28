@@ -1,0 +1,25 @@
+/* [project]/.claude/worktrees/lucid-driscoll-48bce1/app/keifont_c9a82b96.module.css [app-client] (css) */
+@font-face {
+  font-family: keifont;
+  src: url("../media/keifont-s.p.377a877e.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: keifont Fallback;
+  src: local(Arial);
+  ascent-override: 74.46%;
+  descent-override: 12.18%;
+  line-gap-override: 0.0%;
+  size-adjust: 115.41%;
+}
+
+.keifont_c9a82b96-module__i5nztG__className {
+  font-family: keifont, keifont Fallback;
+}
+
+.keifont_c9a82b96-module__i5nztG__variable {
+  --font-keifont: "keifont", "keifont Fallback";
+}
+
+/*# sourceMappingURL=_claude_worktrees_lucid-driscoll-48bce1_app_keifont_c9a82b96_module_css_bad6b30c._.single.css.map*/
