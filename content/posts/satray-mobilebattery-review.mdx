@@ -188,32 +188,32 @@ published: false
   <text x="65" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#92400e">強い衝撃・</text>
   <text x="65" y="94" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#92400e">過充電・変形</text>
   {/* arrow */}
-  <polygon points="128,70 140,63 140,77" fill="#ef4444"/>
-  <line x1="120" y1="72" x2="139" y2="72" stroke="#ef4444" strokeWidth="2"/>
+  <polygon points="140,70 128,63 128,77" fill="#ef4444"/>
+  <line x1="120" y1="72" x2="129" y2="72" stroke="#ef4444" strokeWidth="2"/>
   {/* 2 */}
   <rect x="148" y="36" width="110" height="72" rx="10" fill="#fee2e2" stroke="#ef4444" strokeWidth="1.5"/>
   <text x="203" y="58" textAnchor="middle" fontSize="18">⚡</text>
   <text x="203" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#b91c1c">内部ショート</text>
   <text x="203" y="94" textAnchor="middle" fontSize="11" fill="#b91c1c">セパレータ破損</text>
   {/* arrow */}
-  <polygon points="266,70 278,63 278,77" fill="#ef4444"/>
-  <line x1="258" y1="72" x2="277" y2="72" stroke="#ef4444" strokeWidth="2"/>
+  <polygon points="278,70 266,63 266,77" fill="#ef4444"/>
+  <line x1="258" y1="72" x2="267" y2="72" stroke="#ef4444" strokeWidth="2"/>
   {/* 3 */}
   <rect x="286" y="36" width="110" height="72" rx="10" fill="#fee2e2" stroke="#ef4444" strokeWidth="2"/>
   <text x="341" y="58" textAnchor="middle" fontSize="18">🌡️</text>
   <text x="341" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#b91c1c">液体電解質が</text>
   <text x="341" y="94" textAnchor="middle" fontSize="11" fill="#b91c1c">急激にガス化</text>
   {/* arrow */}
-  <polygon points="404,70 416,63 416,77" fill="#ef4444"/>
-  <line x1="396" y1="72" x2="415" y2="72" stroke="#ef4444" strokeWidth="2"/>
+  <polygon points="416,70 404,63 404,77" fill="#ef4444"/>
+  <line x1="396" y1="72" x2="405" y2="72" stroke="#ef4444" strokeWidth="2"/>
   {/* 4 */}
   <rect x="424" y="36" width="110" height="72" rx="10" fill="#fecaca" stroke="#dc2626" strokeWidth="2"/>
   <text x="479" y="58" textAnchor="middle" fontSize="18">💨</text>
   <text x="479" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#991b1b">電池が膨張・</text>
   <text x="479" y="94" textAnchor="middle" fontSize="11" fill="#991b1b">ガス噴出</text>
   {/* arrow */}
-  <polygon points="542,70 554,63 554,77" fill="#dc2626"/>
-  <line x1="534" y1="72" x2="553" y2="72" stroke="#dc2626" strokeWidth="2"/>
+  <polygon points="554,70 542,63 542,77" fill="#dc2626"/>
+  <line x1="534" y1="72" x2="543" y2="72" stroke="#dc2626" strokeWidth="2"/>
   {/* 5 */}
   <rect x="562" y="36" width="108" height="72" rx="10" fill="#fca5a5" stroke="#dc2626" strokeWidth="2.5"/>
   <text x="616" y="58" textAnchor="middle" fontSize="22">🔥</text>
@@ -252,6 +252,10 @@ published: false
     {[0.25,0.5,0.75,1].map((s,i) => (
       <polygon key={i} points={[0,72,144,216,288].map(deg=>{const r=deg*Math.PI/180;return `${Math.cos(r-Math.PI/2)*80*s},${Math.sin(r-Math.PI/2)*80*s}`;}).join(' ')} fill="none" stroke="currentColor" strokeOpacity="0.1" strokeWidth="1"/>
     ))}
+    {/* 目盛りラベル（この一つ目のチャートにのみ表示、0〜100の相対スコア） */}
+    {[0.25,0.5,0.75,1].map((s,i) => (
+      <text key={`scale${i}`} x="6" y={-80*s+3} fontSize="7" fill="currentColor" fillOpacity="0.45">{s*100}</text>
+    ))}
     {/* データ: 安全性15 コスト95 容量90 寿命70 普及度95 */}
     {(() => {
       const vals = [0.15, 0.95, 0.90, 0.70, 0.95];
@@ -289,11 +293,8 @@ published: false
     <text x="58" y="70" textAnchor="start" fontSize="10" fill="currentColor" fillOpacity="0.7">容量</text>
     <text x="-70" y="70" textAnchor="end" fontSize="10" fill="currentColor" fillOpacity="0.7">寿命</text>
     <text x="-94" y="-25" textAnchor="end" fontSize="10" fill="currentColor" fillOpacity="0.7">普及度</text>
-    <text x="0" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#d97706">② 準固体電池</text>
+    <text x="0" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#d97706">② 準固体電池（BEST BALANCE）</text>
     <text x="0" y="130" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.6">バランス重視 / 現実的な選択</text>
-    {/* BEST BALANCE badge */}
-    <rect x="-46" y="-16" width="92" height="22" rx="11" fill="#f59e0b" fillOpacity="0.2" stroke="#f59e0b" strokeWidth="1.5"/>
-    <text x="0" y="-2" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#d97706">BEST BALANCE</text>
   </g>
 
   {/* --- 全固体電池 --- */}
@@ -322,9 +323,11 @@ published: false
 </svg>
 </figure>
 
+*※各軸は「安全性」「コスト効率」「容量」「寿命」「普及度」の5項目を0〜100の相対スコアで表したものです。実測値ではなく、ここまでの解説内容をもとにした著者の目安評価としてご覧ください。*
+
 ---
 
-### Step 5：「燃えにくさ」を数字で見る
+### Step 5：「燃えにくさ」をグラフで比較
 
 実際の安全試験データを見ると、その差は一目瞭然です。
 
