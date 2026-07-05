@@ -188,7 +188,7 @@ published: false
   <text x="65" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#92400e">強い衝撃・</text>
   <text x="65" y="94" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#92400e">過充電・変形</text>
   {/* arrow */}
-  <polygon points="140,70 128,63 128,77" fill="#ef4444"/>
+  <polygon points="140,72 128,65 128,79" fill="#ef4444"/>
   <line x1="120" y1="72" x2="129" y2="72" stroke="#ef4444" strokeWidth="2"/>
   {/* 2 */}
   <rect x="148" y="36" width="110" height="72" rx="10" fill="#fee2e2" stroke="#ef4444" strokeWidth="1.5"/>
@@ -196,7 +196,7 @@ published: false
   <text x="203" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#b91c1c">内部ショート</text>
   <text x="203" y="94" textAnchor="middle" fontSize="11" fill="#b91c1c">セパレータ破損</text>
   {/* arrow */}
-  <polygon points="278,70 266,63 266,77" fill="#ef4444"/>
+  <polygon points="278,72 266,65 266,79" fill="#ef4444"/>
   <line x1="258" y1="72" x2="267" y2="72" stroke="#ef4444" strokeWidth="2"/>
   {/* 3 */}
   <rect x="286" y="36" width="110" height="72" rx="10" fill="#fee2e2" stroke="#ef4444" strokeWidth="2"/>
@@ -204,7 +204,7 @@ published: false
   <text x="341" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#b91c1c">液体電解質が</text>
   <text x="341" y="94" textAnchor="middle" fontSize="11" fill="#b91c1c">急激にガス化</text>
   {/* arrow */}
-  <polygon points="416,70 404,63 404,77" fill="#ef4444"/>
+  <polygon points="416,72 404,65 404,79" fill="#ef4444"/>
   <line x1="396" y1="72" x2="405" y2="72" stroke="#ef4444" strokeWidth="2"/>
   {/* 4 */}
   <rect x="424" y="36" width="110" height="72" rx="10" fill="#fecaca" stroke="#dc2626" strokeWidth="2"/>
@@ -212,7 +212,7 @@ published: false
   <text x="479" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#991b1b">電池が膨張・</text>
   <text x="479" y="94" textAnchor="middle" fontSize="11" fill="#991b1b">ガス噴出</text>
   {/* arrow */}
-  <polygon points="554,70 542,63 542,77" fill="#dc2626"/>
+  <polygon points="554,72 542,65 542,79" fill="#dc2626"/>
   <line x1="534" y1="72" x2="543" y2="72" stroke="#dc2626" strokeWidth="2"/>
   {/* 5 */}
   <rect x="562" y="36" width="108" height="72" rx="10" fill="#fca5a5" stroke="#dc2626" strokeWidth="2.5"/>
@@ -234,162 +234,33 @@ published: false
 
 ### Step 4：安全性・コスト・容量のトレードオフ
 
-3種類の電池はそれぞれトレードオフがあります。下のレーダーチャートで比較してみます。
+3種類の電池はそれぞれトレードオフがあります。ここまで解説した内容にもとづき、5つの観点を相対的な傾向（◎○△×）で整理すると次のようになります。数値化できるほど厳密なデータがあるわけではないため、あくまで傾向としての比較表です。
 
-<figure className="my-8">
-<svg viewBox="0 0 780 300" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl mx-auto" style={{fontFamily:"system-ui,sans-serif"}}>
-  {/* タイトル */}
-  <text x="390" y="18" textAnchor="middle" fontSize="12" fontWeight="bold" fill="currentColor">図4：3種類の電池 特性比較</text>
+| 観点 | ①リチウムイオン電池 | ②準固体電池 | ③全固体電池 |
+|---|---|---|---|
+| 安全性 | × 発火リスクあり | ○ リスクを大幅低減 | ◎ 最も安全 |
+| コスト効率 | ◎ 最も安価 | ○ やや割高 | × 量産コストが非常に高い |
+| 容量 | ◎ 大容量 | ○ ほぼ同等 | ○ ほぼ同等 |
+| 寿命 | △ 標準的 | ○ やや長い傾向 | ◎ 長寿命 |
+| 普及度 | ◎ すでに主流 | △ 普及が進行中 | × まだ研究・試作段階 |
 
-  {/* --- リチウムイオン --- */}
-  <g transform="translate(150,160)">
-    {/* 軸 */}
-    {[0,72,144,216,288].map((deg, i) => {
-      const r = deg * Math.PI / 180;
-      return <line key={i} x1="0" y1="0" x2={Math.cos(r-Math.PI/2)*80} y2={Math.sin(r-Math.PI/2)*80} stroke="currentColor" strokeOpacity="0.15" strokeWidth="1"/>;
-    })}
-    {/* グリッド */}
-    {[0.25,0.5,0.75,1].map((s,i) => (
-      <polygon key={i} points={[0,72,144,216,288].map(deg=>{const r=deg*Math.PI/180;return `${Math.cos(r-Math.PI/2)*80*s},${Math.sin(r-Math.PI/2)*80*s}`;}).join(' ')} fill="none" stroke="currentColor" strokeOpacity="0.1" strokeWidth="1"/>
-    ))}
-    {/* 目盛りラベル（この一つ目のチャートにのみ表示、0〜100の相対スコア） */}
-    {[0.25,0.5,0.75,1].map((s,i) => (
-      <text key={`scale${i}`} x="6" y={-80*s+3} fontSize="7" fill="currentColor" fillOpacity="0.45">{s*100}</text>
-    ))}
-    {/* データ: 安全性15 コスト95 容量90 寿命70 普及度95 */}
-    {(() => {
-      const vals = [0.15, 0.95, 0.90, 0.70, 0.95];
-      const pts = vals.map((v,i)=>{const r=(i*72)*Math.PI/180;return `${Math.cos(r-Math.PI/2)*80*v},${Math.sin(r-Math.PI/2)*80*v}`;}).join(' ');
-      return <polygon points={pts} fill="#ef4444" fillOpacity="0.25" stroke="#ef4444" strokeWidth="2"/>;
-    })()}
-    {/* 軸ラベル */}
-    <text x="0" y="-90" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.7">安全性</text>
-    <text x="90" y="-25" textAnchor="start" fontSize="10" fill="currentColor" fillOpacity="0.7">コスト効率</text>
-    <text x="58" y="70" textAnchor="start" fontSize="10" fill="currentColor" fillOpacity="0.7">容量</text>
-    <text x="-70" y="70" textAnchor="end" fontSize="10" fill="currentColor" fillOpacity="0.7">寿命</text>
-    <text x="-94" y="-25" textAnchor="end" fontSize="10" fill="currentColor" fillOpacity="0.7">普及度</text>
-    {/* タイトル */}
-    <text x="0" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#ef4444">① Li-ion電池</text>
-    <text x="0" y="130" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.6">安価・大容量 / 発火リスク</text>
-  </g>
-
-  {/* --- 準固体電池 --- */}
-  <g transform="translate(390,160)">
-    {[0,72,144,216,288].map((deg, i) => {
-      const r = deg * Math.PI / 180;
-      return <line key={i} x1="0" y1="0" x2={Math.cos(r-Math.PI/2)*80} y2={Math.sin(r-Math.PI/2)*80} stroke="currentColor" strokeOpacity="0.15" strokeWidth="1"/>;
-    })}
-    {[0.25,0.5,0.75,1].map((s,i) => (
-      <polygon key={i} points={[0,72,144,216,288].map(deg=>{const r=deg*Math.PI/180;return `${Math.cos(r-Math.PI/2)*80*s},${Math.sin(r-Math.PI/2)*80*s}`;}).join(' ')} fill="none" stroke="currentColor" strokeOpacity="0.1" strokeWidth="1"/>
-    ))}
-    {/* データ: 安全性70 コスト80 容量85 寿命85 普及度40 */}
-    {(() => {
-      const vals = [0.70, 0.80, 0.85, 0.85, 0.40];
-      const pts = vals.map((v,i)=>{const r=(i*72)*Math.PI/180;return `${Math.cos(r-Math.PI/2)*80*v},${Math.sin(r-Math.PI/2)*80*v}`;}).join(' ');
-      return <polygon points={pts} fill="#f59e0b" fillOpacity="0.3" stroke="#f59e0b" strokeWidth="2.5"/>;
-    })()}
-    <text x="0" y="-90" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.7">安全性</text>
-    <text x="90" y="-25" textAnchor="start" fontSize="10" fill="currentColor" fillOpacity="0.7">コスト効率</text>
-    <text x="58" y="70" textAnchor="start" fontSize="10" fill="currentColor" fillOpacity="0.7">容量</text>
-    <text x="-70" y="70" textAnchor="end" fontSize="10" fill="currentColor" fillOpacity="0.7">寿命</text>
-    <text x="-94" y="-25" textAnchor="end" fontSize="10" fill="currentColor" fillOpacity="0.7">普及度</text>
-    <text x="0" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#d97706">② 準固体電池（BEST BALANCE）</text>
-    <text x="0" y="130" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.6">バランス重視 / 現実的な選択</text>
-  </g>
-
-  {/* --- 全固体電池 --- */}
-  <g transform="translate(630,160)">
-    {[0,72,144,216,288].map((deg, i) => {
-      const r = deg * Math.PI / 180;
-      return <line key={i} x1="0" y1="0" x2={Math.cos(r-Math.PI/2)*80} y2={Math.sin(r-Math.PI/2)*80} stroke="currentColor" strokeOpacity="0.15" strokeWidth="1"/>;
-    })}
-    {[0.25,0.5,0.75,1].map((s,i) => (
-      <polygon key={i} points={[0,72,144,216,288].map(deg=>{const r=deg*Math.PI/180;return `${Math.cos(r-Math.PI/2)*80*s},${Math.sin(r-Math.PI/2)*80*s}`;}).join(' ')} fill="none" stroke="currentColor" strokeOpacity="0.1" strokeWidth="1"/>
-    ))}
-    {/* データ: 安全性98 コスト15 容量75 寿命95 普及度5 */}
-    {(() => {
-      const vals = [0.98, 0.15, 0.75, 0.95, 0.05];
-      const pts = vals.map((v,i)=>{const r=(i*72)*Math.PI/180;return `${Math.cos(r-Math.PI/2)*80*v},${Math.sin(r-Math.PI/2)*80*v}`;}).join(' ');
-      return <polygon points={pts} fill="#8b5cf6" fillOpacity="0.25" stroke="#8b5cf6" strokeWidth="2"/>;
-    })()}
-    <text x="0" y="-90" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.7">安全性</text>
-    <text x="90" y="-25" textAnchor="start" fontSize="10" fill="currentColor" fillOpacity="0.7">コスト効率</text>
-    <text x="58" y="70" textAnchor="start" fontSize="10" fill="currentColor" fillOpacity="0.7">容量</text>
-    <text x="-70" y="70" textAnchor="end" fontSize="10" fill="currentColor" fillOpacity="0.7">寿命</text>
-    <text x="-94" y="-25" textAnchor="end" fontSize="10" fill="currentColor" fillOpacity="0.7">普及度</text>
-    <text x="0" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#7c3aed">③ 全固体電池</text>
-    <text x="0" y="130" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.6">安全・長寿命 / 高コスト</text>
-  </g>
-</svg>
-</figure>
-
-*※各軸は「安全性」「コスト効率」「容量」「寿命」「普及度」の5項目を0〜100の相対スコアで表したものです。実測値ではなく、ここまでの解説内容をもとにした著者の目安評価としてご覧ください。*
+準固体電池は安全性を大きく引き上げつつ、コストや容量は従来品に近い水準を保っている――という位置づけが、「現実的な次世代電池」と言われる理由です。
 
 ---
 
-### Step 5：「燃えにくさ」をグラフで比較
+### Step 5：「燃えにくさ」を数字で見る
 
 実際の安全試験データを見ると、その差は一目瞭然です。
 
-<figure className="my-8">
-<svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl mx-auto" style={{fontFamily:"system-ui,sans-serif"}}>
-  <text x="340" y="20" textAnchor="middle" fontSize="12" fontWeight="bold" fill="currentColor">図5：異常発熱時の最大温度上昇速度（℃/秒）</text>
-  {/* Y軸 */}
-  <line x1="100" y1="40" x2="100" y2="170" stroke="currentColor" strokeOpacity="0.3" strokeWidth="1.5"/>
-  {/* X軸 */}
-  <line x1="100" y1="170" x2="640" y2="170" stroke="currentColor" strokeOpacity="0.3" strokeWidth="1.5"/>
-  {/* グリッド */}
-  {[0,0.5,1.0,1.5,2.0].map((v,i)=>{
-    const y = 170 - (v/2.2)*130;
-    return <g key={i}>
-      <line x1="95" y1={y} x2="640" y2={y} stroke="currentColor" strokeOpacity="0.08" strokeWidth="1"/>
-      <text x="88" y={y+4} textAnchor="end" fontSize="10" fill="currentColor" fillOpacity="0.5">{v.toFixed(1)}</text>
-    </g>;
-  })}
-  {/* Y軸ラベル */}
-  <text x="15" y="33" textAnchor="start" fontSize="9" fill="currentColor" fillOpacity="0.6">温度上昇</text>
-  <text x="15" y="44" textAnchor="start" fontSize="9" fill="currentColor" fillOpacity="0.6">(℃/秒)</text>
+従来のリチウムイオン電池では異常発熱時に最大**2.13℃/秒**で温度が上昇するのに対し、準固体電池では**0.24℃/秒**——**約9分の1**に抑えられています。この差が「熱暴走の連鎖を断ち切れるかどうか」を左右します。
 
-  {/* Bar: リチウムイオン 2.129 */}
-  {(() => {
-    const h = (2.129/2.2)*130;
-    return <>
-      <rect x="160" y={170-h} width="100" height={h} rx="6" fill="#ef4444" fillOpacity="0.8"/>
-      <text x="210" y={170-h-8} textAnchor="middle" fontSize="13" fontWeight="bold" fill="#ef4444">2.13℃/s</text>
-      <text x="210" y="185" textAnchor="middle" fontSize="11" fill="currentColor" fillOpacity="0.7">リチウムイオン</text>
-      <text x="210" y="200" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.5">（従来型）</text>
-    </>;
-  })()}
-
-  {/* Bar: 準固体 0.235 */}
-  {(() => {
-    const h = (0.235/2.2)*130;
-    return <>
-      <rect x="360" y={170-h} width="100" height={h} rx="6" fill="#f59e0b" fillOpacity="0.85"/>
-      <text x="410" y={170-h-8} textAnchor="middle" fontSize="13" fontWeight="bold" fill="#d97706">0.24℃/s</text>
-      <text x="410" y="185" textAnchor="middle" fontSize="11" fill="currentColor" fillOpacity="0.7">準固体電池</text>
-      <text x="410" y="200" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.5">（約1/9に低減）</text>
-    </>;
-  })()}
-
-  {/* 倍率アノテーション */}
-  <line x1="210" y1="57" x2="410" y2="142" stroke="currentColor" strokeOpacity="0.2" strokeWidth="1" strokeDasharray="4,3"/>
-  <rect x="460" y="90" width="160" height="40" rx="8" fill="#22c55e" fillOpacity="0.1" stroke="#22c55e" strokeOpacity="0.5" strokeWidth="1.5"/>
-  <text x="540" y="107" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#16a34a">約 1/9 に低減</text>
-  <text x="540" y="122" textAnchor="middle" fontSize="10" fill="#16a34a" fillOpacity="0.8">発火連鎖が起きにくい</text>
-</svg>
-</figure>
-
-従来のリチウムイオン電池では異常発熱時に最大2.13℃/秒で温度が上昇するのに対し、準固体電池では0.24℃/秒——**約9分の1**に抑えられています。この差が「熱暴走の連鎖を断ち切れるかどうか」を左右します。
-
-また、安全試験においても以下をクリアしています：
-
-| 試験項目 | 内容 | 準固体電池の結果 |
-|---------|------|---------------|
-| 加熱試験 | 130℃まで加熱 | 発火・爆発なし |
-| 釘刺し試験 | 鉄の釘を貫通させる | 発火なし |
-| 圧迫試験 | 強い力で押しつぶす | 発火・液漏れなし |
-| 落下試験 | 1.5mから落下 | 異常なし |
+| 試験項目 | 内容 | リチウムイオン電池 | 準固体電池 |
+|---------|------|---------------|---------------|
+| 異常発熱時の最大温度上昇速度 | 異常発熱を起こした際の速度 | 2.13℃/秒 | 0.24℃/秒（約1/9） |
+| 加熱試験 | 130℃まで加熱 | － | 発火・爆発なし |
+| 釘刺し試験 | 鉄の釘を貫通させる | － | 発火なし |
+| 圧迫試験 | 強い力で押しつぶす | － | 発火・液漏れなし |
+| 落下試験 | 1.5mから落下 | － | 異常なし |
 
 ---
 
