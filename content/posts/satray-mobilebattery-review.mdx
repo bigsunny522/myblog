@@ -117,74 +117,54 @@ published: false
 ### Step 2：3種類の電池を内部構造で比べてみる
 
 <figure className="my-8">
-<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl mx-auto" style={{fontFamily:"system-ui,sans-serif"}}>
-  {/* ===== 1: リチウムイオン電池 ===== */}
-  {/* Label */}
-  <text x="110" y="22" textAnchor="middle" fontSize="12" fontWeight="bold" fill="currentColor">① リチウムイオン電池</text>
-  {/* 負極 */}
-  <rect x="20" y="34" width="44" height="140" rx="6" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="1.5"/>
-  <text x="42" y="98" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#3b82f6" transform="rotate(-90,42,104)">負極</text>
-  {/* セパレータ */}
-  <rect x="64" y="34" width="16" height="140" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
-  {/* 電解質 液体 */}
-  <rect x="80" y="34" width="80" height="140" fill="#ef4444" fillOpacity="0.15" stroke="#ef4444" strokeWidth="1.5"/>
-  <text x="120" y="98" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#ef4444" transform="rotate(-90,120,104)">液体電解質</text>
-  {/* 可燃マーク */}
-  <text x="120" y="158" textAnchor="middle" fontSize="18">🔥</text>
-  {/* セパレータ2 */}
-  <rect x="160" y="34" width="16" height="140" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
-  {/* 正極 */}
-  <rect x="176" y="34" width="44" height="140" rx="6" fill="#10b981" fillOpacity="0.2" stroke="#10b981" strokeWidth="1.5"/>
-  <text x="198" y="98" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#10b981" transform="rotate(-90,198,104)">正極</text>
-  {/* 危険ラベル */}
-  <rect x="20" y="188" width="200" height="26" rx="6" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" strokeOpacity="0.4" strokeWidth="1"/>
-  <text x="120" y="205" textAnchor="middle" fontSize="10" fill="#ef4444">⚠ 可燃性・漏液リスクあり</text>
+<svg viewBox="0 0 660 560" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl mx-auto" style={{fontFamily:"system-ui,sans-serif"}}>
+  <text x="330" y="24" textAnchor="middle" fontSize="13" fontWeight="bold" fill="currentColor">図2：3種類の電池 内部構造比較</text>
 
-  {/* ===== 2: 準固体電池 ===== */}
-  <text x="370" y="22" textAnchor="middle" fontSize="12" fontWeight="bold" fill="currentColor">② 準固体電池（半固体）</text>
-  {/* 負極 */}
-  <rect x="280" y="34" width="44" height="140" rx="6" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="1.5"/>
-  <text x="302" y="98" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#3b82f6" transform="rotate(-90,302,104)">負極</text>
-  {/* 電解質 ゲル */}
-  <rect x="324" y="34" width="92" height="140" fill="#f59e0b" fillOpacity="0.18" stroke="#f59e0b" strokeWidth="1.5"/>
-  {/* ゲルのドット表現 */}
-  {[340,356,372,388,404].map((x, i) => (
-    [50,70,90,110,130,150].map((y, j) => (
-      <circle key={`d${i}-${j}`} cx={x} cy={y} r="3" fill="#f59e0b" fillOpacity="0.4"/>
-    ))
-  ))}
-  <text x="370" y="115" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#d97706" transform="rotate(-90,370,104)">ゲル状電解質</text>
-  {/* 正極 */}
-  <rect x="416" y="34" width="44" height="140" rx="6" fill="#10b981" fillOpacity="0.2" stroke="#10b981" strokeWidth="1.5"/>
-  <text x="438" y="98" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#10b981" transform="rotate(-90,438,104)">正極</text>
-  {/* 安全ラベル */}
-  <rect x="280" y="188" width="180" height="26" rx="6" fill="#f59e0b" fillOpacity="0.1" stroke="#f59e0b" strokeOpacity="0.4" strokeWidth="1"/>
-  <text x="370" y="205" textAnchor="middle" fontSize="10" fill="#d97706">✓ 難燃性・液漏れしにくい</text>
+  {/* ===== 1: リチウムイオン電池 ===== */}
+  <text x="20" y="60" fontSize="14" fontWeight="bold" fill="#ef4444">① リチウムイオン電池</text>
+  <rect x="20" y="70" width="90" height="80" rx="6" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="1.5"/>
+  <text x="65" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#3b82f6">負極</text>
+  <rect x="110" y="70" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
+  <rect x="126" y="70" width="384" height="80" fill="#ef4444" fillOpacity="0.15" stroke="#ef4444" strokeWidth="1.5"/>
+  <text x="318" y="105" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#ef4444">液体電解質</text>
+  <text x="318" y="122" textAnchor="middle" fontSize="10" fill="#b91c1c">可燃性の有機溶媒</text>
+  <text x="460" y="118" textAnchor="middle" fontSize="16">🔥</text>
+  <rect x="510" y="70" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
+  <rect x="526" y="70" width="90" height="80" rx="6" fill="#10b981" fillOpacity="0.15" stroke="#10b981" strokeWidth="1.5"/>
+  <text x="571" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#10b981">正極</text>
+  <rect x="20" y="160" width="596" height="26" rx="6" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" strokeOpacity="0.4" strokeWidth="1"/>
+  <text x="318" y="177" textAnchor="middle" fontSize="11" fill="#ef4444">⚠ 可燃性・漏液リスクあり</text>
+
+  {/* ===== 2: 準固体電池（強調枠） ===== */}
+  <rect x="12" y="192" width="612" height="166" rx="10" fill="none" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="5,3"/>
+  <text x="20" y="222" fontSize="14" fontWeight="bold" fill="#d97706">② 準固体電池（半固体）</text>
+  <rect x="20" y="232" width="90" height="80" rx="6" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="1.5"/>
+  <text x="65" y="277" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#3b82f6">負極</text>
+  <rect x="110" y="232" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
+  <rect x="126" y="232" width="384" height="80" fill="#f59e0b" fillOpacity="0.18" stroke="#f59e0b" strokeWidth="1.5"/>
+  <text x="318" y="267" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#d97706">ゲル状電解質</text>
+  <text x="318" y="284" textAnchor="middle" fontSize="10" fill="#b45309">難燃性・半固体</text>
+  <rect x="510" y="232" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
+  <rect x="526" y="232" width="90" height="80" rx="6" fill="#10b981" fillOpacity="0.15" stroke="#10b981" strokeWidth="1.5"/>
+  <text x="571" y="277" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#10b981">正極</text>
+  <rect x="20" y="322" width="596" height="26" rx="6" fill="#f59e0b" fillOpacity="0.12" stroke="#f59e0b" strokeOpacity="0.5" strokeWidth="1"/>
+  <text x="318" y="339" textAnchor="middle" fontSize="11" fill="#d97706" fontWeight="bold">✓ 難燃性・液漏れしにくい（BEST BALANCE）</text>
 
   {/* ===== 3: 全固体電池 ===== */}
-  <text x="610" y="22" textAnchor="middle" fontSize="12" fontWeight="bold" fill="currentColor">③ 全固体電池</text>
-  {/* 負極 */}
-  <rect x="520" y="34" width="44" height="140" rx="6" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="1.5"/>
-  <text x="542" y="98" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#3b82f6" transform="rotate(-90,542,104)">負極</text>
-  {/* 電解質 固体 */}
-  <rect x="564" y="34" width="92" height="140" fill="#8b5cf6" fillOpacity="0.15" stroke="#8b5cf6" strokeWidth="1.5"/>
-  {/* 固体のハッチ表現 */}
-  {[570,580,590,600,610,620,630,640,648].map((x, i) => (
-    <line key={`h${i}`} x1={x} y1="34" x2={x} y2="174" stroke="#8b5cf6" strokeOpacity="0.2" strokeWidth="1"/>
-  ))}
-  <text x="610" y="112" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#7c3aed" transform="rotate(-90,610,104)">固体電解質</text>
-  {/* 正極 */}
-  <rect x="656" y="34" width="44" height="140" rx="6" fill="#10b981" fillOpacity="0.2" stroke="#10b981" strokeWidth="1.5"/>
-  <text x="678" y="98" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#10b981" transform="rotate(-90,678,104)">正極</text>
-  {/* 安全ラベル */}
-  <rect x="520" y="188" width="180" height="26" rx="6" fill="#8b5cf6" fillOpacity="0.1" stroke="#8b5cf6" strokeOpacity="0.4" strokeWidth="1"/>
-  <text x="610" y="205" textAnchor="middle" fontSize="10" fill="#7c3aed">✓✓ 最高の安全性・高コスト</text>
+  <text x="20" y="378" fontSize="14" fontWeight="bold" fill="#7c3aed">③ 全固体電池</text>
+  <rect x="20" y="388" width="90" height="80" rx="6" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="1.5"/>
+  <text x="65" y="433" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#3b82f6">負極</text>
+  <rect x="110" y="388" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
+  <rect x="126" y="388" width="384" height="80" fill="#8b5cf6" fillOpacity="0.15" stroke="#8b5cf6" strokeWidth="1.5"/>
+  <text x="318" y="423" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#7c3aed">固体電解質</text>
+  <text x="318" y="440" textAnchor="middle" fontSize="10" fill="#6d28d9">セラミック・ガラス等</text>
+  <rect x="510" y="388" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
+  <rect x="526" y="388" width="90" height="80" rx="6" fill="#10b981" fillOpacity="0.15" stroke="#10b981" strokeWidth="1.5"/>
+  <text x="571" y="433" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#10b981">正極</text>
+  <rect x="20" y="478" width="596" height="26" rx="6" fill="#8b5cf6" fillOpacity="0.1" stroke="#8b5cf6" strokeOpacity="0.4" strokeWidth="1"/>
+  <text x="318" y="495" textAnchor="middle" fontSize="11" fill="#7c3aed">✓✓ 最高の安全性・高コスト</text>
 
-  {/* 凡例 */}
-  <text x="360" y="256" textAnchor="middle" fontSize="11" fill="currentColor" fillOpacity="0.5">図2：3種類の電池 内部構造比較</text>
-  {/* 準固体ラベル強調 */}
-  <rect x="262" y="226" width="216" height="20" rx="4" fill="none" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="5,3"/>
-  <text x="370" y="239" textAnchor="middle" fontSize="10" fill="#d97706" fontWeight="bold">← 準固体電池はここがキモ →</text>
+  <text x="330" y="534" textAnchor="middle" fontSize="11" fill="currentColor" fillOpacity="0.5">電解質の状態（液体・ゲル状・固体）だけが3種類の違い</text>
 </svg>
 </figure>
 
