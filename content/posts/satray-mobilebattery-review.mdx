@@ -10,12 +10,13 @@ tags:
   - レビュー
   - 準固体電池
   - 半固体電池
+  - PR
 coverImage: /images/posts/satray-battery/cover.jpg
 recommended: false
 published: false
 ---
 
-{/* ※ 本記事はメーカーより製品をご提供いただいて執筆しています */}
+<u>※本記事は瑞金株式会社様より製品をご提供いただき作成したPR記事です。</u>
 
 # Satray 準固体電池モバイルバッテリー レビュー
 
@@ -56,6 +57,8 @@ published: false
 ## 準固体電池とは？ 仕組みを図解で解説
 
 「準固体電池」と聞いてもピンとこない方が多いと思います。まずはここを丁寧に解説します。
+
+仕組みの説明は不要で、レビュー本編から読みたい方は[外観・デザインへ](#外観デザイン)どうぞ。
 
 ### Step 1：そもそもリチウムイオン電池はどう動く？
 
@@ -125,56 +128,13 @@ published: false
 
 ### Step 2：3種類の電池を内部構造で比べてみる
 
-<figure className="my-8">
-<svg viewBox="0 0 660 560" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl mx-auto" style={{fontFamily:"system-ui,sans-serif"}}>
-  <text x="330" y="24" textAnchor="middle" fontSize="13" fontWeight="bold" fill="currentColor">図2：3種類の電池 内部構造比較（正極は左・負極は右で統一）</text>
+電池の構造自体（正極・負極・電解質・セパレータ）は3種類とも同じで、違うのは電解質の状態だけです。
 
-  {/* ===== 1: リチウムイオン電池 ===== */}
-  <text x="20" y="60" fontSize="14" fontWeight="bold" fill="#ef4444">① リチウムイオン電池</text>
-  <rect x="20" y="70" width="90" height="80" fill="#f59e0b"/>
-  <text x="65" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">正極</text>
-  <rect x="110" y="70" width="416" height="80" fill="#ef4444" fillOpacity="0.15" stroke="#ef4444" strokeWidth="1.5"/>
-  <rect x="310" y="70" width="16" height="80" fill="#475569"/>
-  <text x="210" y="105" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#ef4444">液体電解質</text>
-  <text x="210" y="122" textAnchor="middle" fontSize="10" fill="#b91c1c">可燃性の有機溶媒</text>
-  <text x="430" y="118" textAnchor="middle" fontSize="16">🔥</text>
-  <rect x="526" y="70" width="90" height="80" fill="#9ca3af"/>
-  <text x="571" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">負極</text>
-  <rect x="20" y="160" width="596" height="26" rx="6" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" strokeOpacity="0.4" strokeWidth="1"/>
-  <text x="318" y="177" textAnchor="middle" fontSize="11" fill="#ef4444">⚠ 可燃性・漏液リスクあり</text>
+- **①リチウムイオン電池**：電解質は**可燃性の有機溶媒**（液体）。すでに主流で量産コストも安いが、温度が上がると電解質が急激にガス化しやすく、発火・漏液のリスクがある
+- **②準固体電池（半固体）**：電解質を**ゲル状**にして難燃性を高めたタイプ。液漏れもしにくく、安全性とコスト・量産のしやすさのバランスが良い
+- **③全固体電池**：電解質が**セラミックやガラスなどの固体**。安全性は最も高いが量産コストが非常に高く、まだ研究・試作段階のものが多い
 
-  {/* ===== 2: 準固体電池（強調枠） ===== */}
-  <rect x="12" y="192" width="612" height="166" rx="10" fill="none" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="5,3"/>
-  <text x="20" y="222" fontSize="14" fontWeight="bold" fill="#d97706">② 準固体電池（半固体）</text>
-  <rect x="20" y="232" width="90" height="80" fill="#f59e0b"/>
-  <text x="65" y="277" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">正極</text>
-  <rect x="110" y="232" width="416" height="80" fill="#fde68a" fillOpacity="0.35" stroke="#f59e0b" strokeWidth="1.5"/>
-  <rect x="310" y="232" width="16" height="80" fill="#475569"/>
-  <text x="210" y="267" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#d97706">ゲル状電解質</text>
-  <text x="210" y="284" textAnchor="middle" fontSize="10" fill="#b45309">難燃性・半固体</text>
-  <rect x="526" y="232" width="90" height="80" fill="#9ca3af"/>
-  <text x="571" y="277" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">負極</text>
-  <rect x="20" y="322" width="596" height="26" rx="6" fill="#f59e0b" fillOpacity="0.12" stroke="#f59e0b" strokeOpacity="0.5" strokeWidth="1"/>
-  <text x="318" y="339" textAnchor="middle" fontSize="11" fill="#d97706" fontWeight="bold">✓ 難燃性・液漏れしにくい（BEST BALANCE）</text>
-
-  {/* ===== 3: 全固体電池 ===== */}
-  <text x="20" y="378" fontSize="14" fontWeight="bold" fill="#7c3aed">③ 全固体電池</text>
-  <rect x="20" y="388" width="90" height="80" fill="#f59e0b"/>
-  <text x="65" y="433" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">正極</text>
-  <rect x="110" y="388" width="416" height="80" fill="#8b5cf6" fillOpacity="0.15" stroke="#8b5cf6" strokeWidth="1.5"/>
-  <rect x="310" y="388" width="16" height="80" fill="#475569"/>
-  <text x="210" y="423" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#7c3aed">固体電解質</text>
-  <text x="210" y="440" textAnchor="middle" fontSize="10" fill="#6d28d9">セラミック・ガラス等</text>
-  <rect x="526" y="388" width="90" height="80" fill="#9ca3af"/>
-  <text x="571" y="433" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">負極</text>
-  <rect x="20" y="478" width="596" height="26" rx="6" fill="#8b5cf6" fillOpacity="0.1" stroke="#8b5cf6" strokeOpacity="0.4" strokeWidth="1"/>
-  <text x="318" y="495" textAnchor="middle" fontSize="11" fill="#7c3aed">✓✓ 最高の安全性・高コスト</text>
-
-  <text x="330" y="534" textAnchor="middle" fontSize="11" fill="currentColor" fillOpacity="0.5">電解質の状態（液体・ゲル状・固体）だけが3種類の違い。中央の帯はいずれもセパレータ</text>
-</svg>
-</figure>
-
-電池の構造自体は3種類とも同じ。変わるのは電解質だけです。準固体電池は①の液体電解質を**ゲル状（半固体）**に替えたものと考えると分かりやすいです。
+準固体電池は①の液体電解質を**ゲル状（半固体）**に置き換えたものと考えると分かりやすいです。
 
 ---
 
@@ -188,7 +148,7 @@ published: false
 
 ---
 
-### Step 4：安全性・コスト・容量のトレードオフ
+### Step 4：安全性・コスト・容量のトレードオフとメリット・デメリット
 
 3種類の電池はそれぞれトレードオフがあります。ここまで解説した内容にもとづき、5つの観点を相対的な傾向（◎○△×）で整理すると次のようになります。数値化できるほど厳密なデータがあるわけではないため、あくまで傾向としての比較表です。
 
@@ -203,14 +163,14 @@ published: false
 準固体電池は安全性を大きく引き上げつつ、コストや容量は従来品に近い水準を保っている――という位置づけが、現実的な次世代電池と言われる理由です。表の5項目だけでは伝わりにくい部分も含め、安全性以外の観点も含めて準固体電池の良い点・注意点をもう少し掘り下げます。
 
 <ReviewSummary>
-<ReviewPoints type="good">
+<ReviewPoints type="good" label="メリット">
 <ReviewPoint type="good" title="軽さ・薄さ">液漏れを防ぐ頑丈な密閉構造が液体電解質ほど必要なく、同容量でも軽量・薄型に仕上げやすい。今回レビューしたSatrayの製品も同容量帯の中でかなり軽い部類だった</ReviewPoint>
 <ReviewPoint type="good" title="安全性">ゲル状電解質は液体よりガス化しにくく、熱暴走の連鎖が起きにくい</ReviewPoint>
 <ReviewPoint type="good" title="液漏れしにくさ">電解質が半固体のため、外装が破損しても液体電解質のように漏れ出しにくい</ReviewPoint>
 <ReviewPoint type="good" title="量産のしやすさ">全固体電池のようにゼロから専用の製造ラインを作る必要がなく、既存のリチウムイオン電池の生産設備をベースに移行しやすい。全固体電池より一足早く実用化・普及が進んでいる理由でもある</ReviewPoint>
 <ReviewPoint type="good" title="寿命">ゲル状電解質は液体より劣化要因が少なく、サイクル寿命がやや長くなる傾向がある</ReviewPoint>
 </ReviewPoints>
-<ReviewPoints type="con">
+<ReviewPoints type="con" label="デメリット">
 <ReviewPoint type="con" title="コスト">量産技術がリチウムイオン電池ほど成熟しておらず、同容量帯の従来品より価格が上乗せされやすい。実際の価格差はおよそ1,000〜2,000円程度高い傾向にある</ReviewPoint>
 <ReviewPoint type="con" title="低温での性能">ゲル状電解質は液体より低温下で流動性が落ちやすく、真冬の屋外など寒い環境では一時的に出力が下がりやすい</ReviewPoint>
 <ReviewPoint type="con" title="出力・急速充電性能">ゲル状電解質は液体よりイオン伝導度がやや劣る場合があり、超高出力・超急速充電が求められる用途では液体電解質品に一歩譲る可能性がある。ただし今回のSatray製品は最大30W出力・Qi2.2 25Wに対応しており、スマホ充電で違いを感じる場面はほとんどない</ReviewPoint>
@@ -346,5 +306,4 @@ Qi2.2規格に対応し、最大25Wでのワイヤレス充電が可能です。
   description="準固体電池採用で発火リスクを大幅低減。Qi2.2（25W）・30W急速充電対応のモバイルバッテリー"
 >
   <BuyLink type="amazon" href="https://www.amazon.co.jp/dp/B0GZVK4HQB">Amazonで見る</BuyLink>
-  <BuyLink type="official" href="#">公式サイト（リンク追加予定）</BuyLink>
 </BuyLinks>

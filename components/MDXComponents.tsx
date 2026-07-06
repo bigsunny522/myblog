@@ -322,12 +322,12 @@ const ReviewSummary = ({
   return <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">{children}</div>;
 };
 
-const ReviewPoints = ({ type, children }: { type: 'good' | 'con'; children: React.ReactNode }) => {
+const ReviewPoints = ({ type, label, children }: { type: 'good' | 'con'; label?: string; children: React.ReactNode }) => {
   const isGood = type === 'good';
   return (
     <div className="my-4">
       <div className={cn('pl-4 border-l-4 mb-4', isGood ? 'border-primary/50' : 'border-red-500/50')}>
-        <h3 className="text-xl font-bold text-foreground m-0">{isGood ? 'GOOD' : '気になる点'}</h3>
+        <h3 className="text-xl font-bold text-foreground m-0">{label ?? (isGood ? 'GOOD' : '気になる点')}</h3>
       </div>
       <div className="space-y-3">{children}</div>
     </div>

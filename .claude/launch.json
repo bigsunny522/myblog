@@ -9,6 +9,12 @@
       "autoPort": true
     },
     {
+      "name": "Blog (next only, no Tina)",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["next", "dev", "-p", "3005"],
+      "port": 3005
+    },
+    {
       "name": "Dashboard",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
