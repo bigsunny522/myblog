@@ -192,7 +192,7 @@ const ImageGrid = ({ children, columns = 2 }: { children: React.ReactNode; colum
 );
 
 const Figure = ({ src, alt, caption, className }: { src: string; alt: string; caption?: string; className?: string }) => (
-  <figure className="m-0 flex flex-col">
+  <figure className="m-0 mb-6 flex flex-col">
     <OptimizedImageModal src={src} alt={alt} className={cn('w-full', className)} />
     {caption && (
       <figcaption className="text-center text-xs text-muted-foreground mt-2 px-1 leading-snug">{caption}</figcaption>
@@ -556,7 +556,7 @@ export const mdxComponents = {
   CheckItem,
   CouponBox,
   img: (props: any) => {
-    const { alt, ...rest } = props;
+    const { alt, className, ...rest } = props;
     const sizeMatch = (alt as string | undefined)?.match(/\|(small|medium|large|(\d+(?:\.\d+)?)%)$/i);
     let maxWidth: string | undefined;
     if (sizeMatch) {
@@ -567,7 +567,7 @@ export const mdxComponents = {
       else maxWidth = token; // e.g. "50%"
     }
     const cleanAlt = alt ? (alt as string).replace(/\|(small|medium|large|\d+(?:\.\d+)?%)$/i, '').trim() : alt;
-    return <OptimizedImageModal {...rest} alt={cleanAlt} maxWidth={maxWidth} />;
+    return <OptimizedImageModal {...rest} alt={cleanAlt} maxWidth={maxWidth} className={cn('mb-6', className)} />;
   }, // Use functional wrapper to ensure props are passed correctly
   ImageModal: OptimizedImageModal, // Named component for direct JSX use in MDX: <ImageModal src="..." />
   Specs,
