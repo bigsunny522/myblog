@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const isDev = process.env.NODE_ENV === 'development';
 
 const nextConfig: NextConfig = {
-  // 'export' はビルド時のみ有効。開発時は無効にしてNotionドラフト記事を直接確認できるようにする
+  // 'export' は本番ビルド時のみ有効(開発時は無効にして dev サーバーの利便性を保つ)
   output: isDev ? undefined : 'export',
   images: {
     loader: 'custom',
