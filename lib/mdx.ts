@@ -55,12 +55,8 @@ function getMdxPostBySlug(slug: string): BlogPost | undefined {
   };
 }
 
-export function getMdxOnlySlugs(): string[] {
-  return getMdxPostSlugs().map((s) => s.replace(/\.mdx$/, '')).filter(Boolean);
-}
-
 export async function getPostSlugs(): Promise<string[]> {
-  return getMdxOnlySlugs();
+  return getMdxPostSlugs().map((s) => s.replace(/\.mdx$/, '')).filter(Boolean);
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {
