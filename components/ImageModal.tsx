@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { X, ZoomIn } from "lucide-react";
 import ExportedImage from "next-image-export-optimizer";
+import { cn } from "@/lib/utils";
 
 interface ImageModalProps {
   src?: string;
@@ -43,7 +44,11 @@ export const ImageModal = ({ src, alt, className, maxWidth, width, height, ...pr
     <>
       {/* Thumbnail wrapper */}
       <span
-        className={`relative cursor-zoom-in group block overflow-hidden ${className ?? ""}${maxWidth ? " mx-auto" : ""}`}
+        className={cn(
+          "imgmodal-thumb relative cursor-zoom-in group block overflow-hidden my-6 sm:my-8",
+          maxWidth && "mx-auto",
+          className
+        )}
         style={maxWidth ? { maxWidth } : undefined}
         onClick={open}
         role="button"

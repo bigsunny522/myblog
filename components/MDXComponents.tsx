@@ -184,9 +184,17 @@ const FeaturePoint = ({ number, title, children, body }: {
   </div>
 );
 
-const colClasses: Record<number, string> = { 2: 'md:grid-cols-2', 3: 'md:grid-cols-3', 4: 'md:grid-cols-4' };
+// CSS columns (masonry-style) instead of grid: with grid, a tall portrait image forces
+// the whole row to its height, leaving a large empty gap under any shorter landscape
+// image sharing that row. Columns let each image keep its natural height and just flow.
+const colClasses: Record<number, string> = { 2: 'md:columns-2', 3: 'md:columns-3', 4: 'md:columns-4' };
 const ImageGrid = ({ children, columns = 2 }: { children: React.ReactNode; columns?: number }) => (
-  <div className={cn('grid grid-cols-1 gap-4 my-8', colClasses[columns] ?? 'md:grid-cols-2')}>
+  <div
+    className={cn(
+      'columns-1 gap-4 my-8 [&_.imgmodal-thumb]:my-0 [&_.imgmodal-thumb]:mb-4 [&_.imgmodal-thumb]:break-inside-avoid',
+      colClasses[columns] ?? 'md:columns-2'
+    )}
+  >
     {children}
   </div>
 );

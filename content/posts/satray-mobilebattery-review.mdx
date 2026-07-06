@@ -62,50 +62,58 @@ published: false
 モバイルバッテリーに限らず、スマートフォンやノートPCのバッテリーはほぼすべて**リチウムイオン電池**です。構造はシンプルで、**正極・負極・電解質・セパレータ**の4つで成り立っています。
 
 <figure className="my-8">
-<svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl mx-auto" style={{fontFamily:"system-ui,sans-serif"}}>
-  {/* Background */}
-  <rect width="680" height="260" rx="16" fill="none"/>
-  {/* Battery cell outline */}
-  <rect x="80" y="40" width="520" height="160" rx="10" fill="none" stroke="currentColor" strokeOpacity="0.2" strokeWidth="1.5"/>
-  {/* 負極 */}
-  <rect x="80" y="40" width="100" height="160" rx="10" fill="#3b82f6" fillOpacity="0.15"/>
-  <rect x="80" y="40" width="100" height="160" rx="10" fill="none" stroke="#3b82f6" strokeWidth="1.5"/>
-  <text x="130" y="115" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#3b82f6">負極</text>
-  <text x="130" y="133" textAnchor="middle" fontSize="11" fill="#3b82f6" fillOpacity="0.8">（グラファイト）</text>
-  {/* セパレータ */}
-  <rect x="180" y="40" width="36" height="160" fill="#94a3b8" fillOpacity="0.15"/>
-  <rect x="180" y="40" width="36" height="160" fill="none" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4,3"/>
-  <text x="198" y="24" textAnchor="middle" fontSize="10" fill="#64748b">セパレータ</text>
-  <line x1="198" y1="28" x2="198" y2="40" stroke="#94a3b8" strokeWidth="1"/>
-  {/* 電解質 */}
-  <rect x="216" y="40" width="228" height="160" fill="#f59e0b" fillOpacity="0.12"/>
-  <rect x="216" y="40" width="228" height="160" fill="none" stroke="#f59e0b" strokeWidth="1.5"/>
-  <text x="330" y="110" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#d97706">電解質</text>
-  <text x="330" y="128" textAnchor="middle" fontSize="11" fill="#d97706" fillOpacity="0.9">（液体・ゲル・固体）</text>
-  {/* 正極 */}
-  <rect x="444" y="40" width="156" height="160" rx="10" fill="#10b981" fillOpacity="0.15"/>
-  <rect x="444" y="40" width="156" height="160" rx="10" fill="none" stroke="#10b981" strokeWidth="1.5"/>
-  <text x="522" y="115" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#10b981">正極</text>
-  <text x="522" y="133" textAnchor="middle" fontSize="11" fill="#10b981" fillOpacity="0.8">（リチウム化合物）</text>
-  {/* Li+ ion arrows - discharge */}
+<svg viewBox="0 0 620 500" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-xl mx-auto" style={{fontFamily:"system-ui,sans-serif"}}>
   <defs>
-    <marker id="arr-right" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/>
+    <marker id="arr-k" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="currentColor"/>
     </marker>
-    <marker id="arr-left" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto">
-      <path d="M8,0 L8,6 L0,3 z" fill="#6366f1"/>
+    <marker id="arr-b" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#1d4ed8"/>
     </marker>
   </defs>
-  {/* Ion right arrow (discharge) */}
-  <line x1="430" y1="118" x2="456" y2="118" stroke="#f59e0b" strokeWidth="2" markerEnd="url(#arr-right)"/>
-  <text x="443" y="108" textAnchor="middle" fontSize="9" fill="#d97706">放電時</text>
-  <text x="443" y="135" textAnchor="middle" fontSize="9" fill="#6366f1">充電時</text>
-  {/* Ion left arrow (charge) */}
-  <line x1="456" y1="126" x2="430" y2="126" stroke="#6366f1" strokeWidth="2" markerEnd="url(#arr-left)"/>
-  {/* Li+ label */}
-  <text x="330" y="155" textAnchor="middle" fontSize="12" fill="#d97706">⚡ Li⁺ が電解質内を移動して電気を生み出す</text>
-  {/* Label below */}
-  <text x="340" y="225" textAnchor="middle" fontSize="12" fill="currentColor" fillOpacity="0.6">図1：リチウムイオン電池の基本構造</text>
+  {/* タイトル */}
+  <text x="310" y="30" textAnchor="middle" fontSize="20" fontWeight="bold" fill="currentColor">充電</text>
+  {/* 電源（外部電源）と配線 */}
+  <line x1="295" y1="45" x2="295" y2="85" stroke="currentColor" strokeWidth="2"/>
+  <line x1="325" y1="55" x2="325" y2="75" stroke="currentColor" strokeWidth="6"/>
+  <text x="310" y="103" textAnchor="middle" fontSize="12" fill="currentColor" fillOpacity="0.7">電源</text>
+  <path d="M145,150 L145,65 L295,65" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+  <path d="M325,65 L475,65 L475,150" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+  {/* 電流（正極側・外部電源→正極） */}
+  <text x="90" y="35" textAnchor="middle" fontSize="13" fontWeight="bold" fill="currentColor">電流</text>
+  <line x1="90" y1="45" x2="90" y2="128" stroke="currentColor" strokeWidth="2" markerEnd="url(#arr-k)"/>
+  {/* 電子の流れ（負極側・外部電源→負極） */}
+  <text x="540" y="24" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8">電子の流れ</text>
+  <circle cx="540" cy="44" r="10" fill="none" stroke="#1d4ed8" strokeWidth="1.5"/>
+  <text x="540" y="49" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8">−</text>
+  <line x1="540" y1="62" x2="540" y2="128" stroke="#1d4ed8" strokeWidth="2" markerEnd="url(#arr-b)"/>
+  {/* 電解質（液槽） */}
+  <rect x="20" y="200" width="580" height="220" fill="#7dd3fc" fillOpacity="0.35" stroke="currentColor" strokeOpacity="0.6" strokeWidth="2"/>
+  {/* 正極（左） */}
+  <rect x="110" y="150" width="70" height="230" fill="#f59e0b"/>
+  <text x="145" y="180" textAnchor="middle" fontSize="15" fontWeight="bold" fill="#1e1b0f">正極</text>
+  {/* 負極（右） */}
+  <rect x="440" y="150" width="70" height="230" fill="#9ca3af"/>
+  <text x="475" y="180" textAnchor="middle" fontSize="15" fontWeight="bold" fill="#1e1b0f">負極</text>
+  {/* セパレータ（中央、液槽の底まで浸る多孔質膜） */}
+  <rect x="290" y="200" width="24" height="220" fill="#b45f4d"/>
+  {/* Li+ が正極→負極へ移動（充電時） */}
+  <ellipse cx="215" cy="250" rx="26" ry="17" fill="white" stroke="currentColor" strokeWidth="1.5"/>
+  <text x="215" y="255" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1e1b0f">Li⁺</text>
+  <line x1="245" y1="250" x2="405" y2="250" stroke="currentColor" strokeWidth="2" markerEnd="url(#arr-k)"/>
+  <ellipse cx="270" cy="310" rx="26" ry="17" fill="white" stroke="currentColor" strokeWidth="1.5"/>
+  <text x="270" y="315" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1e1b0f">Li⁺</text>
+  <line x1="300" y1="310" x2="405" y2="310" stroke="currentColor" strokeWidth="2" markerEnd="url(#arr-k)"/>
+  <ellipse cx="215" cy="370" rx="26" ry="17" fill="white" stroke="currentColor" strokeWidth="1.5"/>
+  <text x="215" y="375" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1e1b0f">Li⁺</text>
+  <line x1="245" y1="370" x2="405" y2="370" stroke="currentColor" strokeWidth="2" markerEnd="url(#arr-k)"/>
+  {/* 補足ラベル（引き出し線） */}
+  <line x1="70" y1="440" x2="120" y2="405" stroke="currentColor" strokeOpacity="0.5" strokeWidth="1" strokeDasharray="3,2"/>
+  <text x="60" y="455" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.7">電解質</text>
+  <line x1="450" y1="450" x2="305" y2="410" stroke="currentColor" strokeOpacity="0.5" strokeWidth="1" strokeDasharray="3,2"/>
+  <text x="460" y="465" textAnchor="middle" fontSize="13" fill="currentColor" fillOpacity="0.7">セパレータ</text>
+  {/* キャプション */}
+  <text x="310" y="490" textAnchor="middle" fontSize="12" fill="currentColor" fillOpacity="0.6">図1：リチウムイオン電池の構造と充電のしくみ（放電時はLi⁺・電流・電子の流れがすべて逆向き）</text>
 </svg>
 </figure>
 
@@ -119,53 +127,50 @@ published: false
 
 <figure className="my-8">
 <svg viewBox="0 0 660 560" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl mx-auto" style={{fontFamily:"system-ui,sans-serif"}}>
-  <text x="330" y="24" textAnchor="middle" fontSize="13" fontWeight="bold" fill="currentColor">図2：3種類の電池 内部構造比較</text>
+  <text x="330" y="24" textAnchor="middle" fontSize="13" fontWeight="bold" fill="currentColor">図2：3種類の電池 内部構造比較（正極は左・負極は右で統一）</text>
 
   {/* ===== 1: リチウムイオン電池 ===== */}
   <text x="20" y="60" fontSize="14" fontWeight="bold" fill="#ef4444">① リチウムイオン電池</text>
-  <rect x="20" y="70" width="90" height="80" rx="6" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="1.5"/>
-  <text x="65" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#3b82f6">負極</text>
-  <rect x="110" y="70" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
-  <rect x="126" y="70" width="384" height="80" fill="#ef4444" fillOpacity="0.15" stroke="#ef4444" strokeWidth="1.5"/>
-  <text x="318" y="105" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#ef4444">液体電解質</text>
-  <text x="318" y="122" textAnchor="middle" fontSize="10" fill="#b91c1c">可燃性の有機溶媒</text>
-  <text x="460" y="118" textAnchor="middle" fontSize="16">🔥</text>
-  <rect x="510" y="70" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
-  <rect x="526" y="70" width="90" height="80" rx="6" fill="#10b981" fillOpacity="0.15" stroke="#10b981" strokeWidth="1.5"/>
-  <text x="571" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#10b981">正極</text>
+  <rect x="20" y="70" width="90" height="80" fill="#f59e0b"/>
+  <text x="65" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">正極</text>
+  <rect x="110" y="70" width="416" height="80" fill="#ef4444" fillOpacity="0.15" stroke="#ef4444" strokeWidth="1.5"/>
+  <rect x="310" y="70" width="16" height="80" fill="#475569"/>
+  <text x="210" y="105" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#ef4444">液体電解質</text>
+  <text x="210" y="122" textAnchor="middle" fontSize="10" fill="#b91c1c">可燃性の有機溶媒</text>
+  <text x="430" y="118" textAnchor="middle" fontSize="16">🔥</text>
+  <rect x="526" y="70" width="90" height="80" fill="#9ca3af"/>
+  <text x="571" y="115" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">負極</text>
   <rect x="20" y="160" width="596" height="26" rx="6" fill="#ef4444" fillOpacity="0.1" stroke="#ef4444" strokeOpacity="0.4" strokeWidth="1"/>
   <text x="318" y="177" textAnchor="middle" fontSize="11" fill="#ef4444">⚠ 可燃性・漏液リスクあり</text>
 
   {/* ===== 2: 準固体電池（強調枠） ===== */}
   <rect x="12" y="192" width="612" height="166" rx="10" fill="none" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="5,3"/>
   <text x="20" y="222" fontSize="14" fontWeight="bold" fill="#d97706">② 準固体電池（半固体）</text>
-  <rect x="20" y="232" width="90" height="80" rx="6" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="1.5"/>
-  <text x="65" y="277" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#3b82f6">負極</text>
-  <rect x="110" y="232" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
-  <rect x="126" y="232" width="384" height="80" fill="#f59e0b" fillOpacity="0.18" stroke="#f59e0b" strokeWidth="1.5"/>
-  <text x="318" y="267" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#d97706">ゲル状電解質</text>
-  <text x="318" y="284" textAnchor="middle" fontSize="10" fill="#b45309">難燃性・半固体</text>
-  <rect x="510" y="232" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
-  <rect x="526" y="232" width="90" height="80" rx="6" fill="#10b981" fillOpacity="0.15" stroke="#10b981" strokeWidth="1.5"/>
-  <text x="571" y="277" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#10b981">正極</text>
+  <rect x="20" y="232" width="90" height="80" fill="#f59e0b"/>
+  <text x="65" y="277" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">正極</text>
+  <rect x="110" y="232" width="416" height="80" fill="#fde68a" fillOpacity="0.35" stroke="#f59e0b" strokeWidth="1.5"/>
+  <rect x="310" y="232" width="16" height="80" fill="#475569"/>
+  <text x="210" y="267" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#d97706">ゲル状電解質</text>
+  <text x="210" y="284" textAnchor="middle" fontSize="10" fill="#b45309">難燃性・半固体</text>
+  <rect x="526" y="232" width="90" height="80" fill="#9ca3af"/>
+  <text x="571" y="277" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">負極</text>
   <rect x="20" y="322" width="596" height="26" rx="6" fill="#f59e0b" fillOpacity="0.12" stroke="#f59e0b" strokeOpacity="0.5" strokeWidth="1"/>
   <text x="318" y="339" textAnchor="middle" fontSize="11" fill="#d97706" fontWeight="bold">✓ 難燃性・液漏れしにくい（BEST BALANCE）</text>
 
   {/* ===== 3: 全固体電池 ===== */}
   <text x="20" y="378" fontSize="14" fontWeight="bold" fill="#7c3aed">③ 全固体電池</text>
-  <rect x="20" y="388" width="90" height="80" rx="6" fill="#3b82f6" fillOpacity="0.15" stroke="#3b82f6" strokeWidth="1.5"/>
-  <text x="65" y="433" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#3b82f6">負極</text>
-  <rect x="110" y="388" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
-  <rect x="126" y="388" width="384" height="80" fill="#8b5cf6" fillOpacity="0.15" stroke="#8b5cf6" strokeWidth="1.5"/>
-  <text x="318" y="423" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#7c3aed">固体電解質</text>
-  <text x="318" y="440" textAnchor="middle" fontSize="10" fill="#6d28d9">セラミック・ガラス等</text>
-  <rect x="510" y="388" width="16" height="80" fill="#94a3b8" fillOpacity="0.2" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3,2"/>
-  <rect x="526" y="388" width="90" height="80" rx="6" fill="#10b981" fillOpacity="0.15" stroke="#10b981" strokeWidth="1.5"/>
-  <text x="571" y="433" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#10b981">正極</text>
+  <rect x="20" y="388" width="90" height="80" fill="#f59e0b"/>
+  <text x="65" y="433" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">正極</text>
+  <rect x="110" y="388" width="416" height="80" fill="#8b5cf6" fillOpacity="0.15" stroke="#8b5cf6" strokeWidth="1.5"/>
+  <rect x="310" y="388" width="16" height="80" fill="#475569"/>
+  <text x="210" y="423" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#7c3aed">固体電解質</text>
+  <text x="210" y="440" textAnchor="middle" fontSize="10" fill="#6d28d9">セラミック・ガラス等</text>
+  <rect x="526" y="388" width="90" height="80" fill="#9ca3af"/>
+  <text x="571" y="433" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1e1b0f">負極</text>
   <rect x="20" y="478" width="596" height="26" rx="6" fill="#8b5cf6" fillOpacity="0.1" stroke="#8b5cf6" strokeOpacity="0.4" strokeWidth="1"/>
   <text x="318" y="495" textAnchor="middle" fontSize="11" fill="#7c3aed">✓✓ 最高の安全性・高コスト</text>
 
-  <text x="330" y="534" textAnchor="middle" fontSize="11" fill="currentColor" fillOpacity="0.5">電解質の状態（液体・ゲル状・固体）だけが3種類の違い</text>
+  <text x="330" y="534" textAnchor="middle" fontSize="11" fill="currentColor" fillOpacity="0.5">電解質の状態（液体・ゲル状・固体）だけが3種類の違い。中央の帯はいずれもセパレータ</text>
 </svg>
 </figure>
 
@@ -175,60 +180,11 @@ published: false
 
 ### Step 3：なぜ従来の電池は燃えるのか？「熱暴走」の仕組み
 
-リチウムイオン電池の事故の多くは「**熱暴走（Thermal Runaway）**」によるものです。
+リチウムイオン電池の事故の多くは「**熱暴走（Thermal Runaway）**」によるものです。強い衝撃・過充電・経年劣化などをきっかけに電池内部でショートが起きると、そこから温度が急上昇します。ここまでは液体電解質でも準固体電池でも共通して起こりうる現象です。
 
-<figure className="my-8">
-<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl mx-auto" style={{fontFamily:"system-ui,sans-serif"}}>
-  {/* タイトル */}
-  <text x="340" y="20" textAnchor="middle" fontSize="12" fontWeight="bold" fill="currentColor">図3：リチウムイオン電池の熱暴走メカニズム</text>
-  {/* ステップボックス */}
-  {/* 1 */}
-  <rect x="10" y="36" width="110" height="72" rx="10" fill="#fef3c7" stroke="#f59e0b" strokeWidth="1.5"/>
-  <text x="65" y="58" textAnchor="middle" fontSize="18">💥</text>
-  <text x="65" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#92400e">強い衝撃・</text>
-  <text x="65" y="94" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#92400e">過充電・変形</text>
-  {/* arrow */}
-  <polygon points="140,72 128,65 128,79" fill="#ef4444"/>
-  <line x1="120" y1="72" x2="129" y2="72" stroke="#ef4444" strokeWidth="2"/>
-  {/* 2 */}
-  <rect x="148" y="36" width="110" height="72" rx="10" fill="#fee2e2" stroke="#ef4444" strokeWidth="1.5"/>
-  <text x="203" y="58" textAnchor="middle" fontSize="18">⚡</text>
-  <text x="203" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#b91c1c">内部ショート</text>
-  <text x="203" y="94" textAnchor="middle" fontSize="11" fill="#b91c1c">セパレータ破損</text>
-  {/* arrow */}
-  <polygon points="278,72 266,65 266,79" fill="#ef4444"/>
-  <line x1="258" y1="72" x2="267" y2="72" stroke="#ef4444" strokeWidth="2"/>
-  {/* 3 */}
-  <rect x="286" y="36" width="110" height="72" rx="10" fill="#fee2e2" stroke="#ef4444" strokeWidth="2"/>
-  <text x="341" y="58" textAnchor="middle" fontSize="18">🌡️</text>
-  <text x="341" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#b91c1c">液体電解質が</text>
-  <text x="341" y="94" textAnchor="middle" fontSize="11" fill="#b91c1c">急激にガス化</text>
-  {/* arrow */}
-  <polygon points="416,72 404,65 404,79" fill="#ef4444"/>
-  <line x1="396" y1="72" x2="405" y2="72" stroke="#ef4444" strokeWidth="2"/>
-  {/* 4 */}
-  <rect x="424" y="36" width="110" height="72" rx="10" fill="#fecaca" stroke="#dc2626" strokeWidth="2"/>
-  <text x="479" y="58" textAnchor="middle" fontSize="18">💨</text>
-  <text x="479" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#991b1b">電池が膨張・</text>
-  <text x="479" y="94" textAnchor="middle" fontSize="11" fill="#991b1b">ガス噴出</text>
-  {/* arrow */}
-  <polygon points="554,72 542,65 542,79" fill="#dc2626"/>
-  <line x1="534" y1="72" x2="543" y2="72" stroke="#dc2626" strokeWidth="2"/>
-  {/* 5 */}
-  <rect x="562" y="36" width="108" height="72" rx="10" fill="#fca5a5" stroke="#dc2626" strokeWidth="2.5"/>
-  <text x="616" y="58" textAnchor="middle" fontSize="22">🔥</text>
-  <text x="616" y="82" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#7f1d1d">発火・爆発</text>
-  {/* 説明文 */}
-  <text x="340" y="136" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.6">可燃性の有機溶媒（電解液）が蒸発→引火するため、一度始まると止められない</text>
-  {/* 準固体電池の場合 */}
-  <rect x="10" y="162" width="660" height="30" rx="8" fill="#f0fdf4" stroke="#22c55e" strokeWidth="1.5"/>
-  <text x="340" y="181" textAnchor="middle" fontSize="11" fill="#15803d">✅ 準固体電池：ゲル状電解質はガス化しにくいため、ステップ③で熱暴走の連鎖が止まりやすい</text>
-</svg>
-</figure>
+問題はこの先です。液体電解質は**可燃性の有機溶媒**でできているため、温度が上がると急激にガス化します。実はこれ、最近ニュースやSNSでもたびたび話題になる「**スマホやモバイルバッテリーが膨らむ**」現象の正体でもあります。電池が膨張しているのは、内部で電解液がガス化して行き場のないガスが溜まっている状態で、強い衝撃だけでなく経年劣化や軽い過充電でも起こり得るサインです。この段階ではまだ発火していなくても、ガスがさらに増えて内圧が高まったり外装が破れて空気に触れたりすると、そのまま引火して熱暴走の連鎖に発展することがあります。しかも一度この連鎖が始まると、温度上昇がさらにガス化を加速させる悪循環に陥り、途中で止めるのが非常に難しいのがリチウムイオン電池の怖いところです。膨らんだバッテリーをそのまま使い続けるのが危険とされるのは、こうした背景があるからです。
 
-液体電解質の最大の弱点は、**可燃性の有機溶媒**を使っていること。衝撃やショートで温度が上がると電解液がガス化し、そのガスに引火すると止められない連鎖反応（熱暴走）が起きます。
-
-準固体電池では電解質がゲル状のため、**急激なガス化が起きにくく**、熱暴走の連鎖を断ち切れる可能性が高くなります。
+準固体電池はここが決定的に違います。電解質がゲル状のため、同じように温度が上がっても**急激なガス化が起きにくく**、熱暴走の連鎖を断ち切れる可能性が高くなります。「電池が膨らんできたら使用をやめる」という注意喚起をよく見かけますが、準固体電池はそもそもこの膨張自体が起きにくい設計だと考えると分かりやすいかもしれません。
 
 ---
 
@@ -238,67 +194,37 @@ published: false
 
 | 観点 | ①リチウムイオン電池 | ②準固体電池 | ③全固体電池 |
 |---|---|---|---|
-| 安全性 | × 発火リスクあり | ○ リスクを大幅低減 | ◎ 最も安全 |
-| コスト効率 | ◎ 最も安価 | ○ やや割高 | × 量産コストが非常に高い |
+| 安全性 | <Text bg="#f87171">× 発火リスクあり</Text> | <Text bg="#86efac">○ リスクを大幅低減</Text> | ◎ 最も安全 |
+| コスト効率 | ◎ 最も安価 | ○ やや割高 | <Text bg="#f87171">× 量産コストが非常に高い</Text> |
 | 容量 | ◎ 大容量 | ○ ほぼ同等 | ○ ほぼ同等 |
 | 寿命 | △ 標準的 | ○ やや長い傾向 | ◎ 長寿命 |
-| 普及度 | ◎ すでに主流 | △ 普及が進行中 | × まだ研究・試作段階 |
+| 普及度 | ◎ すでに主流 | △ 普及が進行中 | <Text bg="#f87171">× まだ研究・試作段階</Text> |
 
-準固体電池は安全性を大きく引き上げつつ、コストや容量は従来品に近い水準を保っている――という位置づけが、「現実的な次世代電池」と言われる理由です。
+準固体電池は安全性を大きく引き上げつつ、コストや容量は従来品に近い水準を保っている――という位置づけが、現実的な次世代電池と言われる理由です。表の5項目だけでは伝わりにくい部分も含め、安全性以外の観点も含めて準固体電池の良い点・注意点をもう少し掘り下げます。
 
----
+<ReviewSummary>
+<ReviewPoints type="good">
+<ReviewPoint type="good" title="軽さ・薄さ">液漏れを防ぐ頑丈な密閉構造が液体電解質ほど必要なく、同容量でも軽量・薄型に仕上げやすい。今回レビューしたSatrayの製品も同容量帯の中でかなり軽い部類だった</ReviewPoint>
+<ReviewPoint type="good" title="安全性">ゲル状電解質は液体よりガス化しにくく、熱暴走の連鎖が起きにくい</ReviewPoint>
+<ReviewPoint type="good" title="液漏れしにくさ">電解質が半固体のため、外装が破損しても液体電解質のように漏れ出しにくい</ReviewPoint>
+<ReviewPoint type="good" title="量産のしやすさ">全固体電池のようにゼロから専用の製造ラインを作る必要がなく、既存のリチウムイオン電池の生産設備をベースに移行しやすい。全固体電池より一足早く実用化・普及が進んでいる理由でもある</ReviewPoint>
+<ReviewPoint type="good" title="寿命">ゲル状電解質は液体より劣化要因が少なく、サイクル寿命がやや長くなる傾向がある</ReviewPoint>
+</ReviewPoints>
+<ReviewPoints type="con">
+<ReviewPoint type="con" title="コスト">量産技術がリチウムイオン電池ほど成熟しておらず、同容量帯の従来品より価格が上乗せされやすい。実際の価格差はおよそ1,000〜2,000円程度高い傾向にある</ReviewPoint>
+<ReviewPoint type="con" title="低温での性能">ゲル状電解質は液体より低温下で流動性が落ちやすく、真冬の屋外など寒い環境では一時的に出力が下がりやすい</ReviewPoint>
+<ReviewPoint type="con" title="出力・急速充電性能">ゲル状電解質は液体よりイオン伝導度がやや劣る場合があり、超高出力・超急速充電が求められる用途では液体電解質品に一歩譲る可能性がある。ただし今回のSatray製品は最大30W出力・Qi2.2 25Wに対応しており、スマホ充電で違いを感じる場面はほとんどない</ReviewPoint>
+<ReviewPoint type="con" title="供給体制の未成熟さ">全固体電池ほどではないが、従来のリチウムイオン電池ほど大規模なサプライチェーンや生産実績はまだ確立されておらず、製品ラインナップやカラーバリエーションの少なさにつながっている</ReviewPoint>
+</ReviewPoints>
+</ReviewSummary>
 
-### Step 5：「燃えにくさ」を数字で見る
-
-実際の安全試験データを見ると、その差は一目瞭然です。
-
-従来のリチウムイオン電池では異常発熱時に最大**2.13℃/秒**で温度が上昇するのに対し、準固体電池では**0.24℃/秒**——**約9分の1**に抑えられています。この差が「熱暴走の連鎖を断ち切れるかどうか」を左右します。
-
-| 試験項目 | 内容 | リチウムイオン電池 | 準固体電池 |
-|---------|------|---------------|---------------|
-| 異常発熱時の最大温度上昇速度 | 異常発熱を起こした際の速度 | 2.13℃/秒 | 0.24℃/秒（約1/9） |
-| 加熱試験 | 130℃まで加熱 | － | 発火・爆発なし |
-| 釘刺し試験 | 鉄の釘を貫通させる | － | 発火なし |
-| 圧迫試験 | 強い力で押しつぶす | － | 発火・液漏れなし |
-| 落下試験 | 1.5mから落下 | － | 異常なし |
+いずれも絶対的な弱点というより、全固体電池に比べればまだ発展途上という位置づけです。通常のモバイルバッテリー用途では大きなデメリットにはなりにくい項目です。
 
 ---
 
 ### まとめ：3種類の電池を一言で言うと
 
-<figure className="my-8">
-<svg viewBox="0 0 680 100" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl mx-auto" style={{fontFamily:"system-ui,sans-serif"}}>
-  {/* スペクトルバー */}
-  <defs>
-    <linearGradient id="specGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stopColor="#ef4444" stopOpacity="0.7"/>
-      <stop offset="50%" stopColor="#f59e0b" stopOpacity="0.7"/>
-      <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.7"/>
-    </linearGradient>
-  </defs>
-  <rect x="40" y="30" width="600" height="28" rx="14" fill="url(#specGrad)"/>
-  {/* マーカー：リチウムイオン */}
-  <circle cx="100" cy="44" r="14" fill="#ef4444"/>
-  <text x="100" y="48" textAnchor="middle" fontSize="10" fontWeight="bold" fill="white">Li+</text>
-  <text x="100" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#ef4444">リチウムイオン</text>
-  <text x="100" y="92" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.6">安価・大容量・要注意</text>
-  {/* マーカー：準固体 */}
-  <circle cx="340" cy="44" r="16" fill="#f59e0b" stroke="white" strokeWidth="2"/>
-  <text x="340" y="49" textAnchor="middle" fontSize="10" fontWeight="bold" fill="white">準</text>
-  <text x="340" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#d97706">準固体電池 ← ここ</text>
-  <text x="340" y="92" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.6">安全+コスパ・今すぐ買える</text>
-  {/* マーカー：全固体 */}
-  <circle cx="580" cy="44" r="14" fill="#8b5cf6"/>
-  <text x="580" y="48" textAnchor="middle" fontSize="10" fontWeight="bold" fill="white">全</text>
-  <text x="580" y="78" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#7c3aed">全固体電池</text>
-  <text x="580" y="92" textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity="0.6">最高の安全性・高コスト</text>
-  {/* 軸ラベル */}
-  <text x="40" y="22" textAnchor="start" fontSize="10" fill="currentColor" fillOpacity="0.5">リスク高 →</text>
-  <text x="640" y="22" textAnchor="end" fontSize="10" fill="currentColor" fillOpacity="0.5">← 安全・高コスト</text>
-</svg>
-</figure>
-
-準固体電池は**「今すぐ手に入る現実的な次世代電池」**です。全固体電池ほど安全ではありませんが、従来のリチウムイオン電池より大幅にリスクが低く、しかも製造コストは手頃。そのバランスが評価されて2025〜2026年に急速に普及してきました。
+準固体電池は**今すぐ手に入る現実的な次世代電池**です。全固体電池ほど安全ではありませんが、従来のリチウムイオン電池より大幅にリスクが低く、しかも製造コストは手頃。そのバランスが評価されて2025〜2026年に急速に普及してきました。
 
 ***
 
@@ -315,7 +241,7 @@ published: false
   <Figure src="/images/posts/satray-battery/compare_thickness.jpg" alt="スマホとの厚み比較" caption="スマホ（ケース込み）と並べた厚み比較" className="rounded-lg shadow-sm border border-border object-cover aspect-[4/3]" />
 </ImageGrid>
 
-大きな特徴は、背面に収納された**「隠しスタンド」**です。使わないときは本体に折りたたんでおき、必要なときだけ引き出して自立させられる設計になっています。スタンドは全金属製で角度調整が可能で、動画視聴に最適な52°に設定されており、縦置き・横置きどちらにも対応します。
+大きな特徴は、背面に収納された**隠しスタンド**です。使わないときは本体に折りたたんでおき、必要なときだけ引き出して自立させられる設計になっています。スタンドは全金属製で角度調整が可能で、動画視聴に最適な52°に設定されており、縦置き・横置きどちらにも対応します。
 
 <ImageGrid columns={2}>
   <Figure src="/images/posts/satray-battery/stand_open.jpg" alt="隠しスタンドを引き出して自立させた状態" caption="スタンドを引き出して自立させた状態" className="rounded-lg shadow-sm border border-border object-cover aspect-[4/3]" />
