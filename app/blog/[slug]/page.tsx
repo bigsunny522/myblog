@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { getPostBySlug, getAllPosts, getPostSlugs, getMdxOnlySlugs } from '@/lib/mdx';
+import { getPostBySlug, getAllPosts, getPostSlugs } from '@/lib/mdx';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ChevronLeft } from 'lucide-react';
@@ -16,7 +16,20 @@ import { ViewCounter } from '@/components/ViewCounter';
 import { ShareMenu } from '@/components/ShareMenu';
 import { getBaseUrl } from '@/lib/utils';
 import { ScrollProgressBar } from '@/components/ScrollProgressBar';
-import { SafeImage } from '@/components/SafeImage';
+import ExportedImage from 'next-image-export-optimizer';
+import fs from 'fs';
+import path from 'path';
+
+const FALLBACK_COVER = '/images/main/skyblue.png';
+
+// 静的エクスポートなのでビルド時にファイル存在を確認し、無ければフォールバック画像を使う
+function resolveCover(src?: string): string {
+  const trimmed = src?.trim();
+  if (!trimmed) return FALLBACK_COVER;
+  return fs.existsSync(path.join(process.cwd(), 'public', decodeURIComponent(trimmed)))
+    ? trimmed
+    : FALLBACK_COVER;
+}
 
 interface BlogPostPageProps {
   params: {
@@ -80,15 +93,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 }
 
 export async function generateStaticParams() {
-  try {
-    const slugs = await getPostSlugs();
-    return slugs
-      .map((slug) => slug.replace(/\.mdx$/, ''))
-      .filter(Boolean)
-      .map((slug) => ({ slug }));
-  } catch {
-    return getMdxOnlySlugs().map((slug) => ({ slug }));
-  }
+  const slugs = await getPostSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -246,10 +252,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <div className="max-w-4xl mx-auto">
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden mb-8 border border-border/50 shadow-sm">
-            <SafeImage
-              src={post.coverImage}
+            <ExportedImage
+              src={resolveCover(post.coverImage)}
               alt={post.title}
-              className="w-full h-full object-cover"
+              fill
+              priority
+              sizes="(max-width: 896px) 100vw, 896px"
+              className="object-cover"
             />
           </div>
 
@@ -356,12 +365,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   href={`/blog/${related.slug}`}
                   className="group flex flex-col bg-card border border-border/50 rounded-2xl overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-300"
                 >
-                  <div className="aspect-video overflow-hidden">
-                    <SafeImage
-                      src={related.coverImage}
+                  <div className="relative aspect-video overflow-hidden">
+                    <ExportedImage
+                      src={resolveCover(related.coverImage)}
                       alt={related.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
+                      fill
+                      sizes="(max-width: 640px) 100vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-4 flex flex-col gap-2">

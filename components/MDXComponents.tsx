@@ -153,6 +153,14 @@ const LI = ({ children, className, ...props }: React.DetailedHTMLProps<React.LiH
 };
 
 import { ImageModal } from '@/components/ImageModal';
+import ExportedImage from 'next-image-export-optimizer';
+
+// ImageModal のサーバー側ラッパー。ビルド時に画像寸法を取得して渡すことで、
+// ImageModal に最適化済みWEBP(srcset)を配信させる。寸法が取れない場合は素の <img> にフォールバック。
+const OptimizedImageModal = async ({ src, ...props }: { src?: string; [key: string]: any }) => {
+  const dimensions = await getImageDimensions(src);
+  return <ImageModal src={src} {...props} {...dimensions} />;
+};
 
 const FeaturePoint = ({ number, title, children, body }: {
   number: number;
@@ -185,12 +193,22 @@ const ImageGrid = ({ children, columns = 2 }: { children: React.ReactNode; colum
 
 const Figure = ({ src, alt, caption, className }: { src: string; alt: string; caption?: string; className?: string }) => (
   <figure className="m-0 flex flex-col">
-    <ImageModal src={src} alt={alt} className={cn('w-full', className)} />
+    <OptimizedImageModal src={src} alt={alt} className={cn('w-full', className)} />
     {caption && (
       <figcaption className="text-center text-xs text-muted-foreground mt-2 px-1 leading-snug">{caption}</figcaption>
     )}
   </figure>
 );
+
+// BuyLinks の商品サムネイル(表示幅128px)。寸法が取れれば最適化画像を配信する
+const BuyLinksThumb = async ({ src, alt }: { src: string; alt: string }) => {
+  const dimensions = await getImageDimensions(src);
+  if (dimensions) {
+    return <ExportedImage src={src} alt={alt} {...dimensions} sizes="128px" className="w-full h-auto" />;
+  }
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt={alt} loading="lazy" className="w-full h-auto" />;
+};
 
 type BuyLinkData = { type: 'amazon' | 'rakuten' | 'official'; href: string; label?: string };
 
@@ -216,7 +234,7 @@ const BuyLinks = ({ children, image, title, description, links }: {
         <div className="flex flex-col md:flex-row items-center gap-6">
           {image && (
             <div className="shrink-0 w-32 bg-white rounded-xl overflow-hidden shadow-sm">
-              <img src={image} alt={title || ''} className="w-full h-auto" />
+              <BuyLinksThumb src={image} alt={title || ''} />
             </div>
           )}
           <div className="flex-1 space-y-2 text-center md:text-left">
@@ -478,6 +496,38 @@ const Blockquote = ({ children, ...props }: React.HTMLAttributes<HTMLElement>) =
   </div>
 );
 
+// ビルド時(サーバー側)に public/ 配下の画像寸法を取得する。
+// sharp と fs は動的 import にして、このファイルがクライアントから import された場合も壊れないようにする。
+const dimensionCache = new Map<string, { width: number; height: number } | null>();
+
+async function getImageDimensions(src: unknown): Promise<{ width: number; height: number } | undefined> {
+  if (typeof window !== 'undefined') return undefined;
+  if (typeof src !== 'string' || !src.startsWith('/')) return undefined;
+
+  const cached = dimensionCache.get(src);
+  if (cached !== undefined) return cached ?? undefined;
+
+  try {
+    const sharpModule = await import('sharp');
+    const sharp = sharpModule.default ?? sharpModule;
+    const filePath = `${process.cwd()}/public${decodeURIComponent(src)}`;
+    const meta = await sharp(filePath).metadata();
+    if (!meta.width || !meta.height) throw new Error('no dimensions');
+    // EXIF回転(5〜8)は縦横が入れ替わる
+    const swapped = (meta.orientation ?? 1) >= 5;
+    const result = {
+      width: swapped ? meta.height : meta.width,
+      height: swapped ? meta.width : meta.height,
+    };
+    dimensionCache.set(src, result);
+    return result;
+  } catch {
+    console.warn(`[MDX] 画像の寸法を取得できないため最適化をスキップ: ${src}`);
+    dimensionCache.set(src, null);
+    return undefined;
+  }
+}
+
 // Export the components mapping
 export const mdxComponents = {
   Text,
@@ -517,9 +567,9 @@ export const mdxComponents = {
       else maxWidth = token; // e.g. "50%"
     }
     const cleanAlt = alt ? (alt as string).replace(/\|(small|medium|large|\d+(?:\.\d+)?%)$/i, '').trim() : alt;
-    return <ImageModal {...rest} alt={cleanAlt} maxWidth={maxWidth} />;
+    return <OptimizedImageModal {...rest} alt={cleanAlt} maxWidth={maxWidth} />;
   }, // Use functional wrapper to ensure props are passed correctly
-  ImageModal, // Named component for direct JSX use in MDX: <ImageModal src="..." />
+  ImageModal: OptimizedImageModal, // Named component for direct JSX use in MDX: <ImageModal src="..." />
   Specs,
   SpecsItem,
   BuyLinks,

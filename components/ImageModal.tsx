@@ -2,16 +2,19 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { X, ZoomIn } from "lucide-react";
+import ExportedImage from "next-image-export-optimizer";
 
 interface ImageModalProps {
   src?: string;
   alt?: string;
   className?: string;
   maxWidth?: string;
+  width?: number;
+  height?: number;
   [key: string]: any;
 }
 
-export const ImageModal = ({ src, alt, className, maxWidth, ...props }: ImageModalProps) => {
+export const ImageModal = ({ src, alt, className, maxWidth, width, height, ...props }: ImageModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const open = useCallback(() => setIsOpen(true), []);
@@ -48,13 +51,26 @@ export const ImageModal = ({ src, alt, className, maxWidth, ...props }: ImageMod
         tabIndex={0}
         onKeyDown={(e) => e.key === "Enter" && open()}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={src}
-          alt={alt ?? ""}
-          className={`w-full ${imgFit} block transition-transform duration-300 group-hover:scale-[1.04]`}
-          {...props}
-        />
+        {width && height ? (
+          // 寸法が分かる場合は最適化済みWEBP(srcset)を配信する
+          <ExportedImage
+            src={src}
+            alt={alt ?? ""}
+            width={width}
+            height={height}
+            sizes="(max-width: 768px) 100vw, 768px"
+            className={`w-full ${imgFit} block transition-transform duration-300 group-hover:scale-[1.04]`}
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src}
+            alt={alt ?? ""}
+            loading="lazy"
+            className={`w-full ${imgFit} block transition-transform duration-300 group-hover:scale-[1.04]`}
+            {...props}
+          />
+        )}
         {/* Hover overlay */}
         <span className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/10">
           <ZoomIn className="w-8 h-8 text-white drop-shadow-lg" />
