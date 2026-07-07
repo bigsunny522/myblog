@@ -246,7 +246,7 @@ const BuyLinks = ({ children, image, title, description, links }: {
             </div>
           )}
           <div className="flex-1 space-y-2 text-center md:text-left">
-            {title && <div className="font-bold text-lg font-outfit">{title}</div>}
+            {title && <div className="font-bold text-lg font-outfit text-pretty">{title}</div>}
             {description && <div className="text-sm text-muted-foreground">{description}</div>}
           </div>
           <div className="flex flex-col w-full md:w-auto gap-2 min-w-[200px]">
