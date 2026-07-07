@@ -116,6 +116,7 @@ published: true       # 省略時は true 扱い
 - [ ] `excerpt` 記入(SNS シェア・SEO 用)
 - [ ] `coverImage` 設定 + 画像圧縮済み + WEBP キャッシュコミット済み
 - [ ] レビュー記事なら `rating`(+ 可能なら `price` / `faqs`)
+- [ ] `date` を **main にマージ(公開)する日付**に更新する(執筆開始日のまま放置しない。日付がズレたまま公開すると再度差し替え・再pushが必要になる)
 - [ ] `published: true` に変更
 
 ### 文章表現の注意点
