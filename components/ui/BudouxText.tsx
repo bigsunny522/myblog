@@ -24,9 +24,9 @@ export const BudouxText = ({
         if (!node.trim()) return node;
         const segments = parser.parse(node);
         return segments.map((segment, i) => (
-          <span 
-            key={`${segment}-${i}`} 
-            className="inline-block"
+          <span
+            key={`${segment}-${i}`}
+            className="inline-block indent-0"
           >
             {segment}
           </span>

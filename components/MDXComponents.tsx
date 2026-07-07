@@ -136,7 +136,7 @@ const LI = ({ children, className, ...props }: React.DetailedHTMLProps<React.LiH
             {keyNode}{separator.trim()}
           </span>
           <span className="font-normal text-foreground min-w-0">
-             {[valuePart1, ...restChildren]}
+            {[valuePart1, ...restChildren]}
           </span>
         </div>
       </li>
@@ -374,7 +374,10 @@ const CouponBox = ({ children, body }: { children?: React.ReactNode; body?: Reac
 
 const Table = ({ children, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
   <div className="my-6 overflow-x-auto rounded-xl border border-border not-prose">
-    <table className="w-full text-sm border-collapse" {...props}>
+    <table
+      className="w-full table-fixed text-sm border-collapse [&_tr>*:first-child]:w-[30%]"
+      {...props}
+    >
       {children}
     </table>
   </div>
@@ -399,7 +402,7 @@ const TR = ({ children, ...props }: React.HTMLAttributes<HTMLTableRowElement>) =
 );
 
 const TH = ({ children, ...props }: React.ThHTMLAttributes<HTMLTableCellElement>) => (
-  <th className="px-4 py-3 text-left font-bold text-primary/90 whitespace-nowrap" {...props}>
+  <th className="px-4 py-3 text-left font-bold text-primary/90" {...props}>
     {children}
   </th>
 );
