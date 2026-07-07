@@ -375,7 +375,7 @@ const CouponBox = ({ children, body }: { children?: React.ReactNode; body?: Reac
 const Table = ({ children, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
   <div className="my-6 overflow-x-auto rounded-xl border border-border not-prose">
     <table
-      className="w-full table-fixed text-sm border-collapse [&_tr>*:first-child]:w-[30%]"
+      className="w-full table-fixed text-sm border-collapse [&_tr>*:first-child]:w-[20%]"
       {...props}
     >
       {children}
