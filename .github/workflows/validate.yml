@@ -1,0 +1,49 @@
+name: Validate
+
+# PR時に記事の機械検品(check:posts)とビルドを検証する。
+# デプロイはCloudflare Pages側で行われるため、ここでは検証のみ。
+# これが通れば、人間はマージボタンを押すだけの承認者に回れる。
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate posts (check:posts)
+        run: npm run check:posts
+
+      - name: Build
+        # npm run build ではなく各ステップを個別に実行する。
+        # 理由: npm run build は最後に scripts/ping-indexnow.mjs を実行し、
+        # 検索エンジンへ実URLを通知してしまう。ここはPR検証用のビルドであり
+        # 実際のデプロイではない(デプロイはCloudflare Pages側)ため、
+        # IndexNow への通知は行わない。
+        # NEXT_PUBLIC_TINA_CLIENT_ID もCIでは未設定のため、TinaCMS build は
+        # 発生しない(npm run build 内の判定と同じ挙動)。
+        run: |
+          npx next build
+          node scripts/setup-image-cache.mjs
+          npx next-image-export-optimizer
+          node scripts/generate-sitemap.mjs
