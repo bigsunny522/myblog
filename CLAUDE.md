@@ -62,6 +62,7 @@ Markdown の画像 `![alt](src)` は自動的に `<ImageModal>`(クリック拡�
 1. **元画像はコミット前に圧縮する**: `npm run optimize:images -- posts/<slug>`(長辺 2560px・quality 82 に再圧縮)。カメラ直出しの 7〜10MB の JPG をそのままコミットしない(リポジトリ肥大とビルド時間悪化の原因)
 2. **WEBP キャッシュをコミットする**: 新しい画像を追加したらローカルで `npm run build`(または `next build` 後に `npm run build:images`)を実行し、生成された `public/images/**/nextImageExportOptimizer/*.WEBP` をコミットする。**これを怠ると CI が毎回全サイズの WEBP を再生成し、Cloudflare Pages のビルドが数分余計にかかる**(`scripts/setup-image-cache.mjs` がコミット済み WEBP を CI のキャッシュ位置に復元して再生成をスキップさせる仕組み)
 3. 記事画像は `public/images/posts/<slug>/` に置き、`/images/posts/<slug>/...` で参照する
+4. **カバー画像は `/images/posts/<slug>/cover.jpg` に統一する**(新規記事)。`/images/cover/`・`/images/main/`・Unsplash 等の外部 URL は使わない — 外部 URL は `next-image-export-optimizer` の最適化パイプラインを素通りするため非推奨。既存記事の移行は必須ではない
 
 ## 記事フロントマター
 
