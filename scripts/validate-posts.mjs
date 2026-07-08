@@ -3,7 +3,10 @@
  * - published: false (下書き) の記事は warning のみ(公開時の安全網なので下書き段階の未完成は許容する)
  * - published !== false (公開済み/公開予定) の記事は error として扱い、非ゼロ終了する
  *
- * Usage: node scripts/validate-posts.mjs
+ * Usage:
+ *   node scripts/validate-posts.mjs                    # content/posts/*.mdx を全件チェック(npm run check:posts)
+ *   node scripts/validate-posts.mjs <path/to/file.mdx>  # 指定した1ファイルのみチェック(hookから利用。
+ *                                                          content/drafts/ 配下も指定可、常に warning 扱い)
  */
 
 import fs from 'fs';
@@ -17,9 +20,6 @@ const taxonomyPath = path.join(process.cwd(), 'content/data/taxonomy.json');
 const taxonomy = JSON.parse(fs.readFileSync(taxonomyPath, 'utf8'));
 const validCategories = new Set(taxonomy.categories);
 const validTags = new Set(taxonomy.tags);
-
-const errors = [];
-const warnings = [];
 
 function report(list, file, message) {
   list.push(`${file}: ${message}`);
@@ -76,44 +76,64 @@ function lintBoldBrackets(content) {
   return hits;
 }
 
-const files = fs.readdirSync(postsDir).filter((f) => f.endsWith('.mdx'));
-
-for (const file of files) {
-  const slug = file.replace(/\.mdx$/, '');
-  const fullPath = path.join(postsDir, file);
+// 1ファイル分の検証を行い、errors/warnings リストに追記する。
+// forceDraft: true の場合、published の値によらず warning 扱いにする(content/drafts/ 配下用)
+function validatePost(fullPath, label, forceDraft, errors, warnings) {
+  const slug = path.basename(fullPath, '.mdx');
   const raw = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(raw);
-  const isDraft = data.published === false;
+  const isDraft = forceDraft || data.published === false;
   const list = isDraft ? warnings : errors;
 
   if (!/^[a-zA-Z0-9-]+$/.test(slug)) {
-    report(errors, file, `スラッグに英数字・ハイフン以外の文字が含まれています: ${slug}`);
+    report(errors, label, `スラッグに英数字・ハイフン以外の文字が含まれています: ${slug}`);
   }
 
-  if (!data.title) report(list, file, 'title が未設定です');
-  if (!data.excerpt) report(list, file, 'excerpt が未設定です');
+  if (!data.title) report(list, label, 'title が未設定です');
+  if (!data.excerpt) report(list, label, 'excerpt が未設定です');
   if (!data.date || !/^\d{4}-\d{2}-\d{2}$/.test(data.date)) {
-    report(list, file, `date が YYYY-MM-DD 形式ではありません: "${data.date ?? ''}"`);
+    report(list, label, `date が YYYY-MM-DD 形式ではありません: "${data.date ?? ''}"`);
   }
-  if (!data.category) report(list, file, 'category が未設定です');
-  if (!data.coverImage) report(list, file, 'coverImage が未設定です');
+  if (!data.category) report(list, label, 'category が未設定です');
+  if (!data.coverImage) report(list, label, 'coverImage が未設定です');
 
   if (data.category && !validCategories.has(data.category)) {
-    report(list, file, `category "${data.category}" が content/data/taxonomy.json に存在しません`);
+    report(list, label, `category "${data.category}" が content/data/taxonomy.json に存在しません`);
   }
   for (const tag of data.tags || []) {
     if (tag && !validTags.has(tag)) {
-      report(list, file, `tag "${tag}" が content/data/taxonomy.json に存在しません`);
+      report(list, label, `tag "${tag}" が content/data/taxonomy.json に存在しません`);
     }
   }
 
-  if (data.coverImage) checkImageExists(list, file, data.coverImage, 'coverImage');
+  if (data.coverImage) checkImageExists(list, label, data.coverImage, 'coverImage');
   for (const src of extractImageRefs(content)) {
-    checkImageExists(list, file, src, '本文中');
+    checkImageExists(list, label, src, '本文中');
   }
 
   for (const snippet of lintBoldBrackets(content)) {
-    report(list, file, `太字閉じタグが閉じ括弧に隣接し無効化されている可能性があります: "...${snippet}..."`);
+    report(list, label, `太字閉じタグが閉じ括弧に隣接し無効化されている可能性があります: "...${snippet}..."`);
+  }
+}
+
+const errors = [];
+const warnings = [];
+const singleFileArg = process.argv[2];
+
+if (singleFileArg) {
+  // hookなどからの単一ファイルチェック。content/drafts/ 配下は常に warning 扱い。
+  const fullPath = path.isAbsolute(singleFileArg) ? singleFileArg : path.join(process.cwd(), singleFileArg);
+  if (!fs.existsSync(fullPath)) {
+    console.error(`ファイルが見つかりません: ${singleFileArg}`);
+    process.exit(1);
+  }
+  const normalized = fullPath.replace(/\\/g, '/');
+  const forceDraft = normalized.includes('/content/drafts/');
+  validatePost(fullPath, singleFileArg, forceDraft, errors, warnings);
+} else {
+  const files = fs.readdirSync(postsDir).filter((f) => f.endsWith('.mdx'));
+  for (const file of files) {
+    validatePost(path.join(postsDir, file), file, false, errors, warnings);
   }
 }
 
@@ -123,10 +143,15 @@ if (warnings.length > 0) {
 }
 
 if (errors.length > 0) {
-  console.error(`\n[errors] 公開記事の検証エラー (${errors.length}件):`);
+  console.error(`\n[errors] 検証エラー (${errors.length}件):`);
   for (const e of errors) console.error(`  - ${e}`);
   console.error(`\ncheck:posts failed: ${errors.length} error(s), ${warnings.length} warning(s)`);
   process.exit(1);
 }
 
-console.log(`check:posts passed: ${files.length} posts checked, ${warnings.length} warning(s)`);
+if (!singleFileArg) {
+  const total = fs.readdirSync(postsDir).filter((f) => f.endsWith('.mdx')).length;
+  console.log(`check:posts passed: ${total} posts checked, ${warnings.length} warning(s)`);
+} else if (warnings.length === 0) {
+  console.log(`OK: ${singleFileArg}`);
+}

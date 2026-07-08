@@ -111,7 +111,10 @@ published: true       # 省略時は true 扱い
 - `content/ideas/`: 記事ネタのバックログ(1ネタ1ファイル)。ビルド対象外
 - `content/drafts/`: 書きかけ記事。`lib/mdx.ts` は `content/posts/` しか読まないためビルド対象外 = 誤公開が構造的に起きない。**公開 = drafts から posts への移動**
 - `/new-post` スキル: ネタ選定 → `post/<slug>` ブランチ作成 → テンプレートから drafts に雛形生成 → 画像フォルダ作成
-- `/publish` スキル: frontmatter 更新(date/published)→ drafts から posts へ移動 → `npm run check:posts` → `npm run build` で WEBP キャッシュ生成 → コミット → PR 作成(マージはしない)
+- `/publish` スキル: frontmatter 更新(date/published)→ `proofreader` サブエージェントで校正 → drafts から posts へ移動 → `npm run check:posts` → `npm run build` で WEBP キャッシュ生成 → コミット → PR 作成(マージはしない)
+- `proofreader` サブエージェント(`.claude/agents/proofreader.md`): 読み取り専用。誤字脱字・文章表現のNGパターンを校正する。`/publish` から呼ばれる
+- `fact-checker` サブエージェント(`.claude/agents/fact-checker.md`): WebSearch/WebFetch可。レビュー記事のスペック・価格を公式ソースと突き合わせる。PR提供品レビューで随時使う
+- `content/posts/**.mdx` / `content/drafts/**.mdx` への Edit/Write 後は PostToolUse hook(`.claude/settings.json`)が `scripts/validate-posts.mjs` を自動実行し、違反を即フィードバックする(ブロッキングはしない)
 
 ## TinaCMS
 

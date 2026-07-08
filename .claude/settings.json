@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/validate-on-write.mjs",
+            "statusMessage": "記事の機械検品を実行中..."
+          }
+        ]
+      }
+    ]
+  }
+}
