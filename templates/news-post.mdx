@@ -1,0 +1,63 @@
+---
+title: "[イベント名/ニュース] まとめ｜[要点を一言で]"
+subtitle: "サブタイトル(任意。記事の核心を一言で)"
+excerpt: "SNSシェア・SEO用の説明文。100〜120字程度で「何についての記事か」が伝わるように"
+date: "YYYY-MM-DD" # 公開日 = main にマージする日付。執筆開始日のまま放置しない
+category: "" # 例: ニュース / レポート / まとめ。content/data/taxonomy.json の既存カテゴリから選ぶ
+tags: [] # taxonomy.json未登録のタグは npm run check:posts でエラーになる
+coverImage: "/images/posts/<slug>/cover.jpg"
+recommended: false
+published: false # 執筆中はfalse。公開する時にtrueへ変更
+listed: true
+---
+
+[導入。何についての記事か、いつ・どこで起きたことかを1〜2段落で]
+
+{/* 速報・リアルタイム執筆記事の注意書きの例。取材・レポート記事では不要なので削除 */}
+> **注意：** 本記事は[イベント名]をリアルタイムで視聴しながら執筆したものです。内容に誤りや不正確な表現が含まれている場合があります。正確な情報は [公式サイト](https://example.com) でご確認ください。
+
+<ImageModal src="/images/posts/<slug>/main.jpg" alt="[会場・キービジュアルなどの説明]" />
+
+***
+
+{/* 見出しが多い記事(発表内容まとめ・イベントレポート等)では冒頭に目次を置く。見出し2〜3個程度の短い記事なら削除してよい */}
+## 目次
+
+<Details summary="目次を開く">
+
+- [トピック1](#トピック1の見出し)
+- [トピック2](#トピック2の見出し)
+
+</Details>
+
+***
+
+## トピック1の見出し
+
+[本文。写真は単発なら`<ImageModal>`、複数枚並べるなら`<ImageGrid>`+`<ImageModal>`(または`<Figure>`)を使う]
+
+<ImageGrid columns={2}>
+  <ImageModal src="/images/posts/<slug>/photo1.jpg" alt="[説明]" />
+  <ImageModal src="/images/posts/<slug>/photo2.jpg" alt="[説明]" />
+</ImageGrid>
+
+***
+
+## トピック2の見出し
+
+[本文]
+
+***
+
+## まとめ・感想
+
+[記事全体の総括。速報記事なら「詳細は公式発表を待って追記予定」のように締めてもよい]
+
+{/*
+書き終えたら:
+1. npm run check:posts でフロントマター・画像参照・太字括弧崩れをチェック
+2. date を main にマージする日付に更新
+3. published: true に変更
+4. npm run build でWEBPキャッシュを生成しコミット
+執筆全般の注意点(文章表現・NG表現)は docs/writing-guide.md、コンポーネントの詳細は docs/components.md を参照
+*/}
