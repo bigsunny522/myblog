@@ -31,13 +31,19 @@ ls content/drafts/<slug>.mdx
 - `excerpt` / `coverImage` / レビュー記事なら `rating`(可能なら `price` / `faqs`)が埋まっているか確認する
 - `category` / `tags` が `content/data/taxonomy.json` に存在する値のみになっているか確認する
 
-### 4. drafts から posts へ移動する
+### 4. 校正する(proofreaderサブエージェント)
+
+Agent tool で `proofreader` サブエージェントを呼び、記事を校正する。読み取り専用で指摘のみ返すエージェントなので、指摘内容を確認してから自分(メインの会話)で修正を反映する。指摘が無ければそのまま次に進む。
+
+レビュー記事でスペック・価格・対応規格を確認したい場合は、必要に応じて `fact-checker` サブエージェント(WebSearch可)も併用する。
+
+### 5. drafts から posts へ移動する
 
 ```bash
 git mv content/drafts/<slug>.mdx content/posts/<slug>.mdx
 ```
 
-### 5. 機械検品を実行する
+### 6. 機械検品を実行する
 
 ```bash
 npm run check:posts
@@ -45,7 +51,7 @@ npm run check:posts
 
 `published: true` の記事はエラーが非ゼロ終了の対象になる。エラーが出た場合は該当箇所を修正し、通るまで再実行する。
 
-### 6. ビルドしてWEBPキャッシュを生成する
+### 7. ビルドしてWEBPキャッシュを生成する
 
 `npm run build` はそのまま実行すると最後に IndexNow への ping(`scripts/ping-indexnow.mjs`)まで行ってしまうため、**ローカル検証ではこのステップだけ分解して実行する**(CLAUDE.md 参照)。
 
@@ -60,11 +66,11 @@ node scripts/generate-sitemap.mjs
 
 生成された `public/images/posts/<slug>/nextImageExportOptimizer/*.WEBP` と、更新された `public/images/next-image-export-optimizer-hashes.json` を後でコミットする。
 
-### 7. ネタのステータスを更新する
+### 8. ネタのステータスを更新する
 
 対応する `content/ideas/<idea>.md` があれば `status: done` に更新する。
 
-### 8. コミットする
+### 9. コミットする
 
 ```bash
 git add content/posts/<slug>.mdx public/images/posts/<slug>/ public/images/next-image-export-optimizer-hashes.json public/sitemap.xml content/ideas/<idea>.md
@@ -73,7 +79,7 @@ git commit -m "publish: <slug>"
 
 `public/sitemap.xml` は `next build` の静的エクスポート成果物であり `out/` 配下のみに出るため、リポジトリ管理下の `public/` 側に変更がなければ `git add` の対象から外してよい(実際に差分が出たファイルだけをコミットする)。
 
-### 9. プッシュしてPRを作成する
+### 10. プッシュしてPRを作成する
 
 ```bash
 git push -u origin post/<slug>
