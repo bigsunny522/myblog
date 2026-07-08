@@ -106,6 +106,13 @@ published: true       # 省略時は true 扱い
 
 新規記事は `templates/review-post.mdx`(レビュー記事)・`templates/news-post.mdx`(ニュース・レポート記事)をコピーして書き始める。標準構成・公開前チェックリスト・文章表現の注意点(太字閉じ括弧崩れなど)は [docs/writing-guide.md](docs/writing-guide.md) を参照。
 
+### 執筆パイプライン
+
+- `content/ideas/`: 記事ネタのバックログ(1ネタ1ファイル)。ビルド対象外
+- `content/drafts/`: 書きかけ記事。`lib/mdx.ts` は `content/posts/` しか読まないためビルド対象外 = 誤公開が構造的に起きない。**公開 = drafts から posts への移動**
+- `/new-post` スキル: ネタ選定 → `post/<slug>` ブランチ作成 → テンプレートから drafts に雛形生成 → 画像フォルダ作成
+- `/publish` スキル: frontmatter 更新(date/published)→ drafts から posts へ移動 → `npm run check:posts` → `npm run build` で WEBP キャッシュ生成 → コミット → PR 作成(マージはしない)
+
 ## TinaCMS
 
 `tina/config.ts` が CMS スキーマを定義。**post コレクションのみ**(gear は CMS 管理外で、MDX ファイルを直接編集する)。`tina/__generated__/` は自動生成なので手動編集しない。TinaCMS は `content/posts/*.mdx` に直接書き込む。
