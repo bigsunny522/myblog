@@ -1,0 +1,133 @@
+---
+title: "製品名 レビュー"
+subtitle: "サブタイトル(任意。製品の一番の売りや検証内容を一言で)"
+excerpt: "SNSシェア・SEO用の説明文。100〜120字程度で製品の特徴と結論を簡潔に。excerptは一覧・OGメタ・JSON-LDの説明文に使われる"
+date: "YYYY-MM-DD" # 公開日 = main にマージする日付。執筆開始日のまま放置しない(公開前チェックリスト参照)
+category: "" # content/data/taxonomy.json の既存カテゴリから選ぶ。新規カテゴリはtaxonomy.jsonに先に追加する
+tags: [] # 同上。taxonomy.json未登録のタグは npm run check:posts でエラーになる
+coverImage: "/images/posts/<slug>/cover.jpg" # <slug>は本ファイル名(=記事URL)と一致させる
+recommended: false # ホームの「おすすめ」タブに表示するか
+published: false # 執筆中はfalse。公開する時にtrueへ変更
+listed: true # 公開はするが一覧に出したくない場合のみfalse
+# ↓ レビュー記事は rating / price / faqs の設定を推奨(Review / Offer / FAQPage の JSON-LD が自動生成される)
+rating: 4.0 # 5点満点
+price: "0000" # 円、数字のみ。税込価格を推奨
+faqs:
+  - question: ""
+    answer: ""
+  - question: ""
+    answer: ""
+  - question: ""
+    answer: ""
+---
+
+{/* PR記事(製品提供・タイアップ)の場合は本文冒頭にこの一文を入れる。自腹購入なら削除 */}
+<u>※本記事は◯◯様より製品をご提供いただき作成したPR記事です。</u>
+
+[導入。なぜこの製品を使うことになったか(購入・提供の経緯)、記事で何を検証するのかを1〜2段落で。読者が「自分に関係あるか」を判断できる情報を先に出す]
+
+{/* 任意: ターゲット読者を先に提示すると離脱率が下がる。刺さらない場合は削除してよい */}
+<CheckList type="good">
+  <CheckItem>[こんな人におすすめ、の条件1]</CheckItem>
+  <CheckItem>[条件2]</CheckItem>
+  <CheckItem>[条件3]</CheckItem>
+</CheckList>
+
+<BuyLinks
+  image="/images/posts/<slug>/cover.jpg"
+  title="製品名"
+  description="製品の一言説明(検索結果・SNSカードにも表示される)"
+>
+  <BuyLink type="amazon" href="https://amzn.to/xxxxxxx">Amazonで見る</BuyLink>
+  <BuyLink type="rakuten" href="https://a.r10.to/xxxxxxx">楽天市場で見る</BuyLink>
+  <BuyLink type="official" href="https://example.com">公式サイト</BuyLink>
+</BuyLinks>
+
+***
+
+## 製品スペック
+
+<Specs>
+  <SpecsItem label="製品名">[型番も含める]</SpecsItem>
+  <SpecsItem label="価格">¥0,000([購入元・執筆時点]を明記)</SpecsItem>
+  <SpecsItem label="[スペック項目]">[値]</SpecsItem>
+  <SpecsItem label="[スペック項目]">[値]</SpecsItem>
+  <SpecsItem label="サイズ">[値]</SpecsItem>
+  <SpecsItem label="重量">[値]</SpecsItem>
+  {/* 製品カテゴリに応じて増減。8〜12項目程度が目安 */}
+</Specs>
+
+***
+
+## 注目ポイント
+
+{/* 2〜3個が目安。他製品との違い・差別化ポイントを見出しにする。ここで「なぜ気になるのか」を先に立てておくと、後段の使用感が生きる */}
+<FeaturePoint number={1} title="[ポイント1のタイトル]">
+  [なぜこれが良いのか。他製品との違いや体感を具体的に。数値があれば併記する]
+</FeaturePoint>
+
+<FeaturePoint number={2} title="[ポイント2のタイトル]">
+  [同上]
+</FeaturePoint>
+
+<FeaturePoint number={3} title="[ポイント3のタイトル(任意)]">
+  [同上]
+</FeaturePoint>
+
+***
+
+## 開封・外観
+
+[同梱物や外観の第一印象。付属品は箇条書きで列挙すると読みやすい]
+
+<Figure src="/images/posts/<slug>/main.jpg" alt="[本体正面などメインカット]" caption="[キャプション]" className="rounded-lg shadow-sm border border-border w-full" />
+
+<ImageGrid columns={2}>
+  <Figure src="/images/posts/<slug>/detail1.jpg" alt="[詳細カット1の説明]" caption="[キャプション]" className="rounded-lg shadow-sm border border-border object-cover aspect-[4/3]" />
+  <Figure src="/images/posts/<slug>/detail2.jpg" alt="[詳細カット2の説明]" caption="[キャプション]" className="rounded-lg shadow-sm border border-border object-cover aspect-[4/3]" />
+</ImageGrid>
+
+***
+
+## 使用感
+
+[実際に使ってみて感じたことをセクションごとに分けて書く(例: 性能、操作性、携帯性など製品特性に応じた切り口で見出しを分割する)。良かった点・気になった点を具体的なエピソードとともに。可能なら他製品との比較表や実測データを添えると説得力が増す]
+
+<Figure src="/images/posts/<slug>/usage1.jpg" alt="[使用シーンの説明]" caption="[キャプション]" className="rounded-lg shadow-sm border border-border w-full" />
+
+***
+
+## まとめ
+
+<ReviewSummary>
+<ReviewPoints type="good">
+<ReviewPoint type="good" title="[良い点1]">[説明]</ReviewPoint>
+<ReviewPoint type="good" title="[良い点2]">[説明]</ReviewPoint>
+<ReviewPoint type="good" title="[良い点3]">[説明]</ReviewPoint>
+</ReviewPoints>
+<ReviewPoints type="con">
+<ReviewPoint type="con" title="[気になる点1]">[説明]</ReviewPoint>
+<ReviewPoint type="con" title="[気になる点2(任意)]">[説明]</ReviewPoint>
+</ReviewPoints>
+</ReviewSummary>
+
+### 総評
+
+[結論。どんな人におすすめできるか、価格に見合う価値があるかを1〜2段落で。冒頭の CheckList で立てたターゲット読者に答える形で締めるとまとまりが良い]
+
+<BuyLinks
+  image="/images/posts/<slug>/cover.jpg"
+  title="製品名"
+  description="製品の一言説明"
+>
+  <BuyLink type="amazon" href="https://amzn.to/xxxxxxx">Amazonで見る</BuyLink>
+</BuyLinks>
+
+{/*
+書き終えたら:
+1. npm run check:posts でフロントマター・画像参照・太字括弧崩れをチェック
+2. date を main にマージする日付に更新
+3. published: true に変更
+4. npm run build でWEBPキャッシュを生成しコミット
+執筆全般の注意点(文章表現・NG表現)は docs/writing-guide.md、コンポーネントの詳細は docs/components.md を参照
+*/}
