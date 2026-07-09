@@ -36,6 +36,9 @@ tsconfig.tsbuildinfo
 # Local Claude Code settings
 .claude/settings.local.json
 
+# Claude Code worktree sessions(ビルドキャッシュ・個人設定が誤って混入しやすいため追跡しない)
+.claude/worktrees/
+
 # Temporary images
 image.png
 # Raw/unprocessed photo backups (kept locally only)
