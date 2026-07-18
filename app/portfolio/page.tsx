@@ -62,7 +62,7 @@ const projects = [
     desc: '鳴潮（Wuthering Waves）の音骸強化・厳選を無料でシミュレート。50,000 回のモンテカルロ法によるスコア予測・30+ キャラクター別評価・結果 PNG 出力対応。',
     badge: 'Next.js 16 / Cloudflare Pages',
     tags: ['Monte Carlo', 'Canvas API', 'i18n', 'TypeScript'],
-    href: 'https://wuwaechosimu.xyzack271.com',
+    href: 'https://wuwaechotools.com',
     icon: <Gamepad2 size={20} />,
     iconColor: 'text-cyan-400 bg-cyan-400/10',
     borderColor: 'hover:border-cyan-400/40',
@@ -687,7 +687,7 @@ export default function PortfolioPage() {
           </div>
           <ScrollReveal delay={0.2}>
             <a
-              href="https://wuwaechosimu.xyzack271.com"
+              href="https://wuwaechotools.com"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 rounded-full font-medium text-sm hover:bg-cyan-400/20 transition-colors"
