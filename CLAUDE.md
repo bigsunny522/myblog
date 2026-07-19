@@ -30,6 +30,7 @@ npm run lint             # ESLint (next lint)
 | `/gear` | 愛用ガジェット一覧 |
 | `/tags/[tag]` | タグ別アーカイブ |
 | `/about`, `/privacy-policy` | 固定ページ |
+| `/contact` | お問い合わせフォーム(Web3Forms 経由でメール送信) |
 | `/portfolio` | ポートフォリオ(noindex) |
 | `/dashboard` | ウィジェットダッシュボード(独立サブシステム) |
 | `/tools/image-editor` | ブラウザ画像エディタ(noindex) |
@@ -142,6 +143,7 @@ NEXT_PUBLIC_TINA_CLIENT_ID    # TinaCMS(未設定ならビルドで TinaCMS を�
 TINA_TOKEN
 NEXT_PUBLIC_SUPABASE_URL      # 任意: 閲覧数カウンター(ViewCounter)
 NEXT_PUBLIC_SUPABASE_ANON_KEY
+NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY  # 任意: /contact お問い合わせフォーム(Web3Forms、未設定なら準備中表示)
 GITHUB_BRANCH / CF_PAGES_BRANCH  # TinaCMS のブランチ解決(CI が自動設定)
 ```
 

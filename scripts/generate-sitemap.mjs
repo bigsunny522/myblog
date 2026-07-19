@@ -42,6 +42,7 @@ const staticPages = [
   { url: '/reviews', priority: '0.8', changefreq: 'weekly', lastmod: today },
   { url: '/gear', priority: '0.7', changefreq: 'monthly', lastmod: today },
   { url: '/about', priority: '0.5', changefreq: 'monthly', lastmod: today },
+  { url: '/contact', priority: '0.3', changefreq: 'yearly', lastmod: today },
   { url: '/privacy-policy', priority: '0.3', changefreq: 'yearly', lastmod: today },
 ];
 

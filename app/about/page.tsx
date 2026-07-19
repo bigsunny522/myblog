@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getBaseUrl } from '@/lib/utils';
 import ExportedImage from "next-image-export-optimizer";
@@ -227,8 +228,8 @@ export default function AboutPage() {
                    <ExternalLink size={16} className="ml-auto text-muted-foreground" />
                  </a>
 
-                 <a 
-                   href="mailto:xyzack271@gmail.com" 
+                 <a
+                   href="mailto:xyzack271@gmail.com"
                    className="flex items-center gap-3 px-6 py-4 bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 w-full md:w-auto"
                  >
                    <div className="p-2 bg-red-500/10 rounded-lg text-red-500">
@@ -241,6 +242,14 @@ export default function AboutPage() {
                    <ExternalLink size={16} className="ml-auto text-muted-foreground" />
                  </a>
               </div>
+
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+              >
+                <Mail size={16} />
+                お問い合わせフォームを開く
+              </Link>
             </div>
           </ScrollReveal>
         </section>
