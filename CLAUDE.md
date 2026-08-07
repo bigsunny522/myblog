@@ -141,18 +141,16 @@ published: true       # 省略時は true 扱い
 NEXT_PUBLIC_SITE_URL          # サイトのベース URL(OG メタ・sitemap・IndexNow)
 NEXT_PUBLIC_TINA_CLIENT_ID    # TinaCMS(未設定ならビルドで TinaCMS をスキップ)
 TINA_TOKEN
-NEXT_PUBLIC_SUPABASE_URL      # 任意: 閲覧数カウンター(ViewCounter)
-NEXT_PUBLIC_SUPABASE_ANON_KEY
 NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY  # 任意: /contact お問い合わせフォーム(Web3Forms、未設定なら準備中表示)
 GITHUB_BRANCH / CF_PAGES_BRANCH  # TinaCMS のブランチ解決(CI が自動設定)
 ```
 
 `lib/utils.ts` の `getBaseUrl()` は `NEXT_PUBLIC_SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → `VERCEL_URL` → `https://xyzack271.com`(ハードコードのフォールバック)の順で解決する。
 
-`NEXT_PUBLIC_SUPABASE_URL` / `_ANON_KEY` が未設定(または Production 環境のみ未設定)だと ViewCounter はダミー値を表示する「デモモード」に静かにフォールバックする。閲覧数カウンターのセットアップ・トラブルシューティングは [docs/view-counter-setup.md](docs/view-counter-setup.md) と `supabase/schema.sql` を参照。
+閲覧数カウンター(ViewCounter)は環境変数ではなく Cloudflare Pages Functions(`functions/api/views/[slug].ts`)+ D1 データベースで動作する。D1 バインディング(`DB`)が Production/Preview に設定されていないと 0 表示のまま失敗する。セットアップ・トラブルシューティングは [docs/view-counter-setup.md](docs/view-counter-setup.md) と `migrations/0001_init_views.sql` を参照。
 
 ## 周辺サブシステム(記事作業では触らない)
 
 - **ダッシュボード** (`app/dashboard/`, `components/dashboard/`, `lib/dashboard/`): zustand + react-grid-layout のウィジェットボード。ブログ本体とは独立
 - **画像エディタ** (`app/tools/image-editor/`, `components/ImageEditor.tsx`): ブラウザ内の透かし・編集ツール
-- **アナリティクス/広告**: `GoogleAnalytics` / `GoogleAdsense` コンポーネント(AdSense クライアント ID は `app/layout.tsx` にハードコード)、Supabase バックエンドの `ViewCounter`
+- **アナリティクス/広告**: `GoogleAnalytics` / `GoogleAdsense` コンポーネント(AdSense クライアント ID は `app/layout.tsx` にハードコード)、Cloudflare D1 バックエンドの `ViewCounter`(`functions/api/views/[slug].ts`)
