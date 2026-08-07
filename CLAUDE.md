@@ -149,6 +149,8 @@ GITHUB_BRANCH / CF_PAGES_BRANCH  # TinaCMS のブランチ解決(CI が自動設
 
 `lib/utils.ts` の `getBaseUrl()` は `NEXT_PUBLIC_SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → `VERCEL_URL` → `https://xyzack271.com`(ハードコードのフォールバック)の順で解決する。
 
+`NEXT_PUBLIC_SUPABASE_URL` / `_ANON_KEY` が未設定(または Production 環境のみ未設定)だと ViewCounter はダミー値を表示する「デモモード」に静かにフォールバックする。閲覧数カウンターのセットアップ・トラブルシューティングは [docs/view-counter-setup.md](docs/view-counter-setup.md) と `supabase/schema.sql` を参照。
+
 ## 周辺サブシステム(記事作業では触らない)
 
 - **ダッシュボード** (`app/dashboard/`, `components/dashboard/`, `lib/dashboard/`): zustand + react-grid-layout のウィジェットボード。ブログ本体とは独立
