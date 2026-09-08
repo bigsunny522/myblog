@@ -31,7 +31,7 @@ npm run build:local      # TinaCMS ビルドのみ(.env.local を使用)
 npm run build:images     # next-image-export-optimizer で WEBP を生成(out/ が必要)
 npm run optimize:images  # 元画像の圧縮(例: npm run optimize:images -- posts/<slug>)
 npm run check:posts      # 記事の機械検品(scripts/validate-posts.mjs)
-npm run lint             # ESLint (next lint)
+npm run lint             # ESLint CLI (eslint .)
 ```
 
 `npm run build` の実際のパイプライン:
@@ -43,13 +43,14 @@ npm run lint             # ESLint (next lint)
 
 ```bash
 npx tsc --noEmit
+npm run lint             # 下記の通り、リポジトリ全体では exit 1 になる
 npm run check:posts      # content/ を触った場合
 npm run build            # ビルド構成・画像・sitemap に影響する変更の場合
 ```
 
 `npm run build` は最後に IndexNow へ URL を送信するため、**ローカル検証目的では最後まで走らせない**(検証だけなら `next build` 単体で止める)。
 
-> **`npm run lint` は現在動作しない。** Next.js 16 で `next lint` が削除され、`lint` がディレクトリ引数として解釈されて `Invalid project directory provided, no such directory: <repo>\lint` で終わる。ESLint 9.39.1 は入っているが `eslint.config.js` が無いため `npx eslint` も起動しない。復旧するまで検証手順から外す(2026-09-08 確認)。
+> **lint 設定は 2026-09-09 に復旧した**(`eslint.config.mjs` + `eslint .`)。ただし**導入時点で既存コードにエラー14件・警告19件があり、リポジトリ全体では exit 1 になる**。したがって「`npm run lint` が通ること」を完了条件にしない。**自分が変更したファイルの指摘だけを見て、既存の指摘と区別して報告する**。既存分の解消は別タスク。
 
 ## アーキテクチャ
 
