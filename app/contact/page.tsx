@@ -5,6 +5,7 @@ import { getBaseUrl } from '@/lib/utils';
 const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/contact' },
   title: 'お問い合わせ',
   description: 'ざっくらぼへのお問い合わせはこちらから。記事内容の誤り・レビュー依頼・不具合報告などお気軽にご連絡ください。',
   openGraph: {

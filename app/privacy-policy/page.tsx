@@ -8,6 +8,7 @@ const BASE_URL = getBaseUrl();
 const siteImage = `${BASE_URL}/images/main/skyblue.png`;
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/privacy-policy' },
   title: 'プライバシーポリシー',
   description: 'ざっくらぼのプライバシーポリシーです。個人情報の取り扱い、Cookie・広告・アフィリエイトについて説明しています。',
   openGraph: {

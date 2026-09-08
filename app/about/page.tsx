@@ -11,11 +11,12 @@ import { BudouxText } from '@/components/ui/BudouxText';
 const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/about' },
   title: 'About',
-  description: 'About Zack Lab and the operator.',
+  description: 'ざっくらぼと運営者について。レビューの方針と運営者のプロフィールを紹介しています。',
   openGraph: {
     title: 'About | ざっくらぼ',
-    description: 'About Zack Lab and the operator.',
+    description: 'ざっくらぼと運営者について。レビューの方針と運営者のプロフィールを紹介しています。',
     url: '/about',
     siteName: 'ざっくらぼ',
     type: 'website',
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'About | ざっくらぼ',
-    description: 'About Zack Lab and the operator.',
+    description: 'ざっくらぼと運営者について。レビューの方針と運営者のプロフィールを紹介しています。',
     images: [siteImage],
   },
 };

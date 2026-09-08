@@ -7,11 +7,12 @@ import { GearPageClient } from '@/components/GearPageClient';
 const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/gear' },
   title: 'My Gear',
-  description: 'Zack\'s curated list of gadgets and desk setup gear.',
+  description: '運営者が実際に使っているガジェットとデスク環境の一覧です。',
   openGraph: {
     title: 'My Gear | ざっくらぼ',
-    description: 'Zack\'s curated list of gadgets and desk setup gear.',
+    description: '運営者が実際に使っているガジェットとデスク環境の一覧です。',
     url: '/gear',
     siteName: 'ざっくらぼ',
     type: 'website',
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'My Gear | ざっくらぼ',
-    description: 'Zack\'s curated list of gadgets and desk setup gear.',
+    description: '運営者が実際に使っているガジェットとデスク環境の一覧です。',
     images: [siteImage],
   },
 };

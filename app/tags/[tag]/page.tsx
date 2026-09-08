@@ -18,11 +18,12 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
   const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
 
   return {
-    title: `Posts tagged with #${decodedTag}`,
-    description: `Articles tagged with #${decodedTag}`,
+    title: `#${decodedTag} の記事`,
+    description: `「${decodedTag}」に関する記事の一覧です。`,
+    alternates: { canonical: `/tags/${tag}` },
     openGraph: {
-      title: `#${decodedTag} | ざっくらぼ`,
-      description: `Articles tagged with #${decodedTag}`,
+      title: `#${decodedTag} の記事 | ざっくらぼ`,
+      description: `「${decodedTag}」に関する記事の一覧です。`,
       url: `/tags/${tag}`,
       siteName: 'ざっくらぼ',
       type: 'website',
@@ -30,8 +31,8 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
     },
     twitter: {
       card: 'summary_large_image',
-      title: `#${decodedTag} | ざっくらぼ`,
-      description: `Articles tagged with #${decodedTag}`,
+      title: `#${decodedTag} の記事 | ざっくらぼ`,
+      description: `「${decodedTag}」に関する記事の一覧です。`,
       images: [siteImage],
     },
   };

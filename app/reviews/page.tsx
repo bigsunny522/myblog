@@ -7,6 +7,7 @@ import { FilteredBlogList } from '@/components/FilteredBlogList';
 const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/reviews' },
   title: '記事一覧',
   description: '最新のガジェットレビューとニュース一覧',
   openGraph: {

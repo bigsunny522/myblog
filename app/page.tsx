@@ -6,9 +6,10 @@ import { getBaseUrl } from '@/lib/utils';
 const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/' },
   openGraph: {
     title: 'ざっくらぼ',
-    description: 'The best gadget reviews and tech news.',
+    description: 'デスクも、持ち歩きも、使い心地で選ぶ。ガジェットの実体験と、AI・プログラミングで日常を快適にする工夫を紹介します。',
     url: '/',
     siteName: 'ざっくらぼ',
     type: 'website',
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'ざっくらぼ',
-    description: 'The best gadget reviews and tech news.',
+    description: 'デスクも、持ち歩きも、使い心地で選ぶ。ガジェットの実体験と、AI・プログラミングで日常を快適にする工夫を紹介します。',
     images: [siteImage],
   },
 };
