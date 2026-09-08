@@ -29,7 +29,9 @@ export function GearSection({ items }: { items: GearItem[] }) {
       </ScrollReveal>
 
       {/* Marquee Container */}
-      <ScrollReveal delay={0.2} direction="up" distance={40} className="relative w-full">
+      <ScrollReveal delay={0.2} direction="up" distance={40} className="container mx-auto px-lk-lg">
+        {/* 見出しと左右の端を揃えるため、コンテンツ列の内側でマーキーをクリップする */}
+        <div className="relative w-full overflow-hidden">
           {/* Gradient Masks for smooth fade out at edges */}
           <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
@@ -37,10 +39,10 @@ export function GearSection({ items }: { items: GearItem[] }) {
           <motion.div
             className="flex gap-lk-lg w-max"
             animate={{ x: "-50%" }}
-            transition={{ 
-                duration: 40, 
-                ease: "linear", 
-                repeat: Infinity 
+            transition={{
+                duration: 40,
+                ease: "linear",
+                repeat: Infinity
             }}
           >
             {marqueeItems.map((item, index) => (
@@ -49,6 +51,7 @@ export function GearSection({ items }: { items: GearItem[] }) {
               </div>
             ))}
           </motion.div>
+        </div>
       </ScrollReveal>
 
       <Modal isOpen={!!selectedGear} onClose={() => setSelectedGear(null)}>
