@@ -46,15 +46,6 @@ const staticPages = [
   { url: '/privacy-policy', priority: '0.3', changefreq: 'yearly', lastmod: today },
 ];
 
-// Gear items
-const gearDir = path.join(__dirname, '../content/my-gear');
-const gearSlugs = fs.existsSync(gearDir)
-  ? fs.readdirSync(gearDir)
-      .filter((f) => f.endsWith('.mdx'))
-      .filter((f) => getPublished(path.join(gearDir, f)))
-      .map((f) => f.replace(/\.mdx$/, ''))
-  : [];
-
 const slugs = getMdxSlugs();
 
 const urlEntries = [
@@ -75,12 +66,6 @@ const urlEntries = [
     <priority>0.7</priority>
   </url>`;
   }),
-  ...gearSlugs.map((slug) => `  <url>
-    <loc>${baseUrl}/gear/${slug}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>`),
 ];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -94,7 +79,7 @@ if (!fs.existsSync(outDir)) {
 }
 
 fs.writeFileSync(path.join(outDir, 'sitemap.xml'), xml, 'utf8');
-console.log(`✓ sitemap.xml generated: ${staticPages.length} static + ${slugs.length} posts + ${gearSlugs.length} gear = ${urlEntries.length} URLs`);
+console.log(`✓ sitemap.xml generated: ${staticPages.length} static + ${slugs.length} posts = ${urlEntries.length} URLs`);
 
 // robots.txt を out/ へ動的生成（サイトマップ URL を正しいドメインで書き出す）
 const robotsTxt = `User-agent: *
