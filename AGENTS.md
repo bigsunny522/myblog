@@ -8,6 +8,16 @@
 グローバル設定(`~/.claude/CLAUDE.md`)の通り、設計とレビューを Claude Code、実装と修正を Codex が担当する。
 設計の成果物は `docs/spec-<機能名>.md` に置き、実装の指示はそのパスで受け渡す。
 
+### Codex に渡すときの制約(2026-09-08 に実測して確認)
+
+Codex は Windows のサンドボックス(`sandbox_mode = "workspace-write"`)の中で動く。この環境で確認した制約は次の3つ。仕様書と依頼文はこれを前提に書く。
+
+1. **Codex はコミットできない。** `.git/` 配下への書き込みがサンドボックスで拒否され、`.git/index.lock` を作れない。`sandbox_workspace_write.writable_roots` に `.git` を足しても解除されない(履歴改変を防ぐための仕様)。**仕様書に「Codex がコミットする」手順を書かない。** 差分の確認とコミットはレビュー担当(Claude Code)側で行う
+2. **Codex はネットワークに出られない。** そのため `next build` が `next/font` の Google Fonts 取得に失敗して止まる。**検証ビルドを Codex にやらせない。** ビルドと成果物への assertion はレビュー担当側で実行する。Codex に頼むのは編集と `npx tsc --noEmit` まで
+3. **仕様書は `-Encoding utf8` を明示して読ませる。** リポジトリの `.md` は BOM 無し UTF-8 で、Codex が使う Windows PowerShell 5.1 の `Get-Content -Raw` は BOM が無いと ANSI コードページで読むため文字化けする。依頼文に `Get-Content -Raw -Encoding utf8 <path>` と書き添える
+
+あわせて、Codex から `npm` を叩くと PowerShell の実行ポリシー(既定 `Restricted`)が `npm.ps1` を拒否する。`npm.cmd` を使わせるか、npm を伴う検証はレビュー担当側で実行する。
+
 ## サイト改善・記事テーマの引き継ぎ
 
 サイト改善、記事企画、運営方針を扱う際は [docs/blog-growth-roadmap.md](docs/blog-growth-roadmap.md) を参照する。2026-09-08のユーザーとの相談内容、調査結果、優先順位、AI・プログラミング分野への展開案をまとめている。提案は一括実装の指示ではないため、現在の依頼範囲に合わせて使い、着手時に現状を再確認する。
@@ -32,13 +42,14 @@ npm run lint             # ESLint (next lint)
 コードを変更したら、最低限この順で確認してから完了とする。通っていないものを「動作確認済み」と書かない。
 
 ```bash
-npm run lint
 npx tsc --noEmit
 npm run check:posts      # content/ を触った場合
 npm run build            # ビルド構成・画像・sitemap に影響する変更の場合
 ```
 
 `npm run build` は最後に IndexNow へ URL を送信するため、**ローカル検証目的では最後まで走らせない**(検証だけなら `next build` 単体で止める)。
+
+> **`npm run lint` は現在動作しない。** Next.js 16 で `next lint` が削除され、`lint` がディレクトリ引数として解釈されて `Invalid project directory provided, no such directory: <repo>\lint` で終わる。ESLint 9.39.1 は入っているが `eslint.config.js` が無いため `npx eslint` も起動しない。復旧するまで検証手順から外す(2026-09-08 確認)。
 
 ## アーキテクチャ
 
