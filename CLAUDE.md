@@ -1,156 +1,44 @@
 # CLAUDE.md
 
-このファイルは Claude Code (claude.ai/code) がこのリポジトリで作業する際のガイドです。
+リポジトリの構成・コマンド・規約は `AGENTS.md` に一本化している。ここには Claude Code 固有の指示だけを書く。
 
-## コマンド
+@AGENTS.md
 
-```bash
-npm run dev              # 開発サーバー(TinaCMS watch + next dev、localhost:3000)
-npm run build            # 本番ビルド(下記パイプライン参照)
-npm run build:local      # TinaCMS ビルドのみ(.env.local を使用)
-npm run build:images     # next-image-export-optimizer で WEBP を生成(out/ が必要)
-npm run optimize:images  # 元画像の圧縮(例: npm run optimize:images -- posts/<slug>)
-npm run lint             # ESLint (next lint)
-```
+## このリポジトリでの役割
 
-`npm run build` の実際のパイプライン:
-**TinaCMS build**(`NEXT_PUBLIC_TINA_CLIENT_ID` 未設定ならスキップ)→ **next build** → **setup-image-cache.mjs**(コミット済み WEBP をキャッシュ位置へ復元)→ **next-image-export-optimizer**(WEBP 生成)→ **generate-sitemap.mjs** → **ping-indexnow.mjs**(IndexNow へ URL 送信。ローカル検証では実行しないこと)
+グローバル設定の役割分担に従い、**設計とレビューを担当し、実装は Codex に渡す。**
 
-## アーキテクチャ
+Claude Code が直接編集してよいもの:
 
-**Next.js 16 App Router + 静的エクスポート**。本番ビルドのみ `output: 'export'`(`next.config.ts`)。全ページ `generateStaticParams()` による静的生成で、サーバーレンダリングのルートは無い。デプロイ先は Cloudflare Pages。
+- `docs/**`(仕様書・ガイド)
+- `content/ideas/**`(記事ネタ)
+- `CLAUDE.md` / `AGENTS.md` / `.claude/**` などの設定
+- 記事本文(`content/drafts/**`, `content/posts/**`)— 執筆は `/new-post` `/publish` のパイプラインで Claude Code 側が担当する
 
-### ルート一覧
+Codex に渡すもの:
 
-| ルート | 内容 |
-|---|---|
-| `/` | ホーム(`HomePostTabs`、おすすめタブあり) |
-| `/blog/[slug]` | 記事ページ(MDX レンダリング、JSON-LD、目次、関連記事) |
-| `/reviews` | 記事一覧(`FilteredBlogList`) |
-| `/gear` | 愛用ガジェット一覧 |
-| `/tags/[tag]` | タグ別アーカイブ |
-| `/about`, `/privacy-policy` | 固定ページ |
-| `/contact` | お問い合わせフォーム(Web3Forms 経由でメール送信) |
-| `/portfolio` | ポートフォリオ(noindex) |
-| `/dashboard` | ウィジェットダッシュボード(独立サブシステム) |
-| `/tools/image-editor` | ブラウザ画像エディタ(noindex) |
+- `app/**` `components/**` `lib/**` `src/**` `scripts/**` のコード変更
+- `next.config.ts` `tina/config.ts` などビルド構成の変更
 
-`app/template.tsx` が framer-motion のページ遷移を提供。404 はターミナル風のインタラクティブページ。
+1〜2行で済む自明な修正は例外。ユーザーが明示的に実装を指示した場合はそちらが優先。
 
-### コンテンツパイプライン
+## 設計フェーズ
 
-コンテンツソースは **ローカル MDX のみ**(Notion 連携は削除済み)。
+- plan mode で始める
+- 成果物は `docs/spec-<機能名>.md` に書き出す。Codex にはこのパスを渡す
+- 受け入れ条件は `AGENTS.md` の「実装後の検証手順」のコマンドで表現する
 
-- **記事**: `content/posts/*.mdx` → `lib/mdx.ts` が gray-matter でパース。エントリポイントは `getAllPosts()` / `getPostBySlug(slug)` / `getPostSlugs()`。`getAllPosts()` は `published: false` と `listed: false` を除外し日付降順にソート
-- **ギア**: `content/my-gear/*.mdx` → `lib/gear-data.ts` の `getAllGearItems()`
+## レビューフェーズ
 
-### MDX レンダリング
+対象は `git diff main...HEAD`。リポジトリ全体を読み直さない。
 
-`app/blog/[slug]/page.tsx` がサーバーサイドで MDX をレンダリング(`next-mdx-remote/rsc` + rehype-slug + remark-gfm + remark-breaks)。カスタムコンポーネントのマッピングは `components/MDXComponents.tsx` — 記事内の見出し・コードブロック・リンク等の見た目を変えるにはこのファイルを編集する。
+このリポジトリで特に見落としが起きやすい箇所:
 
-記事本文で使えるカスタムコンポーネントの一覧・実例は [docs/components.md](docs/components.md) を参照。
+1. **静的エクスポートの制約** — `output: 'export'` のため、サーバー実行に依存するコード(Route Handler、`dynamic = 'force-dynamic'`、リクエスト時の `headers()`/`cookies()`)を追加していないか。ビルドは通っても本番で壊れる
+2. **画像** — 素の `<img>` を使っていないか。新規画像に対して WEBP キャッシュがコミットされているか。カバー画像が `/images/posts/<slug>/cover.jpg` に置かれているか
+3. **誤公開** — `published` / `listed` フラグの変更が意図通りか。`content/drafts/` から `content/posts/` への移動が意図的か
+4. **JSON-LD** — `rating` / `price` / `faqs` を追加・変更したとき、`app/blog/[slug]/page.tsx` の出力が壊れていないか
+5. **自動生成物** — `tina/__generated__/**` を手で編集していないか
+6. **シークレット** — トークンや API キーが `.env.local` 以外に混入していないか
 
-## 画像の運用ルール(重要)
-
-静的エクスポートのため `next-image-export-optimizer` のカスタムローダーを使用(`next.config.ts`)。**素の `<img>` タグは最適化を素通りするので使わない** — `ExportedImage`(next-image-export-optimizer)か、MDX 内なら Markdown 画像記法を使う。
-
-1. **元画像はコミット前に圧縮する**: `npm run optimize:images -- posts/<slug>`(長辺 2560px・quality 82 に再圧縮)。カメラ直出しの 7〜10MB の JPG をそのままコミットしない(リポジトリ肥大とビルド時間悪化の原因)
-2. **WEBP キャッシュをコミットする**: 新しい画像を追加したらローカルで `npm run build`(または `next build` 後に `npm run build:images`)を実行し、生成された `public/images/**/nextImageExportOptimizer/*.WEBP` をコミットする。**これを怠ると CI が毎回全サイズの WEBP を再生成し、Cloudflare Pages のビルドが数分余計にかかる**(`scripts/setup-image-cache.mjs` がコミット済み WEBP を CI のキャッシュ位置に復元して再生成をスキップさせる仕組み)
-3. 記事画像は `public/images/posts/<slug>/` に置き、`/images/posts/<slug>/...` で参照する
-4. **カバー画像は `/images/posts/<slug>/cover.jpg` に統一する**(新規記事)。`/images/cover/`・`/images/main/`・Unsplash 等の外部 URL は使わない — 外部 URL は `next-image-export-optimizer` の最適化パイプラインを素通りするため非推奨。既存記事の移行は必須ではない
-
-## 記事フロントマター
-
-### 記事 (`content/posts/*.mdx`)
-
-```yaml
----
-title: ""
-subtitle: ""          # 任意
-excerpt: ""           # 一覧・OG メタ・JSON-LD の説明文に使用
-date: "YYYY-MM-DD"
-category: ""
-tags: []
-coverImage: "/images/posts/<slug>/cover.jpg"
-recommended: false    # ホームの「おすすめ」タブに表示
-published: false      # false = 全一覧から非表示(URL 直アクセスは可、noindex)。公開時のみ true
-listed: true          # false = 公開(インデックス可)だが一覧に出さない
-# ↓ レビュー記事のみ(構造化データを生成)
-rating: 4.5           # 任意: Review JSON-LD(5点満点)
-price: "6980"         # 任意: Offer JSON-LD(円、数字のみ)
-faqs:                 # 任意: FAQPage JSON-LD
-  - question: ""
-    answer: ""
----
-```
-
-`rating` / `price` / `faqs` を設定すると `app/blog/[slug]/page.tsx` が Review / FAQPage の JSON-LD を出力する(BlogPosting と BreadcrumbList は常時出力)。レビュー記事では設定を推奨。
-
-### ギア (`content/my-gear/*.mdx`)
-
-```yaml
----
-name: ""
-category: ""          # Keyboard / Monitor / Camera など
-image: "/images/Gear/filename.jpg"
-manufacturer: ""
-specs:
-  "キー": "値"
-link_official: ""
-link_amazon: ""
-link_rakuten: ""
-published: true       # 省略時は true 扱い
----
-```
-
-## 記事執筆ガイド
-
-新規記事は `templates/review-post.mdx`(レビュー記事)・`templates/news-post.mdx`(ニュース・レポート記事)をコピーして書き始める。標準構成・公開前チェックリスト・文章表現の注意点(太字閉じ括弧崩れなど)は [docs/writing-guide.md](docs/writing-guide.md) を参照。
-
-### 執筆パイプライン
-
-- `content/ideas/`: 記事ネタのバックログ(1ネタ1ファイル)。ビルド対象外
-- `content/drafts/`: 書きかけ記事。`lib/mdx.ts` は `content/posts/` しか読まないためビルド対象外 = 誤公開が構造的に起きない。**公開 = drafts から posts への移動**
-- `/new-post` スキル: ネタ選定 → `post/<slug>` ブランチ作成 → テンプレートから drafts に雛形生成 → 画像フォルダ作成
-- `/publish` スキル: frontmatter 更新(date/published)→ `proofreader` サブエージェントで校正 → drafts から posts へ移動 → `npm run check:posts` → `npm run build` で WEBP キャッシュ生成 → コミット → PR 作成(マージはしない)
-- `proofreader` サブエージェント(`.claude/agents/proofreader.md`): 読み取り専用。誤字脱字・文章表現のNGパターンを校正する。`/publish` から呼ばれる
-- `fact-checker` サブエージェント(`.claude/agents/fact-checker.md`): WebSearch/WebFetch可。レビュー記事のスペック・価格を公式ソースと突き合わせる。PR提供品レビューで随時使う
-- `content/posts/**.mdx` / `content/drafts/**.mdx` への Edit/Write 後は PostToolUse hook(`.claude/settings.json`)が `scripts/validate-posts.mjs` を自動実行し、違反を即フィードバックする(ブロッキングはしない)
-
-## TinaCMS
-
-`tina/config.ts` が CMS スキーマを定義。**post コレクションのみ**(gear は CMS 管理外で、MDX ファイルを直接編集する)。`tina/__generated__/` は自動生成なので手動編集しない。TinaCMS は `content/posts/*.mdx` に直接書き込む。
-
-## Git ワークフロー
-
-- **必ずブランチで作業する** — 記事や機能ごとに新しいブランチを作る。`main` に直接コミットしない
-- **ブランチ命名**: 記事は `post/<slug>`(例: `post/minecraft-fabric-mod-guide`)、機能は `feat/<name>`、修正は `fix/<name>`
-- **main への push は明示的な指示があった時のみ** — フィーチャーブランチへのコミット・push は自由
-
-## 規約
-
-- **パスエイリアス**: `@/` はリポジトリルート**と** `./src/` の両方に解決される(`tsconfig.json`)
-- **`src/` = LiftKit**: `@chainlift/liftkit` の golden-ratio ベース CSS デザインシステム。`app/globals.css` が import しており、`lk-*` 系のスペーシング/radius トークンを提供。`npm run add` で LiftKit コンポーネントを追加
-- **スタイリング**: Tailwind v4。テーマカラー(`--primary`, `--accent`, `--background` など)は `app/globals.css` の CSS カスタムプロパティで定義(tailwind.config.js ではない)。ダークモードは `prefers-color-scheme`
-- **日本語の改行**: 自然な折り返しが必要な箇所は `<BudouxText>` を使う
-- **cn() ヘルパー**: `lib/utils.ts` の `cn()`(clsx + tailwind-merge)を条件付き className に使う
-
-## 環境変数
-
-```
-NEXT_PUBLIC_SITE_URL          # サイトのベース URL(OG メタ・sitemap・IndexNow)
-NEXT_PUBLIC_TINA_CLIENT_ID    # TinaCMS(未設定ならビルドで TinaCMS をスキップ)
-TINA_TOKEN
-NEXT_PUBLIC_SUPABASE_URL      # 任意: 閲覧数カウンター(ViewCounter)
-NEXT_PUBLIC_SUPABASE_ANON_KEY
-NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY  # 任意: /contact お問い合わせフォーム(Web3Forms、未設定なら準備中表示)
-GITHUB_BRANCH / CF_PAGES_BRANCH  # TinaCMS のブランチ解決(CI が自動設定)
-```
-
-`lib/utils.ts` の `getBaseUrl()` は `NEXT_PUBLIC_SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → `VERCEL_URL` → `https://xyzack271.com`(ハードコードのフォールバック)の順で解決する。
-
-## 周辺サブシステム(記事作業では触らない)
-
-- **ダッシュボード** (`app/dashboard/`, `components/dashboard/`, `lib/dashboard/`): zustand + react-grid-layout のウィジェットボード。ブログ本体とは独立
-- **画像エディタ** (`app/tools/image-editor/`, `components/ImageEditor.tsx`): ブラウザ内の透かし・編集ツール
-- **アナリティクス/広告**: `GoogleAnalytics` / `GoogleAdsense` コンポーネント(AdSense クライアント ID は `app/layout.tsx` にハードコード)、Supabase バックエンドの `ViewCounter`
+指摘は Codex にそのまま渡せる形式で書く — `ファイル:行` / 事象 / 再現条件 / 根拠。確認できていないものは「未確認」と明記する。
