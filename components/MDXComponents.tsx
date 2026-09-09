@@ -166,7 +166,7 @@ const FeaturePoint = ({ number, title, children, body }: {
   number: number;
   title: string;
   children?: React.ReactNode;
-  body?: React.ReactNode; // TinaCMS テンプレート経由
+  body?: React.ReactNode; // children の代わりに本文を props で渡す形式
 }) => (
   <div className="bg-background border border-border rounded-xl p-5 md:p-6 mb-4">
     <div className="mb-4">
@@ -225,10 +225,10 @@ const BuyLinks = ({ children, image, title, description, links }: {
   image?: string;
   title?: string;
   description?: string;
-  // TinaCMS テンプレート経由のリンク配列
+  // <BuyLink> を並べる代わりに配列で渡す形式
   links?: BuyLinkData[];
 }) => {
-  // TinaCMS テンプレート経由の場合は links プロップからレンダリング
+  // links プロップが渡された場合はそちらからレンダリングする
   const renderedLinks = links
     ? links.map((l, i) => (
         <BuyLink key={i} type={l.type ?? 'official'} href={l.href}>
@@ -298,7 +298,7 @@ const ReviewSummary = ({
   goodPoints?: ReviewPointData[];
   conPoints?: ReviewPointData[];
 }) => {
-  // TinaCMS テンプレート経由
+  // <ReviewPoints> を書く代わりに配列で渡す形式
   if (goodPoints || conPoints) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">

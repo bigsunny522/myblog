@@ -6,7 +6,7 @@ import {
   Layers, Code2, Palette, Zap, Database, FileText, Server,
   Box, Globe, Cpu, ExternalLink, Mail, Twitter,
   GitBranch, Layout, Sparkles, Shield, Image, Package,
-  ChevronRight, Pencil, Sliders, Timer, Gamepad2, BarChart2,
+  ChevronRight, Sliders, Timer, Gamepad2, BarChart2,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
 const projects = [
   {
     name: 'ざっくらぼ ブログ',
-    desc: 'ターミナルテーマのパーソナルテックブログ。Next.js App Router・MDX・TinaCMS を組み合わせた完全静的エクスポート構成。',
+    desc: 'ターミナルテーマのパーソナルテックブログ。Next.js App Router・MDX を組み合わせた完全静的エクスポート構成。',
     badge: 'Next.js 16 / Cloudflare Pages',
-    tags: ['MDX', 'TinaCMS', 'Shiki', 'SSG'],
+    tags: ['MDX', 'Shiki', 'SSG'],
     href: 'https://xyzack271.com',
     icon: <Globe size={20} />,
     iconColor: 'text-primary bg-primary/10',
@@ -122,13 +122,6 @@ const blogTechStack = [
     desc: 'next-mdx-remote でサーバーサイドレンダリング。Shiki によるシンタックスハイライト。',
     icon: <FileText size={22} />,
     color: 'text-orange-400 bg-orange-400/10',
-  },
-  {
-    name: 'TinaCMS',
-    role: 'ビジュアル CMS',
-    desc: 'Git ベースのヘッドレス CMS。静的エクスポート構成のまま iPad・外出先からブラウザ上で記事編集が可能。カスタムコンポーネントを Rich Text テンプレートとして登録。',
-    icon: <Pencil size={22} />,
-    color: 'text-fuchsia-400 bg-fuchsia-400/10',
   },
   {
     name: 'sharp / next-image-export-optimizer',
@@ -227,14 +220,14 @@ const appTechStack = [
 
 const features = [
   {
-    title: 'MDX + TinaCMS コンテンツ管理',
-    desc: 'ローカル MDX ファイルを主軸とし、TinaCMS（Git ベース）でブラウザ上からリアルタイム編集が可能。静的エクスポートのまま iPad・外出先での記事執筆に対応。',
+    title: 'Git ベースのコンテンツパイプライン',
+    desc: 'ローカル MDX ファイルを唯一のコンテンツソースとし、下書き用ディレクトリから公開用ディレクトリへの移動を「公開」操作として扱う運用。フロントマターの機械検品を PR ごとに CI で実行し、不備のある記事がマージされない構成。',
     icon: <GitBranch size={20} />,
     color: 'text-primary bg-primary/10',
   },
   {
     title: 'カスタム MDX コンポーネント',
-    desc: '`<ReviewPoint>` `<Specs>` `<BuyLinks>` `<CouponBox>` `<FeaturePoint>` など、レビュー記事に特化した再利用可能コンポーネントを設計・実装。TinaCMS の Rich Text テンプレートとしても登録。',
+    desc: '`<ReviewPoint>` `<Specs>` `<BuyLinks>` `<CouponBox>` `<FeaturePoint>` など、レビュー記事に特化した再利用可能コンポーネントを設計・実装。',
     icon: <Package size={20} />,
     color: 'text-teal-400 bg-teal-400/10',
   },
@@ -378,7 +371,7 @@ const wuwaFeatures = [
 
 const architectureItems = [
   { label: 'レンダリング戦略', value: 'SSG（静的エクスポート）+ React Server Components' },
-  { label: 'コンテンツ取得', value: 'MDX ファイル + TinaCMS（Git ベース）→ 静的 HTML 生成' },
+  { label: 'コンテンツ取得', value: 'ローカル MDX ファイル → next-mdx-remote で静的 HTML 生成' },
   { label: '状態管理', value: 'Zustand（ダッシュボード / UI）+ localStorage 永続化' },
   { label: '画像パイプライン', value: 'sharp WebP 変換 → ブラー Placeholder 生成' },
   { label: 'スタイリング設計', value: 'CSS 変数によるテーマ + Tailwind v4 + LiftKit デザインシステム' },
@@ -445,7 +438,7 @@ export default function PortfolioPage() {
                 <div className="relative z-10 grid grid-cols-1 md:grid-cols-4 gap-8">
                   <OverviewStat label="プロジェクト数" value="4" sub="Blog / Dashboard / Editor / Simu" />
                   <OverviewStat label="フレームワーク" value="Next.js + Vite" sub="App Router / Workers" />
-                  <OverviewStat label="コンテンツ管理" value="MDX + TinaCMS" sub="Git ベース CMS" />
+                  <OverviewStat label="コンテンツ管理" value="MDX" sub="Git ベースの記事管理" />
                   <OverviewStat label="ウィジェット数" value="11種類" sub="ダッシュボードシステム" />
                 </div>
               </div>

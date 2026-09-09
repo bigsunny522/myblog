@@ -25,9 +25,8 @@ Codex は Windows のサンドボックス(`sandbox_mode = "workspace-write"`)�
 ## コマンド
 
 ```bash
-npm run dev              # 開発サーバー(TinaCMS watch + next dev、localhost:3000)
+npm run dev              # 開発サーバー(next dev、localhost:3000)
 npm run build            # 本番ビルド(下記パイプライン参照)
-npm run build:local      # TinaCMS ビルドのみ(.env.local を使用)
 npm run build:images     # next-image-export-optimizer で WEBP を生成(out/ が必要)
 npm run optimize:images  # 元画像の圧縮(例: npm run optimize:images -- posts/<slug>)
 npm run check:posts      # 記事の機械検品(scripts/validate-posts.mjs)
@@ -35,7 +34,7 @@ npm run lint             # ESLint CLI (eslint .)
 ```
 
 `npm run build` の実際のパイプライン:
-**TinaCMS build**(`NEXT_PUBLIC_TINA_CLIENT_ID` 未設定ならスキップ)→ **next build** → **setup-image-cache.mjs**(コミット済み WEBP をキャッシュ位置へ復元)→ **next-image-export-optimizer**(WEBP 生成)→ **generate-sitemap.mjs** → **ping-indexnow.mjs**(IndexNow へ URL 送信。ローカル検証では実行しないこと)
+**next build** → **setup-image-cache.mjs**(コミット済み WEBP をキャッシュ位置へ復元)→ **next-image-export-optimizer**(WEBP 生成)→ **generate-sitemap.mjs** → **ping-indexnow.mjs**(IndexNow へ URL 送信。ローカル検証では実行しないこと)
 
 ### 実装後の検証手順
 
@@ -166,10 +165,6 @@ published: true       # 省略時は true 扱い
 
 `content/posts/**.mdx` / `content/drafts/**.mdx` への編集後は、上記フックが `scripts/validate-posts.mjs` を自動実行し違反を即フィードバックする(ブロッキングはしない)。
 
-## TinaCMS
-
-`tina/config.ts` が CMS スキーマを定義。**post コレクションのみ**(gear は CMS 管理外で、MDX ファイルを直接編集する)。`tina/__generated__/` は自動生成なので手動編集しない。TinaCMS は `content/posts/*.mdx` に直接書き込む。
-
 ## Git ワークフロー
 
 - **必ずブランチで作業する** — 記事や機能ごとに新しいブランチを作る。`main` に直接コミットしない
@@ -188,12 +183,9 @@ published: true       # 省略時は true 扱い
 
 ```
 NEXT_PUBLIC_SITE_URL          # サイトのベース URL(OG メタ・sitemap・IndexNow)
-NEXT_PUBLIC_TINA_CLIENT_ID    # TinaCMS(未設定ならビルドで TinaCMS をスキップ)
-TINA_TOKEN
 NEXT_PUBLIC_SUPABASE_URL      # 任意: 閲覧数カウンター(ViewCounter)
 NEXT_PUBLIC_SUPABASE_ANON_KEY
 NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY  # 任意: /contact お問い合わせフォーム(Web3Forms、未設定なら準備中表示)
-GITHUB_BRANCH / CF_PAGES_BRANCH  # TinaCMS のブランチ解決(CI が自動設定)
 ```
 
 `lib/utils.ts` の `getBaseUrl()` は `NEXT_PUBLIC_SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → `VERCEL_URL` → `https://xyzack271.com`(ハードコードのフォールバック)の順で解決する。

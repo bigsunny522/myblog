@@ -20,7 +20,6 @@
   1. Node スクリプトによるビルド成果物(`out/`)への assertion — 新規作成し CI に載せる
   2. `npm run check:posts`(既存の記事検品)
   3. Browser pane による目視・DOM 確認
-- `tina/__generated__/` は自動生成。手動編集しない
 - 画像パスを変更した場合は WEBP キャッシュを再生成してコミットする(CLAUDE.md「画像の運用ルール」)
 - コミットメッセージ末尾に `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>` を付ける
 
@@ -59,7 +58,7 @@ Codex の指摘を実コードで裏取りした結果。プランはこの状�
 - `components/FilteredBlogList.tsx` — 件数表示と空状態の日本語化
 - `app/layout.tsx` / `app/page.tsx` / `app/tags/[tag]/page.tsx` — 説明文の日本語化 + canonical
 - `app/reviews/page.tsx` / `app/about/page.tsx` / `app/gear/page.tsx` / `app/contact/page.tsx` / `app/privacy-policy/page.tsx` / `app/blog/[slug]/page.tsx` — canonical
-- `lib/mdx.ts` / `tina/config.ts` / `scripts/validate-posts.mjs` / `CLAUDE.md` — `updated` フロントマターの導入
+- `lib/mdx.ts` / `scripts/validate-posts.mjs` / `AGENTS.md` — `updated` フロントマターの導入
 - `components/OpeningAnimation.tsx` — 非ブロッキング化
 
 ---
@@ -571,8 +570,7 @@ MSG
 - Modify: `app/blog/[slug]/page.tsx:149` 付近(JSON-LD)+ 日付表示箇所
 - Modify: `scripts/generate-sitemap.mjs`(`getPostDate` の隣に `getPostLastmod` を追加)
 - Modify: `scripts/validate-posts.mjs`(`updated` の形式と前後関係を検証)
-- Modify: `tina/config.ts`(post コレクションにフィールド追加)
-- Modify: `CLAUDE.md`(フロントマターの YAML ブロックに1行追加)
+- Modify: `AGENTS.md`(フロントマターの YAML ブロックに1行追加)
 
 **Interfaces:**
 - Consumes: `BlogPost` from `lib/mdx.ts`
@@ -671,20 +669,7 @@ function getPostLastmod(filePath) {
     const date = getPostLastmod(path.join(postsDir, `${slug}.mdx`));
 ```
 
-- [ ] **Step 6: TinaCMS スキーマにフィールドを足す**
-
-`tina/config.ts` の post コレクションの `fields` に、`date` フィールドの直後へ追加:
-
-```ts
-        {
-          type: 'string',
-          name: 'updated',
-          label: '最終更新日 (YYYY-MM-DD / 任意)',
-          description: '記事を実質的に加筆・修正したときだけ設定する。表示・構造化データ・サイトマップに反映される。',
-        },
-```
-
-- [ ] **Step 7: CLAUDE.md のフロントマター例に追記する**
+- [ ] **Step 6: AGENTS.md のフロントマター例に追記する**
 
 `### 記事 (content/posts/*.mdx)` の YAML ブロック、`date: "YYYY-MM-DD"` の次の行に追加:
 
@@ -692,7 +677,7 @@ function getPostLastmod(filePath) {
 updated: "YYYY-MM-DD"  # 任意: 加筆・修正した日。表示・JSON-LD の dateModified・sitemap の lastmod に反映
 ```
 
-- [ ] **Step 8: 既存記事1本に `updated` を入れて end-to-end で確認する**
+- [ ] **Step 7: 既存記事1本に `updated` を入れて end-to-end で確認する**
 
 検証用に一時的に `content/posts/wwdc26-summary.mdx` の frontmatter へ `updated: "2026-09-08"` を追加し、次を実行:
 
@@ -718,10 +703,10 @@ grep -o '最終更新: 2026-09-08' out/blog/wwdc26-summary.html
 git checkout content/posts/wwdc26-summary.mdx
 ```
 
-- [ ] **Step 9: コミット**
+- [ ] **Step 8: コミット**
 
 ```bash
-git add lib/mdx.ts "app/blog/[slug]/page.tsx" scripts/generate-sitemap.mjs scripts/validate-posts.mjs tina/config.ts CLAUDE.md
+git add lib/mdx.ts "app/blog/[slug]/page.tsx" scripts/generate-sitemap.mjs scripts/validate-posts.mjs AGENTS.md
 git commit -F - <<'MSG'
 feat: 記事に updated フロントマターを追加し更新日を一貫して扱う
 

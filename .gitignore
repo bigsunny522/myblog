@@ -43,5 +43,3 @@ tsconfig.tsbuildinfo
 image.png
 # Raw/unprocessed photo backups (kept locally only)
 public/images/posts/**/originals/
-# TinaCMS（public/adminはビルド時に生成されるため除外）
-public/admin

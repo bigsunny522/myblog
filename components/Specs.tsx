@@ -15,7 +15,7 @@ export const Specs = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // TinaCMS テンプレート経由（items プロップ）と既存 MDX children の両方に対応
+  // items プロップ（配列）と MDX children の両方に対応
   const items = itemsProp
     ? itemsProp.map((item, i) => (
         <SpecsItem key={i} label={item.label}>{item.value}</SpecsItem>

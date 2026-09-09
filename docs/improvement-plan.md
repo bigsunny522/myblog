@@ -133,5 +133,4 @@ PostToolUse hook(matcher: Edit/Write、対象 `content/posts/**` と `content/dr
 ## 共通の注意事項
 
 - 画像パスを変更した場合は WEBP キャッシュの再生成・コミットを忘れない(怠ると Cloudflare Pages のビルドが数分余計にかかる)
-- `tina/__generated__/` は自動生成なので手動編集しない
 - IndexNow への ping(`ping-indexnow.mjs`)はローカル検証では実行しない

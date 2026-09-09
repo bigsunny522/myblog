@@ -126,7 +126,6 @@
 - `app/sitemap.ts` — 実質デッドコードだが今回は残す(受け入れ条件にも含めない)
 - `app/portfolio/page.tsx`, `app/tools/image-editor/page.tsx` — noindex
 - `content/**` — 記事本文の変更は無し
-- `tina/__generated__/**` — 自動生成
 - `public/images/**` — 画像パスの変更が無いため WEBP キャッシュの再生成も不要
 
 ## 3. 受け入れ条件
