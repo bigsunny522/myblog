@@ -14,10 +14,10 @@ export const metadata: Metadata = {
     default: 'ざっくらぼ',
     template: '%s | ざっくらぼ',
   },
-  description: 'The best gadget reviews and tech news.',
+  description: 'デスクも、持ち歩きも、使い心地で選ぶ。ガジェットの実体験と、AI・プログラミングで日常を快適にする工夫を紹介します。',
   openGraph: {
     title: 'ざっくらぼ',
-    description: 'The best gadget reviews and tech news.',
+    description: 'デスクも、持ち歩きも、使い心地で選ぶ。ガジェットの実体験と、AI・プログラミングで日常を快適にする工夫を紹介します。',
     url: '/',
     siteName: 'ざっくらぼ',
     locale: 'ja_JP',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'ざっくらぼ',
-    description: 'The best gadget reviews and tech news.',
+    description: 'デスクも、持ち歩きも、使い心地で選ぶ。ガジェットの実体験と、AI・プログラミングで日常を快適にする工夫を紹介します。',
     creator: '@xyzack271',
     images: ['/images/main/skyblue.png'],
   },

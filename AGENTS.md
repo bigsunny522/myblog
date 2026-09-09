@@ -1,0 +1,206 @@
+# AGENTS.md
+
+このリポジトリの共通ガイド。**Claude Code と Codex の両方がこのファイルを参照する。**
+リポジトリの事実(構成・コマンド・規約)はすべてここに書き、エージェント固有の指示だけを `CLAUDE.md` / `.codex/` 側に置く。二重管理しない。
+
+## 役割分担
+
+グローバル設定(`~/.claude/CLAUDE.md`)の通り、設計とレビューを Claude Code、実装と修正を Codex が担当する。
+設計の成果物は `docs/spec-<機能名>.md` に置き、実装の指示はそのパスで受け渡す。
+
+### Codex に渡すときの制約(2026-09-08 に実測して確認)
+
+Codex は Windows のサンドボックス(`sandbox_mode = "workspace-write"`)の中で動く。この環境で確認した制約は次の3つ。仕様書と依頼文はこれを前提に書く。
+
+1. **Codex はコミットできない。** `.git/` 配下への書き込みがサンドボックスで拒否され、`.git/index.lock` を作れない。`sandbox_workspace_write.writable_roots` に `.git` を足しても解除されない(履歴改変を防ぐための仕様)。**仕様書に「Codex がコミットする」手順を書かない。** 差分の確認とコミットはレビュー担当(Claude Code)側で行う
+2. **Codex はネットワークに出られない。** そのため `next build` が `next/font` の Google Fonts 取得に失敗して止まる。**検証ビルドを Codex にやらせない。** ビルドと成果物への assertion はレビュー担当側で実行する。Codex に頼むのは編集と `npx tsc --noEmit` まで
+3. **仕様書は `-Encoding utf8` を明示して読ませる。** リポジトリの `.md` は BOM 無し UTF-8 で、Codex が使う Windows PowerShell 5.1 の `Get-Content -Raw` は BOM が無いと ANSI コードページで読むため文字化けする。依頼文に `Get-Content -Raw -Encoding utf8 <path>` と書き添える
+
+あわせて、Codex から `npm` を叩くと PowerShell の実行ポリシー(既定 `Restricted`)が `npm.ps1` を拒否する。`npm.cmd` を使わせるか、npm を伴う検証はレビュー担当側で実行する。
+
+## サイト改善・記事テーマの引き継ぎ
+
+サイト改善、記事企画、運営方針を扱う際は [docs/blog-growth-roadmap.md](docs/blog-growth-roadmap.md) を参照する。2026-09-08のユーザーとの相談内容、調査結果、優先順位、AI・プログラミング分野への展開案をまとめている。提案は一括実装の指示ではないため、現在の依頼範囲に合わせて使い、着手時に現状を再確認する。
+
+## コマンド
+
+```bash
+npm run dev              # 開発サーバー(TinaCMS watch + next dev、localhost:3000)
+npm run build            # 本番ビルド(下記パイプライン参照)
+npm run build:local      # TinaCMS ビルドのみ(.env.local を使用)
+npm run build:images     # next-image-export-optimizer で WEBP を生成(out/ が必要)
+npm run optimize:images  # 元画像の圧縮(例: npm run optimize:images -- posts/<slug>)
+npm run check:posts      # 記事の機械検品(scripts/validate-posts.mjs)
+npm run lint             # ESLint (next lint)
+```
+
+`npm run build` の実際のパイプライン:
+**TinaCMS build**(`NEXT_PUBLIC_TINA_CLIENT_ID` 未設定ならスキップ)→ **next build** → **setup-image-cache.mjs**(コミット済み WEBP をキャッシュ位置へ復元)→ **next-image-export-optimizer**(WEBP 生成)→ **generate-sitemap.mjs** → **ping-indexnow.mjs**(IndexNow へ URL 送信。ローカル検証では実行しないこと)
+
+### 実装後の検証手順
+
+コードを変更したら、最低限この順で確認してから完了とする。通っていないものを「動作確認済み」と書かない。
+
+```bash
+npx tsc --noEmit
+npm run check:posts      # content/ を触った場合
+npm run build            # ビルド構成・画像・sitemap に影響する変更の場合
+```
+
+`npm run build` は最後に IndexNow へ URL を送信するため、**ローカル検証目的では最後まで走らせない**(検証だけなら `next build` 単体で止める)。
+
+> **`npm run lint` は現在動作しない。** Next.js 16 で `next lint` が削除され、`lint` がディレクトリ引数として解釈されて `Invalid project directory provided, no such directory: <repo>\lint` で終わる。ESLint 9.39.1 は入っているが `eslint.config.js` が無いため `npx eslint` も起動しない。復旧するまで検証手順から外す(2026-09-08 確認)。
+
+## アーキテクチャ
+
+**Next.js 16 App Router + 静的エクスポート**。本番ビルドのみ `output: 'export'`(`next.config.ts`)。全ページ `generateStaticParams()` による静的生成で、サーバーレンダリングのルートは無い。デプロイ先は Cloudflare Pages。
+
+### ルート一覧
+
+| ルート | 内容 |
+|---|---|
+| `/` | ホーム(`HomePostTabs`、おすすめタブあり) |
+| `/blog/[slug]` | 記事ページ(MDX レンダリング、JSON-LD、目次、関連記事) |
+| `/reviews` | 記事一覧(`FilteredBlogList`) |
+| `/gear` | 愛用ガジェット一覧 |
+| `/tags/[tag]` | タグ別アーカイブ |
+| `/about`, `/privacy-policy` | 固定ページ |
+| `/contact` | お問い合わせフォーム(Web3Forms 経由でメール送信) |
+| `/portfolio` | ポートフォリオ(noindex) |
+| `/dashboard` | ウィジェットダッシュボード(独立サブシステム) |
+| `/tools/image-editor` | ブラウザ画像エディタ(noindex) |
+
+`app/template.tsx` が framer-motion のページ遷移を提供。404 はターミナル風のインタラクティブページ。
+
+### コンテンツパイプライン
+
+コンテンツソースは **ローカル MDX のみ**(Notion 連携は削除済み)。
+
+- **記事**: `content/posts/*.mdx` → `lib/mdx.ts` が gray-matter でパース。エントリポイントは `getAllPosts()` / `getPostBySlug(slug)` / `getPostSlugs()`。`getAllPosts()` は `published: false` と `listed: false` を除外し日付降順にソート
+- **ギア**: `content/my-gear/*.mdx` → `lib/gear-data.ts` の `getAllGearItems()`
+
+### MDX レンダリング
+
+`app/blog/[slug]/page.tsx` がサーバーサイドで MDX をレンダリング(`next-mdx-remote/rsc` + rehype-slug + remark-gfm + remark-breaks)。カスタムコンポーネントのマッピングは `components/MDXComponents.tsx` — 記事内の見出し・コードブロック・リンク等の見た目を変えるにはこのファイルを編集する。
+
+記事本文で使えるカスタムコンポーネントの一覧・実例は [docs/components.md](docs/components.md) を参照。
+
+## 画像の運用ルール(重要)
+
+静的エクスポートのため `next-image-export-optimizer` のカスタムローダーを使用(`next.config.ts`)。**素の `<img>` タグは最適化を素通りするので使わない** — `ExportedImage`(next-image-export-optimizer)か、MDX 内なら Markdown 画像記法を使う。
+
+1. **元画像はコミット前に圧縮する**: `npm run optimize:images -- posts/<slug>`(長辺 2560px・quality 82 に再圧縮)。カメラ直出しの 7〜10MB の JPG をそのままコミットしない(リポジトリ肥大とビルド時間悪化の原因)
+2. **WEBP キャッシュをコミットする**: 新しい画像を追加したらローカルで `npm run build`(または `next build` 後に `npm run build:images`)を実行し、生成された `public/images/**/nextImageExportOptimizer/*.WEBP` をコミットする。**これを怠ると CI が毎回全サイズの WEBP を再生成し、Cloudflare Pages のビルドが数分余計にかかる**(`scripts/setup-image-cache.mjs` がコミット済み WEBP を CI のキャッシュ位置に復元して再生成をスキップさせる仕組み)
+3. 記事画像は `public/images/posts/<slug>/` に置き、`/images/posts/<slug>/...` で参照する
+4. **カバー画像は `/images/posts/<slug>/cover.jpg` に統一する**(新規記事)。`/images/cover/`・`/images/main/`・Unsplash 等の外部 URL は使わない — 外部 URL は `next-image-export-optimizer` の最適化パイプラインを素通りするため非推奨。既存記事の移行は必須ではない
+
+## 記事フロントマター
+
+### 記事 (`content/posts/*.mdx`)
+
+```yaml
+---
+title: ""
+subtitle: ""          # 任意
+excerpt: ""           # 一覧・OG メタ・JSON-LD の説明文に使用
+date: "YYYY-MM-DD"
+category: ""
+tags: []
+coverImage: "/images/posts/<slug>/cover.jpg"
+recommended: false    # ホームの「おすすめ」タブに表示
+published: false      # false = 全一覧から非表示(URL 直アクセスは可、noindex)。公開時のみ true
+listed: true          # false = 公開(インデックス可)だが一覧に出さない
+# ↓ レビュー記事のみ(構造化データを生成)
+rating: 4.5           # 任意: Review JSON-LD(5点満点)
+price: "6980"         # 任意: Offer JSON-LD(円、数字のみ)
+faqs:                 # 任意: FAQPage JSON-LD
+  - question: ""
+    answer: ""
+---
+```
+
+`rating` / `price` / `faqs` を設定すると `app/blog/[slug]/page.tsx` が Review / FAQPage の JSON-LD を出力する(BlogPosting と BreadcrumbList は常時出力)。レビュー記事では設定を推奨。
+
+### ギア (`content/my-gear/*.mdx`)
+
+```yaml
+---
+name: ""
+category: ""          # Keyboard / Monitor / Camera など
+image: "/images/Gear/filename.jpg"
+manufacturer: ""
+specs:
+  "キー": "値"
+link_official: ""
+link_amazon: ""
+link_rakuten: ""
+published: true       # 省略時は true 扱い
+---
+```
+
+## 記事執筆ガイド
+
+新規記事は `templates/review-post.mdx`(レビュー記事)・`templates/news-post.mdx`(ニュース・レポート記事)をコピーして書き始める。標準構成・公開前チェックリスト・文章表現の注意点(太字閉じ括弧崩れなど)は [docs/writing-guide.md](docs/writing-guide.md) を参照。
+
+### 執筆パイプライン
+
+- `content/ideas/`: 記事ネタのバックログ(1ネタ1ファイル)。ビルド対象外
+- `content/drafts/`: 書きかけ記事。`lib/mdx.ts` は `content/posts/` しか読まないためビルド対象外 = 誤公開が構造的に起きない。**公開 = drafts から posts への移動**
+- `/new-post`: ネタ選定 → `post/<slug>` ブランチ作成 → テンプレートから drafts に雛形生成 → 画像フォルダ作成
+- `/publish`: frontmatter 更新(date/published)→ `proofreader` で校正 → drafts から posts へ移動 → `npm run check:posts` → `npm run build` で WEBP キャッシュ生成 → コミット → PR 作成(マージはしない)
+- `proofreader`: 読み取り専用。誤字脱字・文章表現のNGパターンを校正する。`/publish` から呼ばれる
+- `fact-checker`: Web 検索可。レビュー記事のスペック・価格を公式ソースと突き合わせる。PR提供品レビューで随時使う
+
+### エージェント別の設定ファイルの場所
+
+同じ役割のスキル・サブエージェント・フックを両側に置いている。片方だけ直すと挙動がずれるので、**内容を変えるときは必ず両方を更新する**。
+
+| | Claude Code | Codex |
+|---|---|---|
+| スキル | `.claude/skills/{new-post,publish}/SKILL.md` | `.agents/skills/{new-post,publish,seo-audit}/SKILL.md` |
+| サブエージェント | `.claude/agents/{proofreader,fact-checker}.md` | `.codex/agents/{proofreader,fact-checker}.toml` |
+| 書き込み後フック | `.claude/settings.json` → `.claude/hooks/validate-on-write.mjs` | `.codex/hooks.json` → `.codex/hooks/validate-on-write.mjs` |
+
+`seo-audit` スキルは現状 Codex 側(`.agents/skills/`)にのみ存在する。
+
+`content/posts/**.mdx` / `content/drafts/**.mdx` への編集後は、上記フックが `scripts/validate-posts.mjs` を自動実行し違反を即フィードバックする(ブロッキングはしない)。
+
+## TinaCMS
+
+`tina/config.ts` が CMS スキーマを定義。**post コレクションのみ**(gear は CMS 管理外で、MDX ファイルを直接編集する)。`tina/__generated__/` は自動生成なので手動編集しない。TinaCMS は `content/posts/*.mdx` に直接書き込む。
+
+## Git ワークフロー
+
+- **必ずブランチで作業する** — 記事や機能ごとに新しいブランチを作る。`main` に直接コミットしない
+- **ブランチ命名**: 記事は `post/<slug>`(例: `post/minecraft-fabric-mod-guide`)、機能は `feat/<name>`、修正は `fix/<name>`
+- **main への push は明示的な指示があった時のみ** — フィーチャーブランチへのコミット・push は自由
+
+## 規約
+
+- **パスエイリアス**: `@/` はリポジトリルート**と** `./src/` の両方に解決される(`tsconfig.json`)
+- **`src/` = LiftKit**: `@chainlift/liftkit` の golden-ratio ベース CSS デザインシステム。`app/globals.css` が import しており、`lk-*` 系のスペーシング/radius トークンを提供。`npm run add` で LiftKit コンポーネントを追加
+- **スタイリング**: Tailwind v4。テーマカラー(`--primary`, `--accent`, `--background` など)は `app/globals.css` の CSS カスタムプロパティで定義(tailwind.config.js ではない)。ダークモードは `prefers-color-scheme`
+- **日本語の改行**: 自然な折り返しが必要な箇所は `<BudouxText>` を使う
+- **cn() ヘルパー**: `lib/utils.ts` の `cn()`(clsx + tailwind-merge)を条件付き className に使う
+
+## 環境変数
+
+```
+NEXT_PUBLIC_SITE_URL          # サイトのベース URL(OG メタ・sitemap・IndexNow)
+NEXT_PUBLIC_TINA_CLIENT_ID    # TinaCMS(未設定ならビルドで TinaCMS をスキップ)
+TINA_TOKEN
+NEXT_PUBLIC_SUPABASE_URL      # 任意: 閲覧数カウンター(ViewCounter)
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY  # 任意: /contact お問い合わせフォーム(Web3Forms、未設定なら準備中表示)
+GITHUB_BRANCH / CF_PAGES_BRANCH  # TinaCMS のブランチ解決(CI が自動設定)
+```
+
+`lib/utils.ts` の `getBaseUrl()` は `NEXT_PUBLIC_SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → `VERCEL_URL` → `https://xyzack271.com`(ハードコードのフォールバック)の順で解決する。
+
+シークレットは `.env.local` にのみ置く。設定ファイルやドキュメント、コミットメッセージにトークンを直書きしない。
+
+## 周辺サブシステム(記事作業では触らない)
+
+- **ダッシュボード** (`app/dashboard/`, `components/dashboard/`, `lib/dashboard/`): zustand + react-grid-layout のウィジェットボード。ブログ本体とは独立
+- **画像エディタ** (`app/tools/image-editor/`, `components/ImageEditor.tsx`): ブラウザ内の透かし・編集ツール
+- **アナリティクス/広告**: `GoogleAnalytics` / `GoogleAdsense` コンポーネント(AdSense クライアント ID は `app/layout.tsx` にハードコード)、Supabase バックエンドの `ViewCounter`

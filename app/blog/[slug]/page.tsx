@@ -62,11 +62,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   const baseUrl = getBaseUrl();
   const ogImage = `${baseUrl}${post.coverImage?.trim() || '/images/main/skyblue.png'}`;
-  const description = post.excerpt || `Read more about ${post.title}`;
+  const description = post.excerpt || `${post.title} のレビュー・解説記事です。`;
 
   return {
     title: post.title,
     description: description,
+    alternates: { canonical: `/blog/${slug}` },
     robots: post.published === false ? { index: false, follow: false } : undefined,
     openGraph: {
       title: post.title,

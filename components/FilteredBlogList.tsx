@@ -50,7 +50,7 @@ export function FilteredBlogList({ posts, allTags }: FilteredBlogListProps) {
 
       {/* Results Count */}
       <div className="text-center text-muted-foreground text-sm">
-        Testing displaying {filteredPosts.length} matches
+        {selectedTag ? `#${selectedTag} の記事 ${filteredPosts.length} 件` : `全 ${filteredPosts.length} 件`}
       </div>
 
       {/* Blog List */}
@@ -68,7 +68,7 @@ export function FilteredBlogList({ posts, allTags }: FilteredBlogListProps) {
       
       {filteredPosts.length === 0 && (
           <div className="text-center py-20 text-muted-foreground">
-              No articles found with this tag.
+              このタグの記事はまだありません。
           </div>
       )}
     </div>
