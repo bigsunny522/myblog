@@ -11,7 +11,7 @@ referenceUrls:
   - "https://www.macworld.com/article/2986799/ios-27-new-iphone-features-release-date-beta-compatiblity-apple-intelligence-siri.html"
   - "https://iphone-mania.jp/iphone-foldable/"
 priority: "high"
-status: "in-progress"
+status: "done"
 ---
 
 下書き: `content/drafts/apple-event-2026-09.mdx`
