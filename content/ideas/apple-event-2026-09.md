@@ -14,7 +14,7 @@ priority: "high"
 status: "in-progress"
 ---
 
-下書き: `content/drafts/apple-event-2026-september.mdx`
+下書き: `content/drafts/apple-event-2026-09.mdx`
 
 イベントを同時視聴しながら最速で「発表まとめ」記事を書く。
 **このファイルの内容は記事本文に載せない。** 見出し構成を決めるための下敷きと、
