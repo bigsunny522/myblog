@@ -56,7 +56,6 @@ npm run check:posts
 `npm run build` はそのまま実行すると最後に IndexNow への ping(`scripts/ping-indexnow.mjs`)まで行ってしまうため、**ローカル検証ではこのステップだけ分解して実行する**(AGENTS.md 参照)。
 
 ```bash
-( test -z "$NEXT_PUBLIC_TINA_CLIENT_ID" || tinacms build || true )
 npx next build
 node scripts/setup-image-cache.mjs
 npx next-image-export-optimizer

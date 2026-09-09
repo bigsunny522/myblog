@@ -11,8 +11,6 @@ export default defineConfig([
     'build/**',
     'coverage/**',
     'next-env.d.ts',
-    'public/admin/**',
-    'tina/__generated__/**',
     '.claude/worktrees/**',
   ]),
 ]);

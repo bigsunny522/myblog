@@ -40,8 +40,6 @@ jobs:
         # 検索エンジンへ実URLを通知してしまう。ここはPR検証用のビルドであり
         # 実際のデプロイではない(デプロイはCloudflare Pages側)ため、
         # IndexNow への通知は行わない。
-        # NEXT_PUBLIC_TINA_CLIENT_ID もCIでは未設定のため、TinaCMS build は
-        # 発生しない(npm run build 内の判定と同じ挙動)。
         run: |
           npx next build
           node scripts/setup-image-cache.mjs

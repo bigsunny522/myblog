@@ -18,7 +18,7 @@ Claude Code が直接編集してよいもの:
 Codex に渡すもの:
 
 - `app/**` `components/**` `lib/**` `src/**` `scripts/**` のコード変更
-- `next.config.ts` `tina/config.ts` などビルド構成の変更
+- `next.config.ts` `package.json` などビルド構成の変更
 
 1〜2行で済む自明な修正は例外。ユーザーが明示的に実装を指示した場合はそちらが優先。
 
@@ -38,7 +38,6 @@ Codex に渡すもの:
 2. **画像** — 素の `<img>` を使っていないか。新規画像に対して WEBP キャッシュがコミットされているか。カバー画像が `/images/posts/<slug>/cover.jpg` に置かれているか
 3. **誤公開** — `published` / `listed` フラグの変更が意図通りか。`content/drafts/` から `content/posts/` への移動が意図的か
 4. **JSON-LD** — `rating` / `price` / `faqs` を追加・変更したとき、`app/blog/[slug]/page.tsx` の出力が壊れていないか
-5. **自動生成物** — `tina/__generated__/**` を手で編集していないか
-6. **シークレット** — トークンや API キーが `.env.local` 以外に混入していないか
+5. **シークレット** — トークンや API キーが `.env.local` 以外に混入していないか
 
 指摘は Codex にそのまま渡せる形式で書く — `ファイル:行` / 事象 / 再現条件 / 根拠。確認できていないものは「未確認」と明記する。
