@@ -183,10 +183,10 @@ published: true       # 省略時は true 扱い
 
 ```
 NEXT_PUBLIC_SITE_URL          # サイトのベース URL(OG メタ・sitemap・IndexNow)
-NEXT_PUBLIC_SUPABASE_URL      # 任意: 閲覧数カウンター(ViewCounter)
-NEXT_PUBLIC_SUPABASE_ANON_KEY
 NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY  # 任意: /contact お問い合わせフォーム(Web3Forms、未設定なら準備中表示)
 ```
+
+閲覧数カウンターは環境変数を使わない。Cloudflare Pages の D1 バインド `DB` を `functions/api/views/[slug].ts` が参照する(設定手順は [docs/setup-view-counter-d1.md](docs/setup-view-counter-d1.md))。
 
 `lib/utils.ts` の `getBaseUrl()` は `NEXT_PUBLIC_SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → `VERCEL_URL` → `https://xyzack271.com`(ハードコードのフォールバック)の順で解決する。
 
@@ -196,4 +196,5 @@ NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY  # 任意: /contact お問い合わせフォー
 
 - **ダッシュボード** (`app/dashboard/`, `components/dashboard/`, `lib/dashboard/`): zustand + react-grid-layout のウィジェットボード。ブログ本体とは独立
 - **画像エディタ** (`app/tools/image-editor/`, `components/ImageEditor.tsx`): ブラウザ内の透かし・編集ツール
-- **アナリティクス/広告**: `GoogleAnalytics` / `GoogleAdsense` コンポーネント(AdSense クライアント ID は `app/layout.tsx` にハードコード)、Supabase バックエンドの `ViewCounter`
+- **アナリティクス/広告**: `GoogleAnalytics` / `GoogleAdsense` コンポーネント(AdSense クライアント ID は `app/layout.tsx` にハードコード)
+- **閲覧数カウンター** (`components/ViewCounter.tsx` → `functions/api/views/[slug].ts` → D1): Next.js とは別に Cloudflare Pages Functions として動く。`public/_routes.json` で `/api/*` だけを Functions に回している。ローカルの `next dev` には `/api` が無いので、カウンターは表示されないのが正常

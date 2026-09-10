@@ -1,87 +1,42 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase, isSupabaseConfigured } from '@/lib/supabaseClient';
 import { Eye } from 'lucide-react';
 
-interface ViewCounterProps {
-  slug: string;
-}
-
-export const ViewCounter = ({ slug }: ViewCounterProps) => {
-  const [views, setViews] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const isDemoMode = !isSupabaseConfigured;
+export const ViewCounter = ({ slug }: { slug: string }) => {
+  const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
-    // Demo Mode implementation
-    if (isDemoMode) {
-      // Simulate network delay
-      const timer = setTimeout(() => {
-        // Generate a deterministic random number based on slug for consistent demo
-        const hash = slug.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-        const demoViews = 100 + (hash % 1000); 
-        setViews(demoViews);
-        setIsLoading(false);
-      }, 500);
+    const controller = new AbortController();
+    const key = `viewed_${slug}`;
+    let method: 'GET' | 'POST' = 'POST';
+    try { method = sessionStorage.getItem(key) === 'true' ? 'GET' : 'POST'; } catch { method = 'POST'; }
 
-      const incrementTimer = setTimeout(() => {
-          setViews(prev => (prev ? prev + 1 : null));
-      }, 1500);
-
-      return () => {
-        clearTimeout(timer);
-        clearTimeout(incrementTimer);
-      };
-    }
-
-    // Real implementation
-    const fetchAndIncrementView = async () => {
-      if (!slug) return;
-
-      const viewedKey = `viewed_${slug}`;
-      const hasViewed = sessionStorage.getItem(viewedKey);
-
+    const loadCount = async () => {
       try {
-        if (!hasViewed) {
-          const { error: rpcError } = await supabase.rpc('increment', { slug_text: slug });
-          if (!rpcError) {
-            sessionStorage.setItem(viewedKey, 'true');
+        const res = await fetch(`/api/views/${encodeURIComponent(slug)}`, { method, signal: controller.signal });
+        if (!res.ok) return;
+        const data: unknown = await res.json();
+        if (typeof data === 'object' && data !== null && 'count' in data && typeof data.count === 'number' && Number.isFinite(data.count)) {
+          setCount(data.count);
+          if (method === 'POST') {
+            try { sessionStorage.setItem(key, 'true'); } catch { /* Ignore unavailable session storage. */ }
           }
         }
-
-        const { data, error } = await supabase
-          .from('views')
-          .select('count')
-          .match({ slug })
-          .single();
-
-        if (!error || error.code === 'PGRST116') {
-          setViews(data?.count ?? 0);
-        } else {
-          setViews(0);
-        }
-      } catch {
-        setViews(0);
-      } finally {
-        setIsLoading(false);
-      }
+      } catch { /* Ignore unavailable API, malformed responses, and aborted requests. */ }
     };
+    void loadCount();
+    return () => controller.abort();
+  }, [slug]);
 
-    fetchAndIncrementView();
-  }, [slug, isDemoMode]);
-
-  if (isLoading && !views) {
-    return (
-      <span className="flex items-center gap-1 min-w-[3ch] animate-pulse bg-muted rounded h-4"></span>
-    );
-  }
-
+  if (count === null) return null;
   return (
-    <span className="flex items-center gap-1" title="Total Views">
-      <Eye className="w-3.5 h-3.5" />
-      {views ? views.toLocaleString() : '0'}
-    </span>
+    <>
+      <span className="mx-2 hidden sm:inline">•</span>
+      <span className="hidden sm:inline-flex items-center gap-1" title="閲覧数">
+        <Eye className="w-3.5 h-3.5" />
+        {count.toLocaleString('ja-JP')}
+      </span>
+    </>
   );
 };
