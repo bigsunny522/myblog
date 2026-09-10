@@ -2,7 +2,8 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { getBaseUrl } from '@/lib/utils';
 import { getAllPosts } from '@/lib/mdx';
-import { FilteredBlogList } from '@/components/FilteredBlogList';
+import { FilteredBlogList, type TagGroup } from '@/components/FilteredBlogList';
+import taxonomy from '@/content/data/taxonomy.json';
 
 const siteImage = `${getBaseUrl()}/images/main/skyblue.png`;
 
@@ -28,9 +29,18 @@ export const metadata: Metadata = {
 
 export default async function ReviewsPage() {
   const posts = await getAllPosts();
-  
-  // Extract all unique tags
-  const allTags = Array.from(new Set(posts.flatMap(post => post.tags).filter(Boolean)));
+
+  const usedTags = new Set(posts.flatMap((post) => post.tags ?? []).filter(Boolean));
+  const groups: TagGroup[] = Object.entries(taxonomy.tagGroups).map(([label, tags]) => ({
+    label,
+    tags: tags.filter((tag) => usedTags.has(tag)),
+  }));
+  const groupedTags = new Set(groups.flatMap((group) => group.tags));
+  const otherTags = [...usedTags].filter((tag) => !groupedTags.has(tag));
+  if (otherTags.length > 0) {
+    groups.push({ label: 'その他', tags: otherTags });
+  }
+  const tagGroups = groups.filter((group) => group.tags.length > 0);
 
   return (
     <div className="container mx-auto px-4 py-16 min-h-screen">
@@ -43,7 +53,7 @@ export default async function ReviewsPage() {
         </p>
       </div>
 
-      <FilteredBlogList posts={posts} allTags={allTags} />
+      <FilteredBlogList posts={posts} tagGroups={tagGroups} />
     </div>
   );
 }

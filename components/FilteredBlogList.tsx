@@ -6,12 +6,17 @@ import { BlogList } from './BlogList';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
-interface FilteredBlogListProps {
-  posts: BlogPost[];
-  allTags: string[];
+export interface TagGroup {
+  label: string;
+  tags: string[];
 }
 
-export function FilteredBlogList({ posts, allTags }: FilteredBlogListProps) {
+interface FilteredBlogListProps {
+  posts: BlogPost[];
+  tagGroups: TagGroup[];
+}
+
+export function FilteredBlogList({ posts, tagGroups }: FilteredBlogListProps) {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const filteredPosts = useMemo(() => {
@@ -22,7 +27,8 @@ export function FilteredBlogList({ posts, allTags }: FilteredBlogListProps) {
   return (
     <div className="space-y-8">
       {/* Tag Filter */}
-      <div className="flex flex-wrap justify-center gap-2">
+      <div className="space-y-3">
+        <div className="flex flex-wrap justify-center gap-2">
         <button
           onClick={() => setSelectedTag(null)}
           className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
@@ -33,18 +39,24 @@ export function FilteredBlogList({ posts, allTags }: FilteredBlogListProps) {
         >
           All
         </button>
-        {allTags.map(tag => (
-          <button
-            key={tag}
-            onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-            className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
-              selectedTag === tag
-                ? 'bg-primary text-primary-foreground shadow-lg scale-105'
-                : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-            }`}
-          >
-            #{tag}
-          </button>
+        </div>
+        {tagGroups.map((group) => (
+          <div key={group.label} role="group" aria-label={group.label} className="flex flex-wrap items-center justify-center gap-2">
+            <span className="text-xs font-semibold text-muted-foreground">{group.label}</span>
+            {group.tags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+                className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
+                  selectedTag === tag
+                    ? 'bg-primary text-primary-foreground shadow-lg scale-105'
+                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                }`}
+              >
+                #{tag}
+              </button>
+            ))}
+          </div>
         ))}
       </div>
 
