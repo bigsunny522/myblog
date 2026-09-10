@@ -19,7 +19,7 @@ const taxonomyPath = path.join(process.cwd(), 'content/data/taxonomy.json');
 
 const taxonomy = JSON.parse(fs.readFileSync(taxonomyPath, 'utf8'));
 const validCategories = new Set(taxonomy.categories);
-const validTags = new Set(taxonomy.tags);
+const validTags = new Set(Object.values(taxonomy.tagGroups).flat());
 
 function report(list, file, message) {
   list.push(`${file}: ${message}`);
