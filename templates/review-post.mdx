@@ -3,8 +3,8 @@ title: "製品名 レビュー"
 subtitle: "サブタイトル(任意。製品の一番の売りや検証内容を一言で)"
 excerpt: "SNSシェア・SEO用の説明文。100〜120字程度で製品の特徴と結論を簡潔に。excerptは一覧・OGメタ・JSON-LDの説明文に使われる"
 date: "YYYY-MM-DD" # 公開日 = main にマージする日付。執筆開始日のまま放置しない(公開前チェックリスト参照)
-category: "" # content/data/taxonomy.json の既存カテゴリから選ぶ。新規カテゴリはtaxonomy.jsonに先に追加する
-tags: [] # 同上。taxonomy.json未登録のタグは npm run check:posts でエラーになる
+category: "レビュー" # 記事の形式タグと同じ値にする
+tags: [] # ジャンル → メーカー → 記事の形式 の順(例: ["オーディオ", "MOONDROP", "レビュー"])。PR提供品は末尾に "PR"。taxonomy.json の tagGroups にある値から選ぶ
 coverImage: "/images/posts/<slug>/cover.jpg" # <slug>は本ファイル名(=記事URL)と一致させる
 recommended: false # ホームの「おすすめ」タブに表示するか
 published: false # 執筆中はfalse。公開する時にtrueへ変更

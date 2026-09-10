@@ -3,8 +3,8 @@ title: "[イベント名/ニュース] まとめ｜[要点を一言で]"
 subtitle: "サブタイトル(任意。記事の核心を一言で)"
 excerpt: "SNSシェア・SEO用の説明文。100〜120字程度で「何についての記事か」が伝わるように"
 date: "YYYY-MM-DD" # 公開日 = main にマージする日付。執筆開始日のまま放置しない
-category: "" # 例: ニュース / レポート / まとめ。content/data/taxonomy.json の既存カテゴリから選ぶ
-tags: [] # taxonomy.json未登録のタグは npm run check:posts でエラーになる
+category: "ニュース" # 記事の形式タグと同じ値(ニュース / イベントレポート / お知らせ など)
+tags: [] # ジャンル → メーカー → 記事の形式 の順。taxonomy.json の tagGroups にある値から選ぶ(docs/writing-guide.md 参照)
 coverImage: "/images/posts/<slug>/cover.jpg"
 recommended: false
 published: false # 執筆中はfalse。公開する時にtrueへ変更
