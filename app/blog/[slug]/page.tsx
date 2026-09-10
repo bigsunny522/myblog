@@ -281,10 +281,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <time>{post.date}</time>
                 <span className="mx-2">•</span>
                 <span>{readingTime} 分で読めます</span>
-                <span className="mx-2 hidden sm:inline">•</span>
-                <span className="hidden sm:inline-flex">
-                  <ViewCounter slug={slug} />
-                </span>
+                <ViewCounter slug={slug} />
                 <span className="mx-2">•</span>
                 <ShareMenu title={post.title} slug={slug} />
               </div>
