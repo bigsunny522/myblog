@@ -1,22 +1,21 @@
 # AGENTS.md
 
-このリポジトリの共通ガイド。**Claude Code と Codex の両方がこのファイルを参照する。**
+このリポジトリの共通ガイド。**Claude Code と実装担当の両方がこのファイルを参照する。**
 リポジトリの事実(構成・コマンド・規約)はすべてここに書き、エージェント固有の指示だけを `CLAUDE.md` / `.codex/` 側に置く。二重管理しない。
 
 ## 役割分担
 
-グローバル設定(`~/.claude/CLAUDE.md`)の通り、設計とレビューを Claude Code、実装と修正を Codex が担当する。
+グローバル設定(`~/.claude/CLAUDE.md`)の通り、設計とレビューを Claude Code、実装と修正を実装担当が担当する。
 設計の成果物は `docs/spec-<機能名>.md` に置き、実装の指示はそのパスで受け渡す。
 
-### Codex に渡すときの制約(2026-09-08 に実測して確認)
+### 実装担当に渡すときの制約
 
-Codex は Windows のサンドボックス(`sandbox_mode = "workspace-write"`)の中で動く。この環境で確認した制約は次の3つ。仕様書と依頼文はこれを前提に書く。
+実装担当のサンドボックス固有の制約(2026-09-08 にこのリポジトリで実測したもの)は `~/.claude/skills/impl-handoff/backends/` にまとめている。このリポジトリでは次を前提に仕様書と依頼文を書く。
 
-1. **Codex はコミットできない。** `.git/` 配下への書き込みがサンドボックスで拒否され、`.git/index.lock` を作れない。`sandbox_workspace_write.writable_roots` に `.git` を足しても解除されない(履歴改変を防ぐための仕様)。**仕様書に「Codex がコミットする」手順を書かない。** 差分の確認とコミットはレビュー担当(Claude Code)側で行う
-2. **Codex はネットワークに出られない。** そのため `next build` が `next/font` の Google Fonts 取得に失敗して止まる。**検証ビルドを Codex にやらせない。** ビルドと成果物への assertion はレビュー担当側で実行する。Codex に頼むのは編集と `npx tsc --noEmit` まで
-3. **仕様書は `-Encoding utf8` を明示して読ませる。** リポジトリの `.md` は BOM 無し UTF-8 で、Codex が使う Windows PowerShell 5.1 の `Get-Content -Raw` は BOM が無いと ANSI コードページで読むため文字化けする。依頼文に `Get-Content -Raw -Encoding utf8 <path>` と書き添える
-
-あわせて、Codex から `npm` を叩くと PowerShell の実行ポリシー(既定 `Restricted`)が `npm.ps1` を拒否する。`npm.cmd` を使わせるか、npm を伴う検証はレビュー担当側で実行する。
+1. **実装担当はコミットしない。** 仕様書に「実装担当がコミットする」手順を書かない。差分の確認とコミットはレビュー担当(Claude Code)側で行う
+2. **検証ビルドを実装担当にやらせない。** サンドボックスではネットワークに出られず、`next build` が `next/font` の Google Fonts 取得に失敗して止まる。ビルドと成果物への assertion はレビュー担当側で実行する。実装担当に頼むのは編集と `npx.cmd tsc --noEmit` まで
+3. **仕様書は `-Encoding utf8` を明示して読ませる。** リポジトリの `.md` は BOM 無し UTF-8 で、Windows PowerShell 5.1 の `Get-Content -Raw` は BOM が無いと ANSI コードページで読むため文字化けする。依頼文に `Get-Content -Raw -Encoding utf8 <path>` と書き添える
+4. **`npm` ではなく `npm.cmd` を使わせる。** `npm.ps1` は実行ポリシー(既定 `Restricted`)で拒否される。npm を伴う検証はレビュー担当側で実行してもよい
 
 ## サイト改善・記事テーマの引き継ぎ
 
