@@ -1,16 +1,25 @@
 # AGENTS.md
 
-このリポジトリの共通ガイド。**Claude Code と Codex の両方がこのファイルを参照する。**
+このリポジトリの共通ガイド。**Claude Code と実装担当の両方がこのファイルを参照する。**
 リポジトリの事実(構成・コマンド・規約)はすべてここに書き、エージェント固有の指示だけを `CLAUDE.md` / `.codex/` 側に置く。二重管理しない。
 
 ## 役割分担
 
-グローバル設定(`~/.claude/CLAUDE.md`)の通り、設計とレビューを Claude Code、実装と修正を Codex が担当する。
+グローバル設定(`~/.claude/CLAUDE.md`)の通り、設計とレビューを Claude Code、実装と修正を実装担当が担当する。誰が実装担当かはグローバル設定の「現在の実装担当」に従う(2026-10-12 時点では `claude-haiku`)。
 設計の成果物は `docs/spec-<機能名>.md` に置き、実装の指示はそのパスで受け渡す。
 
-### Codex に渡すときの制約(2026-09-08 に実測して確認)
+どの実装担当でも、**コミットは実装担当にさせず、差分の確認とコミットはレビュー担当(Claude Code)側で行う。**
 
-Codex は Windows のサンドボックス(`sandbox_mode = "workspace-write"`)の中で動く。この環境で確認した制約は次の3つ。仕様書と依頼文はこれを前提に書く。
+### Mac で作業するとき
+
+- コマンドは `npm` / `npx` をそのまま使う(`npm.cmd` などは不要)。この Mac で `npm install` と `npm run dev` が通ることを 2026-10-12 に確認した
+- `.md` は BOM 無し UTF-8 のままで読める。エンコーディングの指定は不要
+- 実装担当(Claude Code + Haiku)はコミットを拒否する設定で起動する(`impl-handoff` の `backends/claude-haiku.md`)
+- 実装担当はネットワークに出られる。2026-10-12 に `backends/claude-haiku.md` の起動オプションで起動した実装担当が `npx next build` を実行し、Google Fonts の取得も含めて exit 0 で通ることを確認した。ただし `npm run build` は最後に IndexNow へ送信するので、実装担当にも `next build` 単体までしかさせない
+
+### Windows の Codex に渡すときの制約(2026-09-08 に実測して確認)
+
+Windows で Codex を実装担当にする場合の記録。Codex は Windows のサンドボックス(`sandbox_mode = "workspace-write"`)の中で動く。この環境で確認した制約は次の3つ。仕様書と依頼文はこれを前提に書く。
 
 1. **Codex はコミットできない。** `.git/` 配下への書き込みがサンドボックスで拒否され、`.git/index.lock` を作れない。`sandbox_workspace_write.writable_roots` に `.git` を足しても解除されない(履歴改変を防ぐための仕様)。**仕様書に「Codex がコミットする」手順を書かない。** 差分の確認とコミットはレビュー担当(Claude Code)側で行う
 2. **Codex はネットワークに出られない。** そのため `next build` が `next/font` の Google Fonts 取得に失敗して止まる。**検証ビルドを Codex にやらせない。** ビルドと成果物への assertion はレビュー担当側で実行する。Codex に頼むのは編集と `npx tsc --noEmit` まで

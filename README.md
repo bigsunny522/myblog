@@ -79,7 +79,7 @@ specs:
 ## 💻 利用可能なコマンド
 
 ### 開発用スクリプト
-通常のターミナル（PowerShell, Bashなど）で実行します。
+Mac はターミナル（zsh）、Windows は PowerShell で実行します。Windows の PowerShell では `npm` の代わりに `npm.cmd` を使います。
 
 | コマンド | 説明 |
 | :--- | :--- |
