@@ -372,31 +372,94 @@ const CouponBox = ({ children, body }: { children?: React.ReactNode; body?: Reac
   </div>
 );
 
-const Table = ({ children, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-  <div className="my-6 overflow-x-auto rounded-xl border border-border not-prose">
-    <table
-      className="w-full table-fixed text-sm border-collapse [&_tr>*:first-child]:w-[20%]"
-      {...props}
-    >
-      {children}
-    </table>
-  </div>
-);
+const isElementType = (node: React.ReactNode, component: React.ElementType, tag: string): node is React.ReactElement =>
+  React.isValidElement(node) && (node.type === component || node.type === tag);
+
+const getChildren = (element: React.ReactElement) =>
+  (element as React.ReactElement<{ children?: React.ReactNode }>).props.children;
+
+const isEmptyLabel = (node: React.ReactNode): boolean => {
+  if (node == null || typeof node === 'boolean') return true;
+  if (typeof node === 'string') return node.trim().length === 0;
+  if (Array.isArray(node)) return node.every(isEmptyLabel);
+  return false;
+};
+
+const getHeaderLabels = (children: React.ReactNode): React.ReactNode[] => {
+  const labels: React.ReactNode[] = [];
+  let foundHeaderRow = false;
+
+  React.Children.forEach(children, (section) => {
+    if (!isElementType(section, THead, 'thead') || foundHeaderRow) return;
+
+    React.Children.forEach(getChildren(section), (row) => {
+      if (foundHeaderRow || !isElementType(row, TR, 'tr')) return;
+      foundHeaderRow = true;
+
+      React.Children.forEach(getChildren(row), (cell) => {
+        if (isElementType(cell, TH, 'th')) labels.push(getChildren(cell));
+      });
+    });
+  });
+
+  return labels;
+};
+
+const addLabelsToBody = (section: React.ReactNode, labels: React.ReactNode[]) => {
+  if (!React.isValidElement(section) || !isElementType(section, TBody, 'tbody')) return section;
+
+  const sectionElement = section as React.ReactElement<{ children?: React.ReactNode }>;
+  const rows = React.Children.map(sectionElement.props.children, (row) => {
+    if (!React.isValidElement(row) || !isElementType(row, TR, 'tr')) return row;
+
+    const rowElement = row as React.ReactElement<{ children?: React.ReactNode }>;
+    let cellIndex = 0;
+    const cells = React.Children.map(rowElement.props.children, (cell) => {
+      if (!React.isValidElement(cell) || !isElementType(cell, TD, 'td')) return cell;
+
+      const currentIndex = cellIndex;
+      cellIndex += 1;
+      if (currentIndex === 0) return cell;
+
+      const label = labels[currentIndex];
+      if (label === undefined || isEmptyLabel(label)) return cell;
+
+      return React.cloneElement(cell as React.ReactElement<{ label?: React.ReactNode }>, { label });
+    });
+
+    return React.cloneElement(rowElement, undefined, cells);
+  });
+
+  return React.cloneElement(sectionElement, undefined, rows);
+};
+
+const Table = ({ children, ...props }: React.HTMLAttributes<HTMLTableElement>) => {
+  const labels = getHeaderLabels(children);
+  const labeledChildren = React.Children.map(children, (child) => addLabelsToBody(child, labels));
+
+  return (
+    <div className="my-6 overflow-x-hidden rounded-xl border border-border not-prose md:overflow-x-auto">
+      <table className="block w-full table-auto border-collapse text-sm md:table" {...props}>
+        {labeledChildren}
+      </table>
+    </div>
+  );
+};
 
 const THead = ({ children, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-  <thead className="bg-primary/10" {...props}>
+  <thead className="bg-primary/10 max-md:sr-only md:not-sr-only md:table-header-group" {...props}>
     {children}
   </thead>
 );
 
 const TBody = ({ children, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-  <tbody className="divide-y divide-border" {...props}>
+  <tbody className="block md:table-row-group md:divide-y md:divide-border" {...props}>
     {children}
   </tbody>
 );
 
 const TR = ({ children, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-  <tr className="hover:bg-muted/40 transition-colors" {...props}>
+  <tr className="block border-b border-border py-2 transition-colors last:border-b-0 md:table-row md:border-b-0 md:hover:bg-muted/40" {...props}>
     {children}
   </tr>
 );
@@ -407,8 +470,11 @@ const TH = ({ children, ...props }: React.ThHTMLAttributes<HTMLTableCellElement>
   </th>
 );
 
-const TD = ({ children, ...props }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-  <td className="px-4 py-3 text-foreground/80 leading-relaxed" {...props}>
+const TD = ({ children, label, ...props }: React.TdHTMLAttributes<HTMLTableCellElement> & { label?: React.ReactNode }) => (
+  <td className="block px-4 py-2 leading-relaxed text-foreground/80 md:table-cell md:px-4 md:py-3 [&:first-child]:pb-1 [&:first-child]:text-base [&:first-child]:font-bold [&:first-child]:text-foreground md:[&:first-child]:pb-3 md:[&:first-child]:text-sm md:[&:first-child]:font-normal md:[&:first-child]:text-foreground/80" {...props}>
+    {label !== undefined && !isEmptyLabel(label) && (
+      <span className="mb-1 block text-xs text-muted-foreground md:hidden">{label}</span>
+    )}
     {children}
   </td>
 );

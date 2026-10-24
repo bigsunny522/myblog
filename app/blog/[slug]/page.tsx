@@ -313,7 +313,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 max-w-3xl mt-12 prose prose-lg prose-gray dark:prose-invert">
+      <div className="container mx-auto px-4 max-w-4xl mt-12">
+        <div className="prose prose-lg prose-gray dark:prose-invert max-w-none">
         <TableOfContents headings={headings} />
         <MDXRemote
           source={post.content}
@@ -419,6 +420,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div />
           )}
         </nav>
+        </div>
       </div>
     </article>
   );
