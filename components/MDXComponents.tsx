@@ -29,6 +29,15 @@ const Text = ({
   );
 };
 
+const Owned = ({ children, className }: { children?: React.ReactNode; className?: string }) => (
+  <span className={cn(
+    'ml-1.5 inline-flex align-middle items-center whitespace-nowrap rounded-md bg-primary px-1.5 py-0.5 text-xs font-semibold leading-none text-primary-foreground',
+    className
+  )}>
+    {children ?? '愛用中'}
+  </span>
+);
+
 // Custom Heading Components to preserve IDs for TOC
 const H1 = ({ children, id, ...props }: React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>) => (
   // H1: Very prominent, double underline or background
@@ -608,6 +617,7 @@ async function getImageDimensions(src: unknown): Promise<{ width: number; height
 // Export the components mapping
 export const mdxComponents = {
   Text,
+  Owned,
   a: A,
   h1: H1,
   h2: H2,
