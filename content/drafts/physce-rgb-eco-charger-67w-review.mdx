@@ -1,6 +1,6 @@
 ---
 title: "PHYSCE RGB ECO 急速充電器 67W レビュー"
-subtitle: "出力が光の色でわかる、2ポートのGaN充電器"
+subtitle: "出力が光の色でわかる、2ポートの急速充電器"
 excerpt: "PR提供品レビュー。PHYSCEのRGB ECO 急速充電器 67W（C167US）を使ってみました。USB-C×2ポートの独立給電、出力に合わせて色が変わる360° RGBライト、夜の充電に向くBatteryEcoモードの使い勝手をまとめます。"
 date: "YYYY-MM-DD" # 公開日 = main にマージする日付
 category: "レビュー"
@@ -9,13 +9,13 @@ coverImage: "/images/posts/physce-rgb-eco-charger-67w-review/cover.jpg"
 recommended: false
 published: false
 listed: true
-rating: 4.0 # TODO: 使用感を書いてから決める
-price: "7300" # 公式サイト価格(2026年10月時点)
+rating: 4.0
+price: "7300"
 faqs:
   - question: "MacBookなどのノートPCも充電できますか？"
-    answer: "単ポート使用時は最大67W（20V/3.35A）で出力できるため、USB PD充電に対応したMacBook ProなどのノートPCも充電できます。ただし実際の出力は接続機器やケーブルによって変わります。"
-  - question: "2台同時に充電すると出力はどうなりますか？"
-    answer: "2ポート同時使用時は合計最大65Wで、接続機器に応じて45W+20W、35W+30Wなどに自動で配分されます。"
+    answer: "単ポート使用時は最大67Wで出力できるため、USB PDに対応したノートPCも充電できます。実際の出力は接続する機器やケーブルによって変わります。"
+  - question: "2台同時に充電するとどうなりますか？"
+    answer: "2ポート同時使用時は合計で最大65W（メーカー表記ではLPSで60W）の範囲で、接続機器の要求に応じて出力を分け合います。"
   - question: "BatteryEcoモードとは何ですか？"
     answer: "各ポートの出力を最大約5Wに抑えて、ゆっくり充電するモードです。ボタンを約1.5秒長押しすると通常の急速充電モードと切り替えられ、有効中はライトが緑色になります。"
   - question: "ライトは消せますか？"
@@ -26,107 +26,74 @@ faqs:
 
 <u>※本記事はFaceSec Japan株式会社様より製品をご提供いただき作成したPR記事です。</u>
 
-[TODO: 導入。提供を受けた経緯と、これまで使っていた充電器や困っていたことを1〜2文で]
+充電器を新しくするなら、ノートPCもスマホも1台でまかなえるものがほしい。今回は、PHYSCE（ファイス）の「RGB ECO 急速充電器 67W」を提供いただいたので、使ってみた感想をまとめます。
 
-今回試したのは、PHYSCE（ファイス）の「RGB ECO 急速充電器 67W」です。USB-Cを2ポート備えたGaN充電器で、本体をぐるりと囲むRGBライトが、いま出ている出力に合わせて色を変えます。
-
-この記事では、公式の仕様をもとに2ポート同時充電時の出力の配分、ライトの色の意味、BatteryEcoモードの使い方を整理し、実際に使ってみた感想をまとめます。
-
-{/* TODO: Shorts 公開後に動画を埋め込む */}
+USB-Cを2ポート備えた急速充電器で、本体をぐるりと囲むRGBライトが、いま出ている出力に合わせて色を変えるのが特徴です。外観と使用感を先に書き、最後に性能の仕組みを図で整理します。
 
 <CheckList type="good">
   <CheckItem>スマホとノートPCを1台の充電器でまかないたい</CheckItem>
   <CheckItem>いま何Wで充電できているのかを、ひと目で確認したい</CheckItem>
-  <CheckItem>デスクやベッドサイドに置いても見た目が気にならない充電器がほしい</CheckItem>
+  <CheckItem>ベッドサイドでも使える、やさしい光の充電器がほしい</CheckItem>
 </CheckList>
 
 <BuyLinks
   image="/images/posts/physce-rgb-eco-charger-67w-review/cover.jpg"
   title="PHYSCE RGB ECO 急速充電器 67W"
-  description="USB-C×2ポート・最大67W。出力が色でわかる360° RGBライトを備えたGaN急速充電器"
+  description="USB-C×2ポート・最大67W。出力が色でわかる360° RGBライトを備えた急速充電器"
 >
   <BuyLink type="amazon" href="https://amzn.to/xxxxxxx">Amazonで見る</BuyLink>
   <BuyLink type="official" href="https://www.physce.co.jp/products/c167us">公式サイト</BuyLink>
 </BuyLinks>
 
-***
-
-## 製品スペック
-
-<Specs>
-  <SpecsItem label="製品名">PHYSCE RGB ECO 急速充電器 67W（型番：C167US）</SpecsItem>
-  <SpecsItem label="価格">¥7,300（公式サイト・2026年10月時点）</SpecsItem>
-  <SpecsItem label="カラー">ウェッブグレー／スターダストホワイト</SpecsItem>
-  <SpecsItem label="ポート">USB-C×2</SpecsItem>
-  <SpecsItem label="最大出力">67W（単ポート使用時）</SpecsItem>
-  <SpecsItem label="2ポート同時使用時">合計最大65W（45W+20W／35W+30W などに自動配分）</SpecsItem>
-  <SpecsItem label="BatteryEcoモード">各ポート最大約5W</SpecsItem>
-  <SpecsItem label="対応規格">PD3.0 PPS、PD2.0、QC4.0+、QC3.0 ほか</SpecsItem>
-  <SpecsItem label="入力">100-240VAC、50/60Hz、1.8A</SpecsItem>
-  <SpecsItem label="サイズ">約43.4×66×30mm（プラグ部除く）</SpecsItem>
-  <SpecsItem label="重量">約133g</SpecsItem>
-  <SpecsItem label="安全性">PSE適合、難燃性ポリカーボネート SABIC LEXAN™ 940（UL 94 V-0）</SpecsItem>
-  <SpecsItem label="付属品">取扱説明書（ケーブルは別売）</SpecsItem>
-</Specs>
-
-単ポート使用時の出力は 5V/3A、9V/3A、12V/3A、15V/3A、20V/3.35A です。スペックは[公式サイト](https://www.physce.co.jp/products/c167us)の記載によります。
-
-***
-
-## 注目ポイント
-
-<FeaturePoint number={1} title="出力がライトの色でわかる">
-  充電中は、出力に応じてライトの色が変わります。20W未満は青からシアン、20W以上36W未満は黄色からオレンジ、36W以上は赤からマゼンタです。ケーブルが急速充電に対応しているか、ノートPCに十分な電力が届いているかを、チェッカーを使わずに大まかに確かめられます。
-</FeaturePoint>
-
-<FeaturePoint number={2} title="2ポートで出力を分け合う独立給電">
-  2台をつなぐと、合計65Wを45W+20W、35W+30Wのように機器に合わせて配分します。ノートPCとスマホを同時につないでも、片方がほとんど充電されないということが起きにくい作りです。メーカーは日本で特許を取得した独立給電回路により、2台同時でも最大約43%速く充電できるとしています。
-</FeaturePoint>
-
-<FeaturePoint number={3} title="ゆっくり充電するBatteryEcoモード">
-  ボタンを約1.5秒長押しすると、各ポートの出力を最大約5Wに抑えるBatteryEcoモードに切り替わります。有効中はライトが緑になるので、どちらのモードで動いているかを見分けられます。急がない夜の充電に使う想定のモードです。
-</FeaturePoint>
+動画はYouTubeショートにも投稿しています。ライトの色が変わる様子は動きで見たほうがわかりやすいので、あわせてご覧ください。
+{/* TODO: ショートのURLに差し替える */}
+<a href="https://www.youtube.com/shorts/xxxxxxxxxxx">YouTubeショートで見る</a>
 
 ***
 
 ## 開封・外観
 
-パッケージに入っているのは、本体と取扱説明書だけです。USB-Cケーブルは付いていないので、手持ちのケーブルを使います。67Wで充電したい場合は、60Wを超える電力に対応したケーブル（5A対応のe-Marker付きなど）が必要です。
+パッケージに入っているのは、本体と取扱説明書だけです。USB-Cケーブルは付いていないので、手持ちのケーブルを使います。
 
-[TODO: 箱の印象、本体の質感、色（ウェッブグレー／スターダストホワイトのどちらか）、手に持ったときのサイズ感]
+<Figure src="/images/posts/physce-rgb-eco-charger-67w-review/package.jpg" alt="同梱物の取扱説明書と本体" caption="同梱物は取扱説明書と本体のみ。ケーブルは入っていない" className="rounded-lg shadow-sm border border-border w-full" />
 
-<Figure src="/images/posts/physce-rgb-eco-charger-67w-review/main.jpg" alt="PHYSCE RGB ECO 急速充電器 67W の本体" caption="[TODO: キャプション]" className="rounded-lg shadow-sm border border-border w-full" />
+本体は金属のような質感のグレーで、表面にはシンプルな模様が入っています。側面には「GALLIUM NITRIDE」の刻印があり、窒化ガリウム（GaN）を使った充電器だと分かります。上面にはUSB-Cポートが2つ並び、ライトはその奥の天面を帯状に光らせます。
+
+<Figure src="/images/posts/physce-rgb-eco-charger-67w-review/main.jpg" alt="PHYSCE RGB ECO 急速充電器 67W の本体" caption="正面から見た本体。USB-Cポートの並びと刻印が見える" className="rounded-lg shadow-sm border border-border w-full" />
 
 <ImageGrid columns={2}>
-  <Figure src="/images/posts/physce-rgb-eco-charger-67w-review/package.jpg" alt="パッケージ" caption="[TODO: キャプション]" className="rounded-lg shadow-sm border border-border object-cover aspect-[4/3]" />
-  <Figure src="/images/posts/physce-rgb-eco-charger-67w-review/ports.jpg" alt="USB-Cポート2つ" caption="[TODO: キャプション]" className="rounded-lg shadow-sm border border-border object-cover aspect-[4/3]" />
+  <Figure src="/images/posts/physce-rgb-eco-charger-67w-review/ports.jpg" alt="USB-Cポート2つ" caption="USB-Cポートは2つ" className="rounded-lg shadow-sm border border-border object-cover aspect-[4/3]" />
+  <Figure src="/images/posts/physce-rgb-eco-charger-67w-review/hand.jpg" alt="手のひらに乗せた本体" caption="サイズは約43.4×66×30mm、重さは約133g。手のひらに収まる" className="rounded-lg shadow-sm border border-border object-cover aspect-[4/3]" />
 </ImageGrid>
-
-サイズは約43.4×66×30mm、重さは約133gです。[TODO: 手持ちの充電器や持ち運びの感覚と比べた印象]
 
 ***
 
 ## 使用感
 
-### ライトの見え方
+### 出力がライトの色でわかる
 
-[TODO: 点灯したときの第一印象、色の変化のわかりやすさ、昼と夜での見え方]
+充電中は、いま出ている出力に応じてライトの色が変わります。ケーブルや機器の組み合わせで急速充電できているかどうかを、表示を見るだけで大まかに判断できるのは、ほかの充電器にはあまりない良さだと感じました。色の意味は後の性能の章にまとめています。
 
-<Figure src="/images/posts/physce-rgb-eco-charger-67w-review/light.jpg" alt="RGBライトが点灯した状態" caption="[TODO: キャプション]" className="rounded-lg shadow-sm border border-border w-full" />
+### スマホとタブレット、ノートPCを充電する
 
-### スマホとノートPCの同時充電
+スマホは青いライトで充電されていることが分かりました。iPadを充電すると、ライトは黄色に変わります。
 
-[TODO: 実際につないだ機器（機種名）と、そのときのライトの色。使っていて不便がなかったか]
+<ImageGrid columns={2}>
+  <Figure src="/images/posts/physce-rgb-eco-charger-67w-review/iphone.jpg" alt="スマートフォンを充電中の本体" caption="スマートフォンを充電中。ライトは青" className="rounded-lg shadow-sm border border-border object-cover aspect-[4/3]" />
+  <Figure src="/images/posts/physce-rgb-eco-charger-67w-review/ipad.jpg" alt="iPadを充電中の本体" caption="iPadを充電中。ライトは黄色" className="rounded-lg shadow-sm border border-border object-cover aspect-[4/3]" />
+</ImageGrid>
 
-### BatteryEcoモードとベッドサイドでの使用
+ノートPCを充電すると、上面のバーは赤く光り、側面の中段は黄色、下段は赤く点灯します。出力が大きいほど色が暖かい側へ寄るので、ノートPCがしっかり電力を受けているかを色で確かめられます。単ポートで使うと最大67Wまで出るので、ノートPCを含めある程度の端末を1台で充電できます。
 
-[TODO: 寝室で使ったときの明るさ。ライトを消す・BatteryEcoに切り替える操作のしやすさ]
+<Figure src="/images/posts/physce-rgb-eco-charger-67w-review/light.jpg" alt="ノートPCを充電中の本体" caption="ノートPCを充電中。上面のバーは赤、側面の中段は黄色、下段は赤に点灯している" className="rounded-lg shadow-sm border border-border w-full" />
 
-<Figure src="/images/posts/physce-rgb-eco-charger-67w-review/bedside.jpg" alt="ベッドサイドで充電している様子" caption="[TODO: キャプション]" className="rounded-lg shadow-sm border border-border w-full" />
+### BatteryEcoモードとライトの明るさ
 
-### デスクに置いたとき
+ボタンを約1.5秒長押しするとBatteryEcoモードになり、ライトが緑に変わります。このモードでは各ポートの出力を最大約5Wに抑えるので、イヤホンケースのようなゆっくり充電すればよい機器に向いています。
 
-[TODO: デスクでの見た目、ほかの機器との相性、コンセントまわりでの収まり]
+<Figure src="/images/posts/physce-rgb-eco-charger-67w-review/eco.jpg" alt="緑に光る本体とイヤホンケース" caption="Ecoモード中は緑に点灯。イヤホンケースをゆっくり充電している" className="rounded-lg shadow-sm border border-border w-full" />
+
+一方で、ライトははっきり見える明るさがあります。わかりやすい反面、夜に寝室で使うには明るすぎて、就寝時には使えませんでした。ライトはボタンを短く押せば消せるので、夜に使うなら消灯してから充電するのがよいと思います。
 
 ***
 
@@ -135,25 +102,103 @@ faqs:
 <ReviewSummary>
 <ReviewPoints type="good">
 <ReviewPoint type="good" title="出力が色でわかる">ケーブルや機器の組み合わせで急速充電できているかを、ライトの色で大まかに確かめられる</ReviewPoint>
-<ReviewPoint type="good" title="2ポートで最大65W">ノートPCとスマホを1台の充電器でまかなえる</ReviewPoint>
-<ReviewPoint type="good" title="モードとライトを本体で切り替えられる">BatteryEcoモードとライトのオン／オフをボタン1つで操作できる</ReviewPoint>
-{/* TODO: 使ってみて良かった点があれば追加 */}
+<ReviewPoint type="good" title="1台で2つの機器を充電できる">USB-C×2ポートで、合計最大65Wの範囲で出力を分け合える</ReviewPoint>
+<ReviewPoint type="good" title="ボタン1つでモードを切り替えられる">BatteryEcoモードとライトのオン／オフを本体で操作できる</ReviewPoint>
 </ReviewPoints>
 <ReviewPoints type="con">
-<ReviewPoint type="con" title="ケーブルが付属しない">67Wで使うには、5A対応のUSB-Cケーブルを別に用意する必要がある</ReviewPoint>
-{/* TODO: 使ってみて気になった点を追加 */}
+<ReviewPoint type="con" title="ケーブルが付属しない">67Wで使うには、対応したUSB-Cケーブルを別に用意する必要がある</ReviewPoint>
+<ReviewPoint type="con" title="ライトが明るく、寝室では使いにくい">ライトの見やすさは良いが、夜寝るときには明るすぎて使えなかった</ReviewPoint>
 </ReviewPoints>
 </ReviewSummary>
 
 ### 総評
 
-[TODO: 結論。冒頭のチェックリストの3項目に答える形で、どんな人に向いているか、¥7,300の価格に見合うと感じたか]
+ライトで出力が見えるのは、充電器を使う人にとって分かりやすい工夫です。単ポートなら最大67Wまで出るので、ノートPCを含めある程度の端末を1台で充電できます。一方で、ライトの明るさは夜の寝室には向きません。夜はライトを消して充電する使い方が合っていると感じました。
 
 <BuyLinks
   image="/images/posts/physce-rgb-eco-charger-67w-review/cover.jpg"
   title="PHYSCE RGB ECO 急速充電器 67W"
-  description="USB-C×2ポート・最大67W。出力が色でわかる360° RGBライトを備えたGaN急速充電器"
+  description="USB-C×2ポート・最大67W。出力が色でわかる360° RGBライトを備えた急速充電器"
 >
   <BuyLink type="amazon" href="https://amzn.to/xxxxxxx">Amazonで見る</BuyLink>
   <BuyLink type="official" href="https://www.physce.co.jp/products/c167us">公式サイト</BuyLink>
 </BuyLinks>
+
+***
+
+## 性能を詳しく見る
+
+ここでは、メーカーの公式表記をもとに出力の仕組みを図で整理します。数値は表記と計算による目安で、実際の出力は接続する機器とケーブルで変わります。
+
+<Specs>
+  <SpecsItem label="製品名">PHYSCE RGB ECO 急速充電器 67W（型番：C167US）</SpecsItem>
+  <SpecsItem label="価格">¥7,300（公式サイト・2026年10月時点）</SpecsItem>
+  <SpecsItem label="ポート">USB-C×2</SpecsItem>
+  <SpecsItem label="最大出力">67W（単ポート使用時）</SpecsItem>
+  <SpecsItem label="2ポート同時使用時">合計最大65W（メーカー表記ではLPSで60W）</SpecsItem>
+  <SpecsItem label="BatteryEcoモード">各ポート最大約5W</SpecsItem>
+  <SpecsItem label="対応規格">USB PD（AVS表記あり）</SpecsItem>
+  <SpecsItem label="サイズ">約43.4×66×30mm（プラグ部除く）</SpecsItem>
+  <SpecsItem label="重量">約133g</SpecsItem>
+  <SpecsItem label="安全性">PSE適合、難燃性ポリカーボネート（UL 94 V-0）</SpecsItem>
+  <SpecsItem label="付属品">取扱説明書（ケーブルは別売）</SpecsItem>
+</Specs>
+
+### 図1: 単ポートで出せる出力の組み合わせ
+
+USB PDでは、充電器が「電圧×電流」の組み合わせを複数持ち、接続した機器と話し合って1つを選びます。棒の高さが出力の大きさです。最大の67Wは20V・3.35Aのときに出ます。
+
+<svg viewBox="0 0 600 310" width="100%" role="img" aria-label="単ポートの出力の組み合わせ（15W、27W、36W、45W、67W）" style={{maxWidth: "600px", display: "block", margin: "1.5rem auto"}}>
+  <rect x="0" y="0" width="600" height="310" rx="12" fill="#f8fafc" />
+  <line x1="40" y1="260" x2="580" y2="260" stroke="#94a3b8" strokeWidth="1.5" />
+  <rect x="60" y="215" width="70" height="45" rx="6" fill="#93c5fd" />
+  <rect x="160" y="179" width="70" height="81" rx="6" fill="#60a5fa" />
+  <rect x="260" y="152" width="70" height="108" rx="6" fill="#3b82f6" />
+  <rect x="360" y="125" width="70" height="135" rx="6" fill="#2563eb" />
+  <rect x="460" y="59" width="70" height="201" rx="6" fill="#1e3a8a" />
+  <text x="95" y="207" textAnchor="middle" fontSize="16" fontWeight="700" fill="#0f172a">15W</text>
+  <text x="195" y="171" textAnchor="middle" fontSize="16" fontWeight="700" fill="#0f172a">27W</text>
+  <text x="295" y="144" textAnchor="middle" fontSize="16" fontWeight="700" fill="#0f172a">36W</text>
+  <text x="395" y="117" textAnchor="middle" fontSize="16" fontWeight="700" fill="#0f172a">45W</text>
+  <text x="495" y="51" textAnchor="middle" fontSize="16" fontWeight="700" fill="#0f172a">67W</text>
+  <text x="95" y="282" textAnchor="middle" fontSize="14" fill="#334155">5V / 3A</text>
+  <text x="195" y="282" textAnchor="middle" fontSize="14" fill="#334155">9V / 3A</text>
+  <text x="295" y="282" textAnchor="middle" fontSize="14" fill="#334155">12V / 3A</text>
+  <text x="395" y="282" textAnchor="middle" fontSize="14" fill="#334155">15V / 3A</text>
+  <text x="495" y="282" textAnchor="middle" fontSize="14" fill="#334155">20V / 3.35A</text>
+  <text x="300" y="302" textAnchor="middle" fontSize="13" fill="#64748b">電圧が高いほど、ノートPCのような大きな電力の機器に向く</text>
+</svg>
+
+スマホは5Vや9V、ノートPCは20V付近で充電されることが多くなります。どの組み合わせが選ばれるかは、接続する機器とケーブルで決まります。
+
+### 図2: 2ポート同時使用の配分
+
+2台をつなぐと、合計の上限65Wを2台で分け合います。たとえばノートPCが45Wを受けているとき、もう1台に回せるのは残りの20Wです。メーカー表記の60W（LPS）で考えると、残りは15Wになります。
+
+<svg viewBox="0 0 600 220" width="100%" role="img" aria-label="2ポート同時使用時の配分。合計65Wをノートパソコン45Wとスマホ20Wで分け合う" style={{maxWidth: "600px", display: "block", margin: "1.5rem auto"}}>
+  <rect x="0" y="0" width="600" height="220" rx="12" fill="#f8fafc" />
+  <text x="40" y="44" fontSize="15" fontWeight="700" fill="#0f172a">合計の上限 65W を2ポートで分け合う</text>
+  <rect x="40" y="70" width="360" height="62" rx="6" fill="#2563eb" />
+  <rect x="400" y="70" width="160" height="62" rx="6" fill="#93c5fd" />
+  <text x="220" y="107" textAnchor="middle" fontSize="16" fontWeight="700" fill="#ffffff">ノートPC 45W</text>
+  <text x="480" y="107" textAnchor="middle" fontSize="16" fontWeight="700" fill="#0f172a">スマホ 20W</text>
+  <line x1="520" y1="60" x2="520" y2="142" stroke="#dc2626" strokeWidth="2" strokeDasharray="5 4" />
+  <text x="520" y="158" textAnchor="middle" fontSize="13" fill="#dc2626">60W（LPS表記）</text>
+  <text x="40" y="196" fontSize="13" fill="#475569">1ポート目が45Wを受けると、2ポート目に回せるのは残り20W（LPS表記で考えると15W）</text>
+</svg>
+
+### 図3: ライトの色と出力の目安
+
+充電中は、出力の大きさに応じてライトの色が変わります。色の区分は取扱説明書の表記に従います。
+
+| ライトの色 | 充電出力の目安 |
+|---|---|
+| 青からシアン | 20W未満 |
+| 黄色からオレンジ | 21W〜36W |
+| 赤からマゼンタ | 36Wを超える |
+
+待機中は虹色のグラデーションで点灯します。ライトのオン／オフは本体のボタンを短く押して切り替えます。
+
+### 補足: 変換の仕組みとGaN
+
+充電器はコンセントの交流（AC）を、機器が使う直流（DC）に変換します。本体の刻印にあるGaN（窒化ガリウム）は、シリコン素子より高い周波数で素早くスイッチングでき、小型化に役立つとされる素材です。
