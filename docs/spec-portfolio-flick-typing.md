@@ -61,7 +61,7 @@ const flickTechStack = [
   {
     name: 'Cloudflare Workers + D1',
     role: 'バックエンド / DB',
-    desc: '静的アセットの配信と /api/* の処理を 1 つの Worker で担当。プレイ結果とランキング用のニックネームを D1(SQLite)に保存する。',
+    desc: '静的アセットの配信と /api/* の処理を 1 つの Worker で担当。プレイ結果とランキング用のニックネームを D1（SQLite）に保存する。',
     icon: <Database size={22} />,
     color: 'text-orange-500 bg-orange-500/10',
   },

@@ -6,7 +6,7 @@ import {
   Layers, Code2, Palette, Zap, Database, FileText, Server,
   Box, Globe, Cpu, ExternalLink, Mail, Twitter,
   GitBranch, Layout, Sparkles, Shield, Image, Package,
-  ChevronRight, Sliders, Timer, Gamepad2, BarChart2,
+  ChevronRight, Sliders, Timer, Gamepad2, BarChart2, Keyboard,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -67,6 +67,17 @@ const projects = [
     iconColor: 'text-cyan-400 bg-cyan-400/10',
     borderColor: 'hover:border-cyan-400/40',
     accentGlow: 'bg-cyan-500/10',
+  },
+  {
+    name: 'ふりっくタイピング',
+    desc: 'スマホ専用のフリック入力タイピングゲーム。60 秒のタイムアタックと、青空文庫の小説を 1 ミスで終了まで打ち続ける日替わりの耐久モード。ログイン不要のランキング付き。',
+    badge: 'Vite + TypeScript / Cloudflare Workers',
+    tags: ['D1', 'Vitest', 'Anti-cheat', 'TypeScript'],
+    href: 'https://flicktypinggame.xyzack271.com',
+    icon: <Keyboard size={20} />,
+    iconColor: 'text-emerald-400 bg-emerald-400/10',
+    borderColor: 'hover:border-emerald-400/40',
+    accentGlow: 'bg-emerald-500/10',
   },
 ] as const;
 
@@ -369,6 +380,64 @@ const wuwaFeatures = [
   },
 ];
 
+const flickTechStack = [
+  {
+    name: 'Vite + TypeScript',
+    role: 'フロントエンド',
+    desc: 'フレームワークを使わず、素の TypeScript で画面とゲームループを実装。軽量なバンドルでスマホでもすぐに起動する。',
+    icon: <Code2 size={22} />,
+    color: 'text-blue-400 bg-blue-400/10',
+  },
+  {
+    name: 'Cloudflare Workers + D1',
+    role: 'バックエンド / DB',
+    desc: '静的アセットの配信と /api/* の処理を 1 つの Worker で担当。プレイ結果とランキング用のニックネームを D1（SQLite）に保存する。',
+    icon: <Database size={22} />,
+    color: 'text-orange-500 bg-orange-500/10',
+  },
+  {
+    name: '入力挙動の解析',
+    role: '不正対策',
+    desc: '打鍵のタイミングや入力経路を端末上で解析し、物理キーボードや自動操作ツールからの入力を検出してプレイを止める。',
+    icon: <Shield size={22} />,
+    color: 'text-emerald-400 bg-emerald-400/10',
+  },
+  {
+    name: '再現可能なゲームロジック + Vitest',
+    role: '設計 / テスト',
+    desc: 'ゲームの進行を「お題と打鍵の列」から完全に再現できる純粋関数で実装。DOM・時刻・乱数に依存しないため、Vitest で判定を細かくテストできる。',
+    icon: <Layers size={22} />,
+    color: 'text-purple-400 bg-purple-400/10',
+  },
+];
+
+const flickFeatures = [
+  {
+    title: 'タイムアタック',
+    desc: '持ち時間 60 秒で何文字打てるかを競うモード。コンボを重ねたり、お題をノーミスで打ち切ったりすると残り時間が延びる。',
+    icon: <Timer size={20} />,
+    color: 'text-emerald-400 bg-emerald-400/10',
+  },
+  {
+    title: '日替わりの耐久モード',
+    desc: '青空文庫の小説から毎日 1 作品を出題し、全員が同じ文章で競う。1 回でもミスしたら終了。正しく打つたびに残り時間が少しずつ回復する。',
+    icon: <Keyboard size={20} />,
+    color: 'text-amber-400 bg-amber-400/10',
+  },
+  {
+    title: 'ログイン不要のランキング',
+    desc: 'タイムアタックは歴代と今週、耐久はその日と歴代で集計。端末ごとの匿名 ID にニックネームを付けて参加でき、不適切な言葉は弾く。',
+    icon: <BarChart2 size={20} />,
+    color: 'text-cyan-400 bg-cyan-400/10',
+  },
+  {
+    title: '機械操作の検出',
+    desc: 'スマホのキーボードからのタッチ入力だけを受け付ける。PC のブラウザや自動操作ツールによる入力を判定し、記録が送られないようにする。',
+    icon: <Shield size={20} />,
+    color: 'text-rose-400 bg-rose-400/10',
+  },
+];
+
 const architectureItems = [
   { label: 'レンダリング戦略', value: 'SSG（静的エクスポート）+ React Server Components' },
   { label: 'コンテンツ取得', value: 'ローカル MDX ファイル → next-mdx-remote で静的 HTML 生成' },
@@ -436,7 +505,7 @@ export default function PortfolioPage() {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
                 <div className="relative z-10 grid grid-cols-1 md:grid-cols-4 gap-8">
-                  <OverviewStat label="プロジェクト数" value="4" sub="Blog / Dashboard / Editor / Simu" />
+                  <OverviewStat label="プロジェクト数" value="5" sub="Blog / Dashboard / Editor / Simu / Typing" />
                   <OverviewStat label="フレームワーク" value="Next.js + Vite" sub="App Router / Workers" />
                   <OverviewStat label="コンテンツ管理" value="MDX" sub="Git ベースの記事管理" />
                   <OverviewStat label="ウィジェット数" value="11種類" sub="ダッシュボードシステム" />
@@ -574,6 +643,20 @@ export default function PortfolioPage() {
               ))}
             </div>
           </div>
+
+          {/* ふりっくタイピング */}
+          <div className="space-y-4">
+            <ScrollReveal delay={0.05}>
+              <SubSectionLabel>ふりっくタイピング（独立アプリ）</SubSectionLabel>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {flickTechStack.map((tech, i) => (
+                <ScrollReveal key={tech.name} delay={Math.min(i * 0.05, 0.2)} className="h-full">
+                  <TechCard tech={tech} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* ── Key Features ── */}
@@ -687,6 +770,45 @@ export default function PortfolioPage() {
             >
               <Gamepad2 size={16} />
               ツールを試す
+              <ExternalLink size={14} />
+            </a>
+          </ScrollReveal>
+        </section>
+
+        {/* ── Flick Typing Features ── */}
+        <section className="space-y-8">
+          <ScrollReveal direction="left">
+            <SectionTitle>Flick Typing Features</SectionTitle>
+          </ScrollReveal>
+          <ScrollReveal delay={0.05}>
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
+              スマホのフリック入力で遊ぶタイピングゲーム。Vite + TypeScript で作り、Cloudflare Workers と D1 でランキングを動かしています。物理キーボードや自動操作ツールによる入力を弾き、指で打った記録だけで競えるようにしました。
+            </p>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {flickFeatures.map((feat, i) => (
+              <ScrollReveal key={feat.title} delay={Math.min(i * 0.08, 0.3)} className="h-full">
+                <div className="h-full p-6 bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl hover:border-emerald-400/40 transition-colors duration-300">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${feat.color}`}>
+                      {feat.icon}
+                    </div>
+                    <h3 className="font-bold font-outfit text-base">{feat.title}</h3>
+                  </div>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{feat.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+          <ScrollReveal delay={0.2}>
+            <a
+              href="https://flicktypinggame.xyzack271.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-400/10 border border-emerald-400/30 text-emerald-400 rounded-full font-medium text-sm hover:bg-emerald-400/20 transition-colors"
+            >
+              <Keyboard size={16} />
+              ゲームを遊ぶ
               <ExternalLink size={14} />
             </a>
           </ScrollReveal>
