@@ -1,5 +1,6 @@
 import React from 'react';
 import { Specs, SpecsItem } from './Specs';
+import { XPost } from './XPost';
 
 import { cn } from '@/lib/utils';
 
@@ -563,6 +564,7 @@ export const mdxComponents = {
   code: InlineCode,
   Details,
   Video,
+  XPost,
   CheckList,
   CheckItem,
   CouponBox,
