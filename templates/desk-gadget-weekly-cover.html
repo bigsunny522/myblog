@@ -1,0 +1,172 @@
+<!doctype html>
+<!--
+  デスクガジェット週報のカバー画像(1200x675 を 2 倍で書き出す)
+  毎週変えるのは「号の情報」の3か所だけ: .issue-no / .issue-date / .period / .topics の中身
+
+  書き出し(リポジトリのルートで):
+    CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    PROF="$(mktemp -d)"
+    "$CHROME" --headless=new --hide-scrollbars --force-device-scale-factor=2 \
+      --window-size=1200,675 --virtual-time-budget=5000 --user-data-dir="$PROF" \
+      --screenshot="/tmp/cover.png" "file://$PWD/templates/desk-gadget-weekly-cover.html"
+    sips -s format jpeg -s formatOptions 90 /tmp/cover.png --out public/images/posts/<slug>/cover.jpg
+-->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>デスクガジェット週報 カバー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@400;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --fg: #171717;
+    --ink: #0B1120;
+    --muted: #4A5565;
+    --line: #E5E7EB;
+    --primary: #7BABFF;
+    --primary-strong: #1D4ED8;
+    --primary-line: #D6E4FF;
+    --primary-tint: #EEF4FF;
+    --grid: #7BABFF21;
+    --accent: #F59E0B;
+    --accent-ink: #1E1B0F;
+    --jp: "LINE Seed JP", -apple-system, "Hiragino Sans", sans-serif;
+    --en: Outfit, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 675px; overflow: hidden; }
+  body {
+    font-family: var(--jp);
+    color: var(--fg);
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    position: relative;
+  }
+  .wrap { position: absolute; inset: 64px 72px; display: flex; flex-direction: column; }
+
+  .head { display: flex; align-items: center; gap: 20px; }
+  .ribbon {
+    display: inline-block;
+    transform: skew(-14deg);
+    background: var(--primary);
+    color: var(--ink);
+    font-family: var(--en);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: .3em;
+    padding: 9px 18px 9px 24px;
+  }
+  .ribbon span { display: inline-block; transform: skew(14deg); }
+  .issue-no {
+    font-family: var(--en);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: .12em;
+    background: var(--accent);
+    color: var(--accent-ink);
+    padding: 7px 14px;
+    border-radius: 8px;
+  }
+
+  .title {
+    margin-top: 34px;
+    font-weight: 800;
+    font-size: 88px;
+    line-height: 1.05;
+    letter-spacing: .02em;
+    color: var(--ink);
+  }
+  .title .grad {
+    background: linear-gradient(90deg, #7BABFF, #C27AFF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .date-row { margin-top: 22px; display: flex; align-items: baseline; gap: 22px; }
+  .issue-date {
+    font-family: var(--en);
+    font-weight: 800;
+    font-size: 56px;
+    letter-spacing: .04em;
+    color: var(--primary-strong);
+  }
+  .period {
+    font-family: var(--en);
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: .16em;
+    color: var(--muted);
+  }
+
+  .topics { margin-top: auto; display: flex; flex-direction: column; gap: 14px; }
+  .topic { display: flex; align-items: center; gap: 18px; }
+  .chip {
+    flex: none;
+    width: 132px;
+    text-align: center;
+    clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--en);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: .2em;
+    padding: 8px 0;
+  }
+  .topic p { font-weight: 700; font-size: 30px; color: var(--ink); white-space: nowrap; }
+
+  /* 右側の線画(キーボード・マウス・モニター) */
+  .art { position: absolute; right: 48px; top: 110px; width: 320px; height: 264px; }
+</style>
+</head>
+<body>
+  <svg class="art" viewBox="0 0 400 330" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- monitor -->
+    <rect x="60" y="10" width="300" height="180" rx="14" fill="#EEF4FF" stroke="#7BABFF" stroke-width="6"/>
+    <rect x="80" y="30" width="260" height="140" rx="6" fill="#FFFFFF" stroke="#D6E4FF" stroke-width="3"/>
+    <path d="M100 140 L150 95 L190 120 L240 70 L320 110" stroke="#C27AFF" stroke-width="5" opacity=".7"/>
+    <path d="M190 190 L180 228 M230 190 L240 228" stroke="#7BABFF" stroke-width="6"/>
+    <path d="M150 230 H270" stroke="#7BABFF" stroke-width="6"/>
+    <!-- keyboard -->
+    <rect x="10" y="250" width="290" height="70" rx="12" fill="#FFFFFF" stroke="#0B1120" stroke-width="5"/>
+    <g fill="#D6E4FF">
+      <rect x="26" y="263" width="24" height="18" rx="4"/><rect x="56" y="263" width="24" height="18" rx="4"/>
+      <rect x="86" y="263" width="24" height="18" rx="4"/><rect x="116" y="263" width="24" height="18" rx="4"/>
+      <rect x="146" y="263" width="24" height="18" rx="4"/><rect x="176" y="263" width="24" height="18" rx="4"/>
+      <rect x="206" y="263" width="24" height="18" rx="4"/><rect x="236" y="263" width="48" height="18" rx="4" fill="#7BABFF"/>
+      <rect x="26" y="289" width="36" height="18" rx="4"/><rect x="68" y="289" width="150" height="18" rx="4"/>
+      <rect x="224" y="289" width="24" height="18" rx="4"/><rect x="254" y="289" width="30" height="18" rx="4"/>
+    </g>
+    <!-- mouse -->
+    <path d="M345 250 C 372 250 386 270 386 292 C 386 312 370 324 345 324 C 320 324 304 312 304 292 C 304 270 318 250 345 250 Z" fill="#FFFFFF" stroke="#0B1120" stroke-width="5" transform="translate(4 -4)"/>
+    <path d="M349 250 V 278" stroke="#0B1120" stroke-width="4"/>
+    <rect x="345" y="258" width="8" height="14" rx="4" fill="#7BABFF"/>
+  </svg>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="ribbon"><span>WEEKLY DESK GADGET</span></div>
+      <div class="issue-no">#01</div>
+    </div>
+
+    <h1 class="title">デスクガジェット<br><span class="grad">週報</span></h1>
+
+    <div class="date-row">
+      <div class="issue-date">2026.11.14</div>
+      <div class="period">11.07 — 11.14</div>
+    </div>
+
+    <div class="topics">
+      <div class="topic"><div class="chip">KEYBOARD</div><p>Keychron Orca echo に通常プロファイル版</p></div>
+      <div class="topic"><div class="chip">MOUSE</div><p>MX MASTER 4 に数量限定の特別デザイン</p></div>
+      <div class="topic"><div class="chip">MONITOR</div><p>5万円台の 27型 QD-OLED「INNOCN 2780S」</p></div>
+    </div>
+  </div>
+</body>
+</html>

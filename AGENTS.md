@@ -1,22 +1,36 @@
 # AGENTS.md
 
-このリポジトリの共通ガイド。**Claude Code と Codex の両方がこのファイルを参照する。**
-リポジトリの事実(構成・コマンド・規約)はすべてここに書き、エージェント固有の指示だけを `CLAUDE.md` / `.codex/` 側に置く。二重管理しない。
+ブログ「ざっくらぼ」(https://xyzack271.com)のリポジトリ。ガジェットのレビュー・ニュース記事を MDX で書き、Next.js の静的エクスポートで Cloudflare Pages に公開する。
+
+このファイルは Claude Code と実装担当(実装を受け持つコーディングエージェント)の共通ガイド。リポジトリの事実(構成・コマンド・規約)はここに書き、Claude Code 固有の指示は `CLAUDE.md` に書く。同じことを2か所に書かない。
+
+## プロジェクト
+
+- 絶対パス: `/Volumes/SSD/project/myblog`(Orca の worktree は `~/orca/workspaces/myblog/<名前>`)
+- スタック: Next.js 16 App Router / TypeScript / MDX(next-mdx-remote)/ Tailwind v4 / Cloudflare Pages(静的エクスポート)
 
 ## 役割分担
 
-グローバル設定(`~/.claude/CLAUDE.md`)の通り、設計とレビューを Claude Code、実装と修正を Codex が担当する。
-設計の成果物は `docs/spec-<機能名>.md` に置き、実装の指示はそのパスで受け渡す。
+設計とレビューは Claude Code、実装と修正は実装担当が担当する(`~/.claude/CLAUDE.md` のとおり)。
 
-### Codex に渡すときの制約(2026-09-08 に実測して確認)
+1. Claude Code が `docs/spec-<機能名>.md` を書く
+2. 実装担当が仕様書のとおりに実装し、「確認コマンド」を通す
+3. Claude Code が `git diff` を読んでレビューし、指摘を `ファイル:行` / 事象 / 再現条件 / 根拠 の形で返す
+4. 実装担当が指摘を直す。2〜4 を繰り返す
+5. Claude Code がコミットする
 
-Codex は Windows のサンドボックス(`sandbox_mode = "workspace-write"`)の中で動く。この環境で確認した制約は次の3つ。仕様書と依頼文はこれを前提に書く。
+仕様書にない判断が要るときは、実装で決めずに止めて聞く。
 
-1. **Codex はコミットできない。** `.git/` 配下への書き込みがサンドボックスで拒否され、`.git/index.lock` を作れない。`sandbox_workspace_write.writable_roots` に `.git` を足しても解除されない(履歴改変を防ぐための仕様)。**仕様書に「Codex がコミットする」手順を書かない。** 差分の確認とコミットはレビュー担当(Claude Code)側で行う
-2. **Codex はネットワークに出られない。** そのため `next build` が `next/font` の Google Fonts 取得に失敗して止まる。**検証ビルドを Codex にやらせない。** ビルドと成果物への assertion はレビュー担当側で実行する。Codex に頼むのは編集と `npx tsc --noEmit` まで
-3. **仕様書は `-Encoding utf8` を明示して読ませる。** リポジトリの `.md` は BOM 無し UTF-8 で、Codex が使う Windows PowerShell 5.1 の `Get-Content -Raw` は BOM が無いと ANSI コードページで読むため文字化けする。依頼文に `Get-Content -Raw -Encoding utf8 <path>` と書き添える
+記事本文(`content/posts/**`)の執筆は例外で、Claude Code が `/new-post` `/publish` のパイプラインで担当する(下記「記事執筆ガイド」)。
 
-あわせて、Codex から `npm` を叩くと PowerShell の実行ポリシー(既定 `Restricted`)が `npm.ps1` を拒否する。`npm.cmd` を使わせるか、npm を伴う検証はレビュー担当側で実行する。
+## 守ること
+
+- コミット・push・デプロイはしない(レビュー後に Claude Code が行う)
+- ファイルは UTF-8 のまま保つ。ソース編集は `apply_patch` を優先し、Windows では PowerShell のテキスト入出力で書き戻さない
+- 依存の追加が要るときは、実装を止めて聞く(ネットワークが要るので Claude Code 側で入れる)
+- `npm run build` を最後まで走らせない(IndexNow へ送信してしまう。下記「確認コマンド」)
+- `next build` / `next dev` は Google Fonts(`next/font`)の取得にネットワークが要る。ネットワークに出られない環境では実行せず、`npx tsc --noEmit` までで止めて報告する。ビルドと成果物の確認は Claude Code 側で行う
+- シークレットは `.env.local` にだけ置く(下記「環境変数」)
 
 ## サイト改善・記事テーマの引き継ぎ
 
@@ -36,9 +50,9 @@ npm run lint             # ESLint CLI (eslint .)
 `npm run build` の実際のパイプライン:
 **next build** → **setup-image-cache.mjs**(コミット済み WEBP をキャッシュ位置へ復元)→ **next-image-export-optimizer**(WEBP 生成)→ **generate-sitemap.mjs** → **ping-indexnow.mjs**(IndexNow へ URL 送信。ローカル検証では実行しないこと)
 
-### 実装後の検証手順
+### 確認コマンド
 
-コードを変更したら、最低限この順で確認してから完了とする。通っていないものを「動作確認済み」と書かない。
+コードを変更したら、最低限この順で確認してから完了とする(2026-11-14 に、tsc・check:posts・`next build` が通り、lint が既知の 14 エラー・19 警告で止まることを確認済み)。通っていないものを「動作確認済み」と書かない。Mac では `npm` / `npx` をそのまま、Windows の PowerShell では `npm.cmd` / `npx.cmd` を使う。
 
 ```bash
 npx tsc --noEmit
@@ -145,9 +159,10 @@ published: true       # 省略時は true 扱い
 ### 執筆パイプライン
 
 - `content/ideas/`: 記事ネタのバックログ(1ネタ1ファイル)。ビルド対象外
-- `content/drafts/`: 書きかけ記事。`lib/mdx.ts` は `content/posts/` しか読まないためビルド対象外 = 誤公開が構造的に起きない。**公開 = drafts から posts への移動**
-- `/new-post`: ネタ選定 → `post/<slug>` ブランチ作成 → テンプレートから drafts に雛形生成 → 画像フォルダ作成
-- `/publish`: frontmatter 更新(date/published)→ `proofreader` で校正 → drafts から posts へ移動 → `npm run check:posts` → `npm run build` で WEBP キャッシュ生成 → コミット → PR 作成(マージはしない)
+- **下書き**: terminal のノート(`~/terminal-data/vault/notes/ブログ/下書き/`)で書く。リポジトリの `content/drafts/` は 2026-11-14 に廃止した(使わない)
+- **記事化**: 下書きを記事にするときは、最初から `content/posts/<slug>.mdx` に `published: false` で置く。非公開の記事は一覧・sitemap に出ず、URL 直アクセスでだけ表示される(noindex・上部に非公開バナー)。デザインと文章は `npm run dev` のローカルサーバー(`http://localhost:3000/blog/<slug>`)で確認しながら仕上げる。**公開 = `published: true` にすること**
+- `/new-post`: ネタ・ノート選定 → `post/<slug>` ブランチ作成 → テンプレートから `content/posts/` に非公開の雛形生成 → 画像フォルダ作成
+- `/publish`: frontmatter 更新(date / `published: true`)→ `proofreader` で校正 → ローカルで最終確認 → `npm run check:posts` → `npm run build` で WEBP キャッシュ生成 → コミット → PR 作成(マージはしない)
 - `proofreader`: 読み取り専用。誤字脱字・文章表現のNGパターンを校正する。`/publish` から呼ばれる
 - `fact-checker`: Web 検索可。レビュー記事のスペック・価格を公式ソースと突き合わせる。PR提供品レビューで随時使う
 
@@ -163,7 +178,7 @@ published: true       # 省略時は true 扱い
 
 `seo-audit` スキルは現状 Codex 側(`.agents/skills/`)にのみ存在する。
 
-`content/posts/**.mdx` / `content/drafts/**.mdx` への編集後は、上記フックが `scripts/validate-posts.mjs` を自動実行し違反を即フィードバックする(ブロッキングはしない)。
+`content/posts/**.mdx` への編集後は、上記フックが `scripts/validate-posts.mjs` を自動実行し違反を即フィードバックする(ブロッキングはしない)。
 
 ## Git ワークフロー
 

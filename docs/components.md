@@ -124,6 +124,16 @@ mp4 動画埋め込み。`controls playsInline` のみで autoplay/loop はし�
 <Video src="/images/posts/<slug>/demo.mp4" caption="席に近づくだけで自動点灯" />
 ```
 
+### `<XPost id caption?>`
+
+メーカー公式などの X 投稿を埋め込む。`id` は投稿 URL の `status/` に続く数字で、`caption` は任意。
+
+```mdx
+<XPost id="2121136201092796889" caption="Keychron Japan 公式の告知" />
+```
+
+投稿はビルド時に取得され、静的 HTML になる。削除済みの投稿は「見つかりません」と表示される。
+
 ### `<CheckList type="good"|"bad">` / `<CheckItem>`
 
 「こんな人におすすめ」/「こんな人には向かない」リスト。記事冒頭でターゲット読者を先出しする時に使う。

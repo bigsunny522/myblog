@@ -1,28 +1,28 @@
 ---
 name: publish
-description: content/drafts/ の下書き記事を公開する。frontmatterの更新・機械検品・WEBPキャッシュ生成・content/posts/への移動・PR作成までを行う。「記事を公開して」「/publish」「下書きをpostsに移動して」と言われたら使う。
+description: content/posts/ の非公開(published: false)の記事を公開する。frontmatterの更新(published: true)・校正・機械検品・WEBPキャッシュ生成・PR作成までを行う。「記事を公開して」「/publish」と言われたら使う。
 tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
 # /publish
 
-`content/drafts/<slug>.mdx` を `content/posts/` へ公開する。**マージは行わない** — PR作成までがこのスキルの範囲(main へのマージは明示的な指示があった時のみ、という CLAUDE.md の Git ワークフローに従う)。
+非公開(`published: false`)で書いている `content/posts/<slug>.mdx` を公開する。**公開 = `published: true` にすること**(下書きフォルダ `content/drafts/` は 2026-11-14 に廃止)。**マージは行わない** — PR作成までがこのスキルの範囲(main へのマージは明示的な指示があった時のみ、という CLAUDE.md の Git ワークフローに従う)。
 
-引数でスラッグを指定する(例: `/publish satray-mobilebattery-review`)。指定がなければ現在のブランチ名(`post/<slug>`)から推測するか、`content/drafts/*.mdx` を一覧してユーザーに選んでもらう。
+引数でスラッグを指定する(例: `/publish satray-mobilebattery-review`)。指定がなければ現在のブランチ名(`post/<slug>`)から推測するか、`content/posts/` で `published: false` の記事を一覧してユーザーに選んでもらう(`grep -l '^published: false' content/posts/*.mdx`)。
 
 ## 手順
 
 ### 1. 対象ファイルを確認する
 
 ```bash
-ls content/drafts/<slug>.mdx
+ls content/posts/<slug>.mdx
 ```
 
 存在しない場合は中断してユーザーに確認する。
 
 ### 2. 画像が揃っているか確認する
 
-`public/images/posts/<slug>/` に `coverImage` と本文中で参照している画像がすべて存在するか確認する(`npm run check:posts` でも後述の手順5で機械チェックされるが、先に目視確認しておくと手戻りが少ない)。元画像が7〜10MBを超える場合は `npm run optimize:images -- posts/<slug>` で圧縮する(CLAUDE.md の画像運用ルール参照)。
+`public/images/posts/<slug>/` に `coverImage` と本文中で参照している画像がすべて存在するか確認する(`npm run check:posts` でも後述の手順6で機械チェックされるが、先に目視確認しておくと手戻りが少ない)。元画像が7〜10MBを超える場合は `npm run optimize:images -- posts/<slug>` で圧縮する(CLAUDE.md の画像運用ルール参照)。
 
 ### 3. フロントマターを更新する
 
@@ -37,11 +37,9 @@ Agent tool で `proofreader` サブエージェントを呼び、記事を校正
 
 レビュー記事でスペック・価格・対応規格を確認したい場合は、必要に応じて `fact-checker` サブエージェント(WebSearch可)も併用する。
 
-### 5. drafts から posts へ移動する
+### 5. ローカルで最終確認する
 
-```bash
-git mv content/drafts/<slug>.mdx content/posts/<slug>.mdx
-```
+`npm run dev` を起動し、`http://localhost:3000/blog/<slug>` で見た目(画像・埋め込み・表・ダークモード)を確認する。`published: true` にしたので、上部の非公開バナーが消えていることも確かめる。
 
 ### 6. 機械検品を実行する
 
