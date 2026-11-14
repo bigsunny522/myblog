@@ -145,9 +145,10 @@ published: true       # 省略時は true 扱い
 ### 執筆パイプライン
 
 - `content/ideas/`: 記事ネタのバックログ(1ネタ1ファイル)。ビルド対象外
-- `content/drafts/`: 書きかけ記事。`lib/mdx.ts` は `content/posts/` しか読まないためビルド対象外 = 誤公開が構造的に起きない。**公開 = drafts から posts への移動**
-- `/new-post`: ネタ選定 → `post/<slug>` ブランチ作成 → テンプレートから drafts に雛形生成 → 画像フォルダ作成
-- `/publish`: frontmatter 更新(date/published)→ `proofreader` で校正 → drafts から posts へ移動 → `npm run check:posts` → `npm run build` で WEBP キャッシュ生成 → コミット → PR 作成(マージはしない)
+- **下書き**: terminal のノート(`~/terminal-data/vault/notes/ブログ/下書き/`)で書く。リポジトリの `content/drafts/` は 2026-11-14 に廃止した(使わない)
+- **記事化**: 下書きを記事にするときは、最初から `content/posts/<slug>.mdx` に `published: false` で置く。非公開の記事は一覧・sitemap に出ず、URL 直アクセスでだけ表示される(noindex・上部に非公開バナー)。デザインと文章は `npm run dev` のローカルサーバー(`http://localhost:3000/blog/<slug>`)で確認しながら仕上げる。**公開 = `published: true` にすること**
+- `/new-post`: ネタ・ノート選定 → `post/<slug>` ブランチ作成 → テンプレートから `content/posts/` に非公開の雛形生成 → 画像フォルダ作成
+- `/publish`: frontmatter 更新(date / `published: true`)→ `proofreader` で校正 → ローカルで最終確認 → `npm run check:posts` → `npm run build` で WEBP キャッシュ生成 → コミット → PR 作成(マージはしない)
 - `proofreader`: 読み取り専用。誤字脱字・文章表現のNGパターンを校正する。`/publish` から呼ばれる
 - `fact-checker`: Web 検索可。レビュー記事のスペック・価格を公式ソースと突き合わせる。PR提供品レビューで随時使う
 
@@ -163,7 +164,7 @@ published: true       # 省略時は true 扱い
 
 `seo-audit` スキルは現状 Codex 側(`.agents/skills/`)にのみ存在する。
 
-`content/posts/**.mdx` / `content/drafts/**.mdx` への編集後は、上記フックが `scripts/validate-posts.mjs` を自動実行し違反を即フィードバックする(ブロッキングはしない)。
+`content/posts/**.mdx` への編集後は、上記フックが `scripts/validate-posts.mjs` を自動実行し違反を即フィードバックする(ブロッキングはしない)。
 
 ## Git ワークフロー
 

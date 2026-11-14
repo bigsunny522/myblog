@@ -6,7 +6,9 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 
 # /new-post
 
-`content/ideas/` のネタバックログから記事執筆を開始する。ブランチ作成 → テンプレートから `content/drafts/` に雛形生成 → 画像フォルダ作成、までを行う。実際の執筆(本文作成)はこのスキルの後の会話で行う。
+`content/ideas/` のネタバックログから記事執筆を開始する。ブランチ作成 → テンプレートから `content/posts/` に**非公開(`published: false`)**の雛形生成 → 画像フォルダ作成、までを行う。実際の執筆(本文作成)はこのスキルの後の会話で行う。
+
+**`content/drafts/` は使わない**(2026-11-14 廃止)。下書きは terminal のノート(`~/terminal-data/vault/notes/ブログ/下書き/`)で書き、記事にするときは最初から `content/posts/` に `published: false` で置く。非公開の記事は一覧・sitemap に出ず、URL 直アクセスでだけ表示される(noindex・上部に非公開バナー)。デザインと文章は `npm run dev` のローカルサーバーで確認しながら仕上げる。
 
 引数でネタファイル名やスラッグを直接指定してもよい(例: `/new-post satray-mobilebattery-review`)。指定がなければ手順1でネタを選ぶ。
 
@@ -18,7 +20,7 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 ls content/ideas/*.md
 ```
 
-`README.md` と `TEMPLATE.md` を除いた `.md` ファイルの frontmatter(`status`)を確認し、`status: todo` のものを一覧表示してユーザーに選んでもらう。ユーザーが特定のネタや、ideas に存在しない新規テーマを直接指定した場合はそれに従う。
+`README.md` と `TEMPLATE.md` を除いた `.md` ファイルの frontmatter(`status`)を確認し、`status: todo` のものを一覧表示してユーザーに選んでもらう。ユーザーが特定のネタや、ideas に存在しない新規テーマを直接指定した場合はそれに従う。terminal のノートの下書きを指定された場合は `~/terminal-data/vault/notes/ブログ/下書き/` から読み、本文はノートの文章を元にする(ノートは読むだけで書き換えない)。
 
 該当ネタがない場合は、ユーザーから直接タイトル・スラッグ・記事タイプを聞く。
 
@@ -46,11 +48,11 @@ git checkout -b post/<slug> origin/main
 ### 5. テンプレートから下書きを生成する
 
 ```bash
-cp templates/review-post.mdx content/drafts/<slug>.mdx   # または news-post.mdx
+cp templates/review-post.mdx content/posts/<slug>.mdx   # または news-post.mdx
 mkdir -p public/images/posts/<slug>/
 ```
 
-`content/drafts/<slug>.mdx` 内の `<slug>` プレースホルダー(`coverImage` や画像パス)を実際のスラッグに置換する。ネタファイルに `title` / `keywords` / `referenceUrls` があれば、わかる範囲でフロントマターに反映する(`category` / `tags` は必ず `content/data/taxonomy.json` に存在する値から選ぶ。新しい値が必要なら先に taxonomy.json に追加する)。
+`published: false` のままにしておくこと。`content/posts/<slug>.mdx` 内の `<slug>` プレースホルダー(`coverImage` や画像パス)を実際のスラッグに置換する。ネタファイルに `title` / `keywords` / `referenceUrls` があれば、わかる範囲でフロントマターに反映する(`category` / `tags` は必ず `content/data/taxonomy.json` に存在する値から選ぶ。新しい値が必要なら先に taxonomy.json に追加する)。
 
 ### 6. ネタのステータスを更新する
 
@@ -63,10 +65,10 @@ mkdir -p public/images/posts/<slug>/
 ### 8. 初期スキャフォールドをコミットする
 
 ```bash
-git add content/drafts/<slug>.mdx content/ideas/<idea>.md
+git add content/posts/<slug>.mdx content/ideas/<idea>.md
 git commit -m "start draft: <slug>"
 ```
 
 ### 9. 完了報告
 
-ブランチ名・下書きファイルパス(`content/drafts/<slug>.mdx`)・画像フォルダパス(`public/images/posts/<slug>/`)をユーザーに伝え、次のステップ(本文執筆 → 画像配置 → `/publish`)を案内する。
+ブランチ名・記事ファイルパス(`content/posts/<slug>.mdx`、非公開)・画像フォルダパス(`public/images/posts/<slug>/`)をユーザーに伝え、次のステップ(本文執筆 → 画像配置 → `npm run dev` で `http://localhost:3000/blog/<slug>` を確認 → `/publish`)を案内する。

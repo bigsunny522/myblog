@@ -13,7 +13,7 @@ Claude Code が直接編集してよいもの:
 - `docs/**`(仕様書・ガイド)
 - `content/ideas/**`(記事ネタ)
 - `CLAUDE.md` / `AGENTS.md` / `.claude/**` などの設定
-- 記事本文(`content/drafts/**`, `content/posts/**`)— 執筆は `/new-post` `/publish` のパイプラインで Claude Code 側が担当する
+- 記事本文(`content/posts/**`)— 執筆は `/new-post` `/publish` のパイプラインで Claude Code 側が担当する
 
 Codex に渡すもの:
 
@@ -44,7 +44,7 @@ Claude Code 自身が手を動かしてよいのは、**「Claude Code で実装
 
 1. **静的エクスポートの制約** — `output: 'export'` のため、サーバー実行に依存するコード(Route Handler、`dynamic = 'force-dynamic'`、リクエスト時の `headers()`/`cookies()`)を追加していないか。ビルドは通っても本番で壊れる
 2. **画像** — 素の `<img>` を使っていないか。新規画像に対して WEBP キャッシュがコミットされているか。カバー画像が `/images/posts/<slug>/cover.jpg` に置かれているか
-3. **誤公開** — `published` / `listed` フラグの変更が意図通りか。`content/drafts/` から `content/posts/` への移動が意図的か
+3. **誤公開** — `published` / `listed` フラグの変更が意図通りか。`published: false` から `true` への変更が意図的か
 4. **JSON-LD** — `rating` / `price` / `faqs` を追加・変更したとき、`app/blog/[slug]/page.tsx` の出力が壊れていないか
 5. **シークレット** — トークンや API キーが `.env.local` 以外に混入していないか
 
