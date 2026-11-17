@@ -13,7 +13,7 @@ priority: "high"
 status: "done"
 ---
 
-記事: `content/posts/xiaomi-18-pro-series.mdx`(非公開)
+記事: `content/posts/xiaomi-18-pro.mdx`(非公開)
 
 2026-11-17 22:00(日本時間)のグローバル発表会を見ながら、最速で「発表まとめ」記事を書く。
 **このファイルの内容は記事本文に載せない。** 発表を聞いたときに「事前情報と何が違ったか」をすぐ判断するための照合表として使う。
@@ -92,7 +92,7 @@ status: "done"
 
 ## 公開時にやること
 
-- サムネイル: 作成済み。記事のカバー `public/images/posts/xiaomi-18-pro-series/cover.jpg` と同じ画像(1200×675 を 2 倍で書き出し)。X にもこれを添付する
+- サムネイル: 作成済み。記事のカバー `public/images/posts/xiaomi-18-pro/cover.jpg` と同じ画像(1200×675 を 2 倍で書き出し)。X にもこれを添付する
 - X 投稿文(▼ を発表内容で埋める。本文は 140 字前後に収める):
 
   ```
@@ -105,7 +105,7 @@ status: "done"
 
   ベゼル0.99mm と AnTuTu 500万点超えには驚きました
 
-  https://xyzack271.com/blog/xiaomi-18-pro-series
+  https://xyzack271.com/blog/xiaomi-18-pro
   ```
 - スマホ幅(390px 以下)での表示確認
 - `date` を公開日に、`published: true` に
