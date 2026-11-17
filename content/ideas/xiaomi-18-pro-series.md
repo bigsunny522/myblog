@@ -10,7 +10,7 @@ referenceUrls:
   - "https://sumahodigest.com/?p=76414"
   - "https://news.mynavi.jp/article/20261109-5289781/"
 priority: "high"
-status: "in-progress"
+status: "done"
 ---
 
 記事: `content/posts/xiaomi-18-pro-series.mdx`(非公開)
@@ -103,7 +103,7 @@ status: "in-progress"
   ・日本価格 Pro 209,800円〜 / Pro Max 239,800円〜
   ・11/27発売、早割で最大12,000円引き
 
-  ▼一番気になったポイントをひとこと
+  ベゼル0.99mm と AnTuTu 500万点超えには驚きました
 
   https://xyzack271.com/blog/xiaomi-18-pro-series
   ```
