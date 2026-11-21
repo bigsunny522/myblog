@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  デスクガジェット週報のカバー画像(1200x675 を 2 倍で書き出す)
+  週刊ガジェットニュースのカバー画像(1200x675 を 2 倍で書き出す)
   毎週変えるのは「号の情報」の3か所だけ: .issue-no / .issue-date / .period / .topics の中身
 
   書き出し(リポジトリのルートで):
@@ -8,13 +8,13 @@
     PROF="$(mktemp -d)"
     "$CHROME" --headless=new --hide-scrollbars --force-device-scale-factor=2 \
       --window-size=1200,675 --virtual-time-budget=5000 --user-data-dir="$PROF" \
-      --screenshot="/tmp/cover.png" "file://$PWD/templates/desk-gadget-weekly-cover.html"
+      --screenshot="/tmp/cover.png" "file://$PWD/templates/gadget-weekly-cover.html"
     sips -s format jpeg -s formatOptions 90 /tmp/cover.png --out public/images/posts/<slug>/cover.jpg
 -->
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>デスクガジェット週報 カバー</title>
+<title>週刊ガジェットニュース カバー</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@400;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -127,45 +127,42 @@
 </head>
 <body>
   <svg class="art" viewBox="0 0 400 330" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <!-- monitor -->
-    <rect x="60" y="10" width="300" height="180" rx="14" fill="#EEF4FF" stroke="#7BABFF" stroke-width="6"/>
-    <rect x="80" y="30" width="260" height="140" rx="6" fill="#FFFFFF" stroke="#D6E4FF" stroke-width="3"/>
-    <path d="M100 140 L150 95 L190 120 L240 70 L320 110" stroke="#C27AFF" stroke-width="5" opacity=".7"/>
-    <path d="M190 190 L180 228 M230 190 L240 228" stroke="#7BABFF" stroke-width="6"/>
-    <path d="M150 230 H270" stroke="#7BABFF" stroke-width="6"/>
-    <!-- keyboard -->
-    <rect x="10" y="250" width="290" height="70" rx="12" fill="#FFFFFF" stroke="#0B1120" stroke-width="5"/>
-    <g fill="#D6E4FF">
-      <rect x="26" y="263" width="24" height="18" rx="4"/><rect x="56" y="263" width="24" height="18" rx="4"/>
-      <rect x="86" y="263" width="24" height="18" rx="4"/><rect x="116" y="263" width="24" height="18" rx="4"/>
-      <rect x="146" y="263" width="24" height="18" rx="4"/><rect x="176" y="263" width="24" height="18" rx="4"/>
-      <rect x="206" y="263" width="24" height="18" rx="4"/><rect x="236" y="263" width="48" height="18" rx="4" fill="#7BABFF"/>
-      <rect x="26" y="289" width="36" height="18" rx="4"/><rect x="68" y="289" width="150" height="18" rx="4"/>
-      <rect x="224" y="289" width="24" height="18" rx="4"/><rect x="254" y="289" width="30" height="18" rx="4"/>
-    </g>
+    <!-- monitor (back) -->
+    <rect x="120" y="10" width="270" height="165" rx="14" fill="#EEF4FF" stroke="#7BABFF" stroke-width="6"/>
+    <rect x="138" y="28" width="234" height="129" rx="6" fill="#FFFFFF" stroke="#D6E4FF" stroke-width="3"/>
+    <path d="M160 130 L200 95 L235 115 L280 72 L350 105" stroke="#C27AFF" stroke-width="5" opacity=".7"/>
+    <path d="M245 175 L238 210 M275 175 L282 210" stroke="#7BABFF" stroke-width="6"/>
+    <path d="M215 212 H305" stroke="#7BABFF" stroke-width="6"/>
+    <!-- smartphone (rear, with back display) -->
+    <rect x="20" y="70" width="140" height="250" rx="24" fill="#FFFFFF" stroke="#0B1120" stroke-width="5"/>
+    <rect x="38" y="88" width="104" height="76" rx="14" fill="#0B1120"/>
+    <rect x="84" y="96" width="50" height="60" rx="8" fill="#7BABFF"/>
+    <path d="M92 140 L102 128 L110 134 L126 116" stroke="#FFFFFF" stroke-width="3"/>
+    <circle cx="60" cy="108" r="11" fill="#1E293B" stroke="#D6E4FF" stroke-width="3"/>
+    <circle cx="60" cy="144" r="11" fill="#1E293B" stroke="#D6E4FF" stroke-width="3"/>
     <!-- mouse -->
-    <path d="M345 250 C 372 250 386 270 386 292 C 386 312 370 324 345 324 C 320 324 304 312 304 292 C 304 270 318 250 345 250 Z" fill="#FFFFFF" stroke="#0B1120" stroke-width="5" transform="translate(4 -4)"/>
-    <path d="M349 250 V 278" stroke="#0B1120" stroke-width="4"/>
-    <rect x="345" y="258" width="8" height="14" rx="4" fill="#7BABFF"/>
+    <path d="M345 250 C 372 250 386 270 386 292 C 386 312 370 324 345 324 C 320 324 304 312 304 292 C 304 270 318 250 345 250 Z" fill="#FFFFFF" stroke="#0B1120" stroke-width="5" transform="translate(-60 -4)"/>
+    <path d="M289 250 V 278" stroke="#0B1120" stroke-width="4"/>
+    <rect x="285" y="258" width="8" height="14" rx="4" fill="#7BABFF"/>
   </svg>
 
   <div class="wrap">
     <div class="head">
-      <div class="ribbon"><span>WEEKLY DESK GADGET</span></div>
-      <div class="issue-no">#01</div>
+      <div class="ribbon"><span>WEEKLY GADGET NEWS</span></div>
+      <div class="issue-no">#02</div>
     </div>
 
-    <h1 class="title">デスクガジェット<br><span class="grad">週報</span></h1>
+    <h1 class="title">週刊ガジェット<br><span class="grad">ニュース</span></h1>
 
     <div class="date-row">
-      <div class="issue-date">2026.11.14</div>
-      <div class="period">11.07 — 11.14</div>
+      <div class="issue-date">2026.11.21</div>
+      <div class="period">11.15 — 11.21</div>
     </div>
 
     <div class="topics">
-      <div class="topic"><div class="chip">KEYBOARD</div><p>Keychron Orca echo に通常プロファイル版</p></div>
-      <div class="topic"><div class="chip">MOUSE</div><p>MX MASTER 4 に数量限定の特別デザイン</p></div>
-      <div class="topic"><div class="chip">MONITOR</div><p>5万円台の 27型 QD-OLED「INNOCN 2780S」</p></div>
+      <div class="topic"><div class="chip">PHONE</div><p>背面ディスプレイの Xiaomi 18 Pro が11月27日発売</p></div>
+      <div class="topic"><div class="chip">PHONE</div><p>AQUOS sense11 が94,600円から、11月26日発売</p></div>
+      <div class="topic"><div class="chip">DESK</div><p>光るディスプレイボードに静音マウス、ルーム補正スピーカー</p></div>
     </div>
   </div>
 </body>
